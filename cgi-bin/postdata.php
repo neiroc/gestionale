@@ -4,21 +4,22 @@ require "db_aux.php";
 //Connetti al DB
 $mysqli = connect_db();
 
-//Retrieve Data
+//Retrieve Data from  Bootstrap Modal
 $nome = $_POST['nome'];
+$cell = $_POST['cell'];
+$email = $_POST['email'];
+$tipo = $_POST['tipo'];
 
 
-if(isset($nome)){
-
-
-  $res2 = $mysqli->query("INSERT INTO an_anagrafiche (name,email,mobile ) VALUES('$nome','hgfhfg','hgfhgf')");
+ if(($nome != null) && ($email !=null) && ($tipo != null)){
+  $res2 = $mysqli->query("INSERT INTO an_anagrafiche (nome,mobile,email,tipo_anagrafica ) VALUES('$nome','$cell','$email','$tipo')");
   if($res2){
-    echo "Success Post Data";
+    echo "Anagrafica aggiunta!";
   } else{
-    echo "Fail Post Data";
+    echo "Errore Database";
   }
 }else{
-    echo "Error Entering Data";
+    echo "Errore nell'inserimento dati";
   }
 
 ?>
