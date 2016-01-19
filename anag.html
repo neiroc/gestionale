@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
+   
+    <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">
+    <link href="css/dashboard.css" rel="stylesheet">
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <script type="text/javascript" language="javascript" class="init"> 
+   
+    $(document).ready(function() { 
+	    $('#example').dataTable({ 
+	    "aProcessing": true, 
+	    "aServerSide": true, 
+	    "ajax": "cgi-bin/server-response.php", } ); 
+	    
+	    }); 
+    
+    
+    </script>
+    
+     <script type="text/javascript">
+     $('#save').click(function(){
+	  var nome = $('#nome').val();
+
+	  
+	  var datas = "nome="+nome;
+	  
+	  $.ajax({
+	      type: "POST",
+	      url: "cgi-bin/postdata.php",
+	      data: datas,
+	      dataType: "html"
+	  }).done(function( msg ) {
+	      alert( msg );
+	      viewdata();
+	  }).fail(function() {
+	      alert( "error" );
+	  }).always(function() {
+	      alert( "finished" );
+	  });
+	  });
+     </script>
+
+    <title></title>
+</head>
+
+     
+       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+       <h2 class="sub-header">Anagrafiche</h2>
+          
+          
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addData">Aggiungi</button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="addData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+			<div class="modal-content">
+			<form>
+			  <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			    <h4 class="modal-title" id="myModalLabel">Nuova Anagrafica</h4>
+			  </div>
+			  
+			  <div class="modal-body">
+			      <div class="form-group">
+						<label for="nome">Nome e Cognome</label>
+						<input type="text" class="form-control" id="nome">
+			      </div>
+		   
+			
+			  </div>
+			  
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+			    <button type="button" id="save" class="btn btn-primary">Salva</button>
+			  </div>
+			 </form>
+			 </div>
+      </div>
+      </div>
+          
+          
+          <!-- Mostra Risultati sulla Tabella -->
+          <div class="table-responsive">
+           
+            <!-- <table class="table table-striped"> -->
+            <table id="example" cellspacing="0" width="100%"> 
+            <thead> 
+            <tr> 
+            <th>Nome</th>
+            <th>Mobile</th>  
+            <th>Email</th>
+            <th>Tipo</th>           
+            </tr> 
+            </thead> 
+            </table>
+            <!-- </table> -->
+          </div>
+        </div>
+        
+</html>
