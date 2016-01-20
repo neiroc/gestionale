@@ -13,7 +13,23 @@ table.dataTable {
   /*
    * Body styles
    */
+   
 }
+
+/* Alternated rows color */
+table.dataTable tr.odd { background-color: #E2E4FF; }
+table.dataTable tr.even { background-color: white; }
+
+/* Additional CSS for extraInfo*/
+
+td.details-control {
+    background: url('../images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../images/details_close.png') no-repeat center center;
+}
+
 table.dataTable thead th,
 table.dataTable tfoot th {
   font-weight: bold;

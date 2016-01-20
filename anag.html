@@ -5,6 +5,7 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
+    <script src="components/bootstrap-datatable/js/eventTable.js"></script>
    
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">
     <link href="css/dashboard.css" rel="stylesheet">
@@ -13,70 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
-    <script type="text/javascript" language="javascript" class="init"> 
-   
-    $(document).ready(function() { 
-    
-	   var table =  $('#example').dataTable({ 
-	    "aProcessing": true, 
-	    "aServerSide": true, 
-	    "ajax": "cgi-bin/server-response.php", } );
-	    
-	    
-	    
-		 $('#example tbody').on( 'click', 'tr', function () {
-	        if ( $(this).hasClass('selected') ) {
-	            $(this).removeClass('selected');
-	        }
-	        else {
-	            table.$('tr.selected').removeClass('selected');
-	            $(this).addClass('selected');
-	        }
-	    } );
-	 
-	    $('#button').click( function () {
-	        table.row('.selected').remove().draw( false );
-	    } ); 
-	    
-	    
-    	    
 
-
-
-
-
-});
-
-    
-    </script>
-    
-     <script type="text/javascript">
-     $('#save').click(function(){
-	  var nome = $('#nome').val();
-	  var cell = $('#cell').val();
-	  var email = $('#email').val();
-	  var tipo = $('#tipo').val();
-
-	  
-	  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo;
-	  
-	  $.ajax({
-	      type: "POST",
-	      url: "cgi-bin/postdata.php",
-	      data: datas,
-	      dataType: "html"
-	  }).done(function( msg ) {
-	      alert( msg );
-	      
-	      //viewdata();
-	      
-	  }).fail(function() {
-	      alert( "error" );
-	  }).always(function() {
-	      alert( "finished" );
-	  });
-	  });
-     </script>
 
     <title></title>
 </head>
@@ -93,7 +31,7 @@
       <!-- Operation's Button trigger modal -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addData">Aggiungi</button>
       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editData">Modifica</button>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rmData">Rimuovi</button>
+      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
   </div>
 </div>    
          
@@ -149,14 +87,15 @@
       </div>
           
           
-          <!-- Mostra Risultati sulla Tabella -->
+          <!-- Risultati sulla Tabella -->
           <div class="table-responsive">
            
             <!-- <table class="table table-striped"> -->
-            <table id="example" cellspacing="0" width="100%">
+            <table id="tb_anag" cellspacing="0" width="100%">
             <tbody> 
             <thead> 
-            <tr> 
+            <tr>
+            <th></th> 
             <th>Nome</th>
             <th>Mobile</th>  
             <th>Email</th>

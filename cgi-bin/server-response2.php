@@ -175,12 +175,12 @@
         "iTotalDisplayRecords" => $iFilteredTotal,
         "aaData" => array()
     );*/
-	
-	 /* Restituisci output */
+	 /*Restituisci output*/
      
     while ( $aRow = mysql_fetch_array( $rResult ) )
     {      
     
+   
     $output['data'][] = $aRow;
         
     }
