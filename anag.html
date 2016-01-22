@@ -6,8 +6,13 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="components/bootstrap-datatable/js/eventTable.js"></script>
+    <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
+	 <script src="https://cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script> 
    
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.1/css/buttons.dataTables.min.css"> 
     <link href="css/dashboard.css" rel="stylesheet">
     
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -26,18 +31,20 @@
           
       <div class="panel panel-default">
   <div class="panel-body">
-    <h3> Operazioni </h3>
+   
       
       <!-- Operation's Button trigger modal -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addData">Aggiungi</button>
-      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editData">Modifica</button>
+      <button type="button" id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
       <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
+      
+		     
   </div>
 </div>    
          
 
 
-      <!-- Modal -->
+      <!-- Modal addData-->
       <div class="modal fade" id="addData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
 			<div class="modal-content">
@@ -67,6 +74,55 @@
 			       <div class="form-group">
 					  <label for="sel1">Tipo:</label>
 					  <select class="form-control" id="tipo">
+					    <option>Cliente</option>
+					    <option>Dipendente</option>
+					    <option>Operatore</option>
+					    
+					  </select>
+					</div>
+		   
+			
+			  </div>
+			  
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+			    <button type="button" id="save" class="btn btn-primary">Salva</button>
+			  </div>
+			 </form>
+			 </div>
+      </div>
+      </div>
+      
+      <!-- Modal editData-->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+			<div class="modal-content">
+			<form>
+			  <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			    <h4 class="modal-title" id="myModalLabel">Modifica Anagrafica</h4>
+			  </div>
+			  
+			  <div class="modal-body">
+			      <div class="form-group">
+						<label for="nome">Nome e Cognome*</label>
+						<input type="text" class="form-control" id="nome2">
+			      </div>
+			      
+			      <div class="form-group">
+						<label for="mobile">Cellulare</label>
+						<input type="tel" class="form-control" id="cell2">
+			      </div>
+			      
+			      <div class="form-group">
+						<label for="email">Em@il</label>
+						<input type="tel" class="form-control" id="email2">
+			      </div>
+			      
+		
+			       <div class="form-group">
+					  <label for="sel1">Tipo:</label>
+					  <select class="form-control" id="tipo2">
 					    <option>Cliente</option>
 					    <option>Dipendente</option>
 					    <option>Operatore</option>
