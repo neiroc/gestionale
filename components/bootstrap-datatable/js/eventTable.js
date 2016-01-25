@@ -1,13 +1,9 @@
 $(document).ready(function() {
 	 
 		
-		/* Inizializza Tabella
-		 *
-		 *  C'è differenza tra dataTable() e DataTable() inserire funzione api() ove necessario
-		 */
-		
+		/* Inizializza Tabella */
+				
 	   var table =  $('#tb_anag').DataTable({
-
 	    "aProcessing": true, 
 	    "aServerSide": true,   	     
 	    "ajax": "cgi-bin/server-response.php",
@@ -21,18 +17,11 @@ $(document).ready(function() {
             { "data": "nome" },
             { "data": "mobile" },
             { "data": "email" },
-            { "data": "tipo_anagrafica" }
-            
-            
+            { "data": "tipo_anagrafica" }                       
         ],
-
         "order": [[1, 'asc']]
-  		
-      
 	     } );
-	     
-
-	     
+	      
     
 	    /* Seleziona Righe */
 		 $('#tb_anag tbody').on( 'click', 'tr', function () {
@@ -64,7 +53,7 @@ $(document).ready(function() {
 	    } );
 	    
 	    
-	    
+	   /* Aggiungi Elemento */ 
 		$('#save').click(function(){
 		  var nome = $('#nome').val();
 		  var cell = $('#cell').val();
@@ -80,19 +69,23 @@ $(document).ready(function() {
 			data: datas,
 			dataType: "html"
 			  }).done(function( msg ) {
+			
 			alert( msg );
 			
 	
-		        
-		
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });
+		  table.row.add( {
+        "nome":       nome,
+        "mobile":   cell,
+        "email":     email,
+        "tipo_anagrafica": tipo
+       
+    		} ).draw();
+
+			  }).fail(function() {
+			alert( "error" );
+			  }).always(function() {
+			alert( "finished" );
+			  });
 	  });
 	  
 	  
@@ -185,9 +178,7 @@ $(document).ready(function() {
 		alert( "finished" );
 		  });
 		  
-	   
-		  
-	
+
 	        table.row('.selected').remove().draw( false );
 	    } );
 
@@ -203,7 +194,7 @@ function format ( d ) {
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
         '<tr>'+
             '<td>Registrato il:</td>'+
-            '<td>'+d.id_anagrafica+'</td>'+
+            '<td>'+d.start_date+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Extension number:</td>'+
