@@ -1,14 +1,15 @@
-$(document).ready(function() { 
-		console.log($('tr.selected'));
-		/*Inizializza Tabella
-		*
-		*C'è differenza tra dataTable() e DataTable() inserire funzione api() ove necessario
-		*/
+$(document).ready(function() {
+	 
 		
-	   var table =  $('#tb_anag').dataTable({
+		/* Inizializza Tabella
+		 *
+		 *  C'è differenza tra dataTable() e DataTable() inserire funzione api() ove necessario
+		 */
+		
+	   var table =  $('#tb_anag').DataTable({
+
 	    "aProcessing": true, 
-	    "aServerSide": true,
-	     
+	    "aServerSide": true,   	     
 	    "ajax": "cgi-bin/server-response.php",
 	    "columns": [
             {
@@ -26,12 +27,13 @@ $(document).ready(function() {
         ],
 
         "order": [[1, 'asc']]
+  		
+      
 	     } );
 	     
 
-      
-
-	      
+	     
+    
 	    /* Seleziona Righe */
 		 $('#tb_anag tbody').on( 'click', 'tr', function () {
 	        if ( $(this).hasClass('selected') ) {
@@ -42,110 +44,154 @@ $(document).ready(function() {
 	            $(this).addClass('selected');
 	        }
 	    } );
+	    
+	    
+		 // Add event listener for opening and closing details
+	    $('#tb_anag tbody').on('click', 'td.details-control', function () {
+	        var tr = $(this).closest('tr');
+	        var row = table.row( tr );
+	 
+	        if ( row.child.isShown() ) {
+	            // This row is already open - close it
+	            row.child.hide();
+	            tr.removeClass('shown');
+	        }
+	        else {
+	            // Open this row
+	            row.child( format(row.data()) ).show();
+	            tr.addClass('shown');
+	        }
+	    } );
+	    
+	    
+	    
+		$('#save').click(function(){
+		  var nome = $('#nome').val();
+		  var cell = $('#cell').val();
+		  var email = $('#email').val();
+		  var tipo = $('#tipo').val();
+		
+		  
+		  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo;
+		  
+		  $.ajax({
+			type: "POST",
+			url: "cgi-bin/postdata.php",
+			data: datas,
+			dataType: "html"
+			  }).done(function( msg ) {
+			alert( msg );
+			
+	
+		        
+		
+		
+		//viewdata();
+		
+		  }).fail(function() {
+		alert( "error" );
+		  }).always(function() {
+		alert( "finished" );
+		  });
+	  });
+	  
+	  
+	   /*Edit Data from Table. Scrivere codice + pulito*/
+
+		$('#editData').click(function(){
+			
+			var $rows = table.$('tr.selected');
+			if ($rows.length) {
+			 
+			 var dataArr = [];
+		    var rows = $('tr.selected');
+		    var rowData = table.rows(rows).data();
+		    console.log(rowData);
+		    $.each($(rowData),function(key,value){
+		        dataArr.push(value["nome"]);
+		        dataArr.push(value["mobile"]); 
+		        dataArr.push(value["email"]);
+		        dataArr.push(value["tipo_anagrafica"]);
+		        dataArr.push(value["id_anagrafica"]);
+		    });
+		    
+		 $("#nome2").val(dataArr[0]);
+		 $("#cell2").val(dataArr[1]);
+		 $("#email2").val(dataArr[2]);
+		 $("#tipo2").val(dataArr[3]);
+		  
+		  $('#editModal').modal('show'); 
+		  
+				/* Save Changes */
+				$('#savechanges').click(function(){
+				  var nome = $('#nome2').val();
+				  var cell = $('#cell2').val();
+				  var email = $('#email2').val();
+				  var tipo = $('#tipo2').val();
+				
+				  
+				  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo+"&id="+dataArr[4];
+				  
+				  $.ajax({
+					type: "POST",
+					url: "cgi-bin/edit.php",
+					data: datas,
+					dataType: "html"
+					  }).done(function( msg ) {
+					alert( msg );
+				
+						//viewdata();
+						
+						  }).fail(function() {
+						alert( "error" );
+						  }).always(function() {
+						alert( "finished" );
+						  });
+				});
+		
+		
+		 
+		  
+		  	} else alert("Non hai selezionato nessuna riga")
+		
+		});
 
 	   
     /* Rimuovi elemento selezionat */
-	  $('#rmData').click( function () {
+	 $('#rmData').click( function () {
+
+	    var dataArr = [];
+	    var rows = $('tr.selected');
+	    var rowData = table.rows(rows).data();
+	    $.each($(rowData),function(key,value){
+	        dataArr.push(value["id_anagrafica"]); //"name" being the value of your first column.
+	    });
+	    
+	    console.log(dataArr);
+	    var datas = "id="+dataArr;
+		$.ajax({
+			type: "POST",
+			url: "cgi-bin/delete.php",
+			data: datas,
+			dataType: "html"
+			  }).done(function( msg ) {
+			alert( msg );
+		
+		//viewdata();
+		
+		  }).fail(function() {
+		alert( "error" );
+		  }).always(function() {
+		alert( "finished" );
+		  });
+		  
+	   
+		  
 	
-
-    var dataArr = [];
-    var rows = $('tr.selected');
-    var rowData = table.api().rows(rows).data();
-    $.each($(rowData),function(key,value){
-        dataArr.push(value["id_anagrafica"]); //"name" being the value of your first column.
-    });
-    
-    console.log(dataArr);
-    var datas = "id="+dataArr;
-	$.ajax({
-		type: "POST",
-		url: "cgi-bin/delete.php",
-		data: datas,
-		dataType: "html"
-		  }).done(function( msg ) {
-		alert( msg );
-	
-	//viewdata();
-	
-	  }).fail(function() {
-	alert( "error" );
-	  }).always(function() {
-	alert( "finished" );
-	  });
-	  
-   
-	  
-
-        table.api().row('.selected').remove().draw( false );
-    } );
-    
-    
-    
-    
-    // Add event listener for opening and closing details
-    $('#tb_anag tbody').on('click', 'td.details-control', function () {
-        var tr = $(this).closest('tr');
-        var row = table.api().row( tr );
- 
-        if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-        }
-        else {
-            // Open this row
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
-        }
-    } );
-
-
-
-$('#editData').click(function(){
-	
-	var $rows = table.$('tr.selected');
-	if ($rows.length) {
-	 
-	 var dataArr = [];
-    var rows = $('tr.selected');
-    var rowData = table.api().rows(rows).data();
-    console.log(rowData);
-    $.each($(rowData),function(key,value){
-        dataArr.push(value["nome"]);
-        dataArr.push(value["mobile"]); 
-        dataArr.push(value["email"]);
-        dataArr.push(value["tipo_anagrafica"]);
-    });
-    
-  $("#nome2").val(dataArr[0]);
-  $("#cell2").val(dataArr[1]);
-  $("#email2").val(dataArr[2]);
-  $("#tipo2").val(dataArr[3]);
-  
-  $('#editModal').modal('show'); 
-  
-  	} else alert("Non hai selezionato nessuna riga")
-
-});
-
-
-/*
-on('show', function(){
-         
-        //make your ajax call populate items or what even you need
-        $(this).find('#nome').html($('<b> Order Id selected: ' + nome  + '</b>'))
-    });*/
-
-
-
-
-
-
-
-
+	        table.row('.selected').remove().draw( false );
+	    } );
 
 }); /*Fine Document Ready*/
-
 
 
 
@@ -171,36 +217,12 @@ function format ( d ) {
 }
 
 
+
     
   
     
 
-$('#save').click(function(){
-  var nome = $('#nome').val();
-  var cell = $('#cell').val();
-  var email = $('#email').val();
-  var tipo = $('#tipo').val();
 
-  
-  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo;
-  
-  $.ajax({
-	type: "POST",
-	url: "cgi-bin/postdata.php",
-	data: datas,
-	dataType: "html"
-	  }).done(function( msg ) {
-	alert( msg );
-
-//viewdata();
-
-  }).fail(function() {
-alert( "error" );
-  }).always(function() {
-alert( "finished" );
-  });
-  });
- 
 	 
 	 
 
