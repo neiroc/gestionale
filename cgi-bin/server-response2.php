@@ -26,7 +26,7 @@ $stmt->bind_result($id,$nome);
 
 
     while ($stmt->fetch()) {
-       $data[] =  array('id' => $id, 'text'=>$nome );	
+       $data[] =  array('id' => $nome, 'text'=>$nome );	
     }
     
     

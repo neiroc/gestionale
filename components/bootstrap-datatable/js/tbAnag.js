@@ -70,9 +70,11 @@ $(document).ready(function() {
 		  var cell = $('#cell').val();
 		  var email = $('#email').val();
 		  var tipo = $('#tipo').val();
+		  var request = "anagrafe";
+
 		
 		  
-		  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo;
+		  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo+"&request="+request;
 		  
 		  $.ajax({
 			type: "POST",

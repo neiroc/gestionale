@@ -97,13 +97,16 @@ $(document).ready(function() {
 	     	    
 	   /* Aggiungi Elemento */ 
 		$('#save').click(function(){
-		  var nome = $('#nome').val();
-		  var cell = $('#cell').val();
-		  var email = $('#email').val();
+		  var apertada = $('#apertada').val();
+		  var cliente = $('#cliente').val();
+		  var operatore = $('#operatore').val();
 		  var tipo = $('#tipo').val();
+		  var plant = $('#plant').val();
+		  var request = "offerta";
+		  console.log(apertada);
 		
 		  
-		  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo;
+		  var datas = "apertada="+apertada+"&cliente="+cliente+"&operatore="+operatore+"&tipo="+tipo+"&request="+request+"&plant="+plant;
 		  
 		  $.ajax({
 			type: "POST",
@@ -114,17 +117,17 @@ $(document).ready(function() {
 			
 			alert( msg );
 			
-	
+	/*
 		  table.row.add( {
         "nome":       nome,
         "mobile":   cell,
         "email":     email,
         "tipo_anagrafica": tipo
        
-    		} ).draw();
+    		} ).draw();*/
 
 			  }).fail(function() {
-			alert( "error" );
+			alert( "error aa" );
 			  }).always(function() {
 			alert( "finished" );
 			  });

@@ -9,14 +9,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >
 
-     
-
+	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
 
-
-    <title> </title>
+    <title></title>
     
-
 </head>
 
 <body>
@@ -45,35 +42,40 @@
 			<form>
 			  <div class="modal-header">
 			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    <h4 class="modal-title" id="myModalLabel">Modifica Offerta</h4>
+			    <h4 class="modal-title" id="myModalLabel">Aggiungi Offerta</h4>
 			  </div>
 			  
 			  <div class="modal-body">
 			      <div class="form-group">
 						<label for="nome">Aperta da*</label>
-						<select class="form-control select2" style="width:100%;" tabindex="2">						         
+						<select id="apertada"class="form-control select2" style="width:100%;" tabindex="2">						         
 						</select>
 			      </div>
 			      
 			       <div class="form-group">
 					  <label for="sell">Cliente:</label>					  
-						    <select class="form-control select2" style="width:100%;" tabindex="2">						         
+						    <select id="cliente" class="form-control select2" style="width:100%;" tabindex="2">						         
 						    </select>
 
 					 </div>
 			      
 			      <div class="form-group">
 						<label for="email">Operatore</label>
-						<select class="form-control select2" style="width:100%;" tabindex="2">						         
+						<select id="operatore" class="form-control select2" style="width:100%;" tabindex="2">						         
 						</select>
 			      </div>
 			      
+			      <div class="form-group">
+						<label for="email">Sede</label>
+						<select id="plant" class="form-control select2" style="width:100%;" tabindex="2">						         
+						</select>
+			      </div>
 			     
 			      
 		
 			       <div class="form-group">
 					  <label for="sel1">Tipo Attività:</label>
-					  <select class="form-control" id="tipo2">
+					  <select class="form-control" id="tipo">
 					    <option>Controllo Qualità</option>
 					    <option>Consulenza</option>
 					    <option>Formazione</option>
@@ -86,7 +88,7 @@
 			  
 			  <div class="modal-footer">
 			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-			    <button type="button" id="savechanges" class="btn btn-primary">Salva</button>
+			    <button type="button" id="save" class="btn btn-primary">Salva</button>
 			  </div>
 		  </form>
 		</div>
