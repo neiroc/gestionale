@@ -12,15 +12,18 @@
      */
      
     /* Array of database columns which should be read and sent back to DataTables. Use a space where
-     * you want to insert a non-database field (for example a counter or static image)
+     * you want to insert a non-database field (for example a counter or static )
      */
-    $aColumns = array('id_anagrafica','nome' , 'mobile', 'email', 'tipo_anagrafica','start_date');
+
+    
+     
+    $aColumns = array($_GET['var1'],$_GET['var2'] , $_GET['var3'], $_GET['var4'], $_GET['var5'], $_GET['var6']);
      
     /* Indexed column (used for fast and accurate table cardinality) */
-    $sIndexColumn = "id_anagrafica";
+    $sIndexColumn = $_GET['var1'];
      
     /* DB table to use */
-    $sTable = "an_anagrafiche";
+    $sTable = $_GET['table'];
      
     /* Database connection information */
     $gaSql['user']       = "root";
@@ -175,14 +178,13 @@
         "iTotalDisplayRecords" => $iFilteredTotal,
         "aaData" => array()
     );*/
-	
+    
+
 	 /* Restituisci output */
      
     while ( $aRow = mysql_fetch_array( $rResult ) )
-    {      
-    
+    {          
     $output['data'][] = $aRow;
-        
     }
      echo json_encode( $output );
     

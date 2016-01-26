@@ -6,7 +6,18 @@ $(document).ready(function() {
 	   var table =  $('#tb_anag').DataTable({
 	    "aProcessing": true, 
 	    "aServerSide": true,   	     
-	    "ajax": "cgi-bin/server-response.php",
+	    "ajax": {
+	    	"url":'cgi-bin/server-response.php',
+	    	"data": {
+	    		"table": "an_anagrafiche",
+	    		"var1": "id_anagrafica", 
+	    		"var2": "nome",
+	    		"var3": "mobile",
+	    		"var4": "email",
+	    		"var5": "start_date",
+	    		"var6": "tipo_anagrafica",
+	    	},	    
+	    },
 	    "columns": [
             {
                 "className":      'details-control',    

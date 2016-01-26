@@ -16,11 +16,15 @@ function connect_db(){
         $con = False;
       }
     
-    return $con;
+   
+   return $con;
 
 }
 
 
+// Frees the memory associated with a result
+//$results->free();
 
-
+// close connection
+//$mysqli->close();
 ?>

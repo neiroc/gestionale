@@ -4,42 +4,31 @@
 	 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
-    <script src="components/bootstrap-datatable/js/eventTable.js"></script>
-    <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
-	 <script src="https://cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script> 
    
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.1/css/buttons.dataTables.min.css"> 
+	
+	 <!-- Custom styles for this template --> 
     <link href="css/dashboard.css" rel="stylesheet">
 
 
-    <title> </title>
+    <title></title>
 </head>
 
 <body>
      
-       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
        <h2 class="sub-header">Anagrafiche</h2>
           
       <div class="panel panel-default">
-  <div class="panel-body">
-   
-      
-      <!-- Operation's Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addData">Aggiungi</button>
-      <button type="button" id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
-      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
-      
-		     
-  </div>
-</div>    
+	   	<div class="panel-body">
+	      <!-- Operation's Button trigger modal -->
+	      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addData">Aggiungi</button>
+	      <button type="button" id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
+	      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>		     
+	      </div>
+      </div>    
          
 
 
@@ -163,5 +152,15 @@
             <!-- </table> -->
           </div>
         </div>
+        
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
+    <script src="components/bootstrap-datatable/js/tbAnag.js"></script>
+    <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
 </body>        
 </html>
