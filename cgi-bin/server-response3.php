@@ -14,19 +14,31 @@
     /* Array of database columns which should be read and sent back to DataTables. Use a space where
      * you want to insert a non-database field (for example a counter or static )
      */
+     
+     require "utility.php";
 
 
-   
+/* Scrivere codice migliore qui
+
+esempio
+      foreach($_GET as $key => $value) {  
+                $aColumns[] = $value ;   
+                    }
+*/
+
 
 
 	if($_GET['req'] == "offerta"){
-	$aColumns = array($_GET['var1'],$_GET['var2'],$_GET['var3'],$_GET['var4'],$_GET['var5'],$_GET['var6'],$_GET['var7'],$_GET['var8'], 
-                     $_GET['var9'],$_GET['var10'],$_GET['var11'],$_GET['var12'],$_GET['var13'],$_GET['var14'],$_GET['var15'],$_GET['var16'],$_GET['var17']);
+	$aColumns = array($_GET['var1'],$_GET['var2'] , $_GET['var3'], $_GET['var4'], $_GET['var5'], $_GET['var6']);
 	}
 	else {
-		  $aColumns = array($_GET['var1'],$_GET['var2'],$_GET['var3'],$_GET['var4'],$_GET['var5'],$_GET['var6']);
+		  $aColumns = array($_GET['var1'],$_GET['var2'] , $_GET['var3'], $_GET['var4'], $_GET['var5'], $_GET['var6']);
 	}
 		
+     
+       
+     
+  
      
     /* Indexed column (used for fast and accurate table cardinality) */
     $sIndexColumn = $_GET['var1'];
@@ -180,13 +192,13 @@
      * Output
      */
     
-    /*
+    
 	$output = array(
-        "sEcho" => intval($_GET['sEcho']),
-        "iTotalRecords" => $iTotal,
-        "iTotalDisplayRecords" => $iFilteredTotal,
-        "aaData" => array()
-    );*/
+      //"sEcho" => $aColumns2[0],
+        "iTotalRecords" => $aColumns[0]
+        //"iTotalDisplayRecords" => $iFilteredTotal,
+        //"aaData" => array()
+    );
     
 
 	 /* Restituisci output */

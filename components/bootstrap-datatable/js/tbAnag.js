@@ -73,8 +73,8 @@ $(document).ready(function() {
 		  var request = "anagrafe";
 
 		
-		  
-		  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo+"&request="+request;
+		  /* Le variabile postate devono avere lo stesso nome delle colonne della tabella del DB */
+		  var datas = "nome="+nome+"&mobile="+cell+"&email="+email+"&tipo_anagrafica="+tipo+"&request="+request;
 		  
 		  $.ajax({
 			type: "POST",

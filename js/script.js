@@ -1,5 +1,9 @@
 $(document).ready(function(){
 	
+	   $('#calendar').fullCalendar({
+        // put your options and callbacks here
+    })
+	
 	 $("#anag").click(function() {
 	 	
         $.ajax({

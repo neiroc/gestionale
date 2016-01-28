@@ -8,14 +8,27 @@ $(document).ready(function() {
 	    "aServerSide": true,   	     
 	    "ajax": {
 	    	"url":'cgi-bin/server-response.php',
-	    	"data": {
-	    		"table": "of_offerte",
-	    		"var1": "id_offerta", 
+	    	"type": "GET",
+	    	"data": { //All data to Get From DB
+	    		"req" : "offerta",
+	    		"table" : "of_offerte",
+            "var1": "id_offerta", 
 	    		"var2": "cliente",
-	    		"var3": "aperta_da",
-	    		"var4": "operatore",
-	    		"var5": "tipo_operatore",
-	    		"var6": "sede",
+	    		"var3": "cliente_strategico",
+	    		"var4": "aperta_da",
+	    		"var5": "data_apertura",
+	    		"var6": "operatore",
+	    		"var7": "tipo_operatore",
+	    		"var8": "tipo_attivita",
+	    		"var9": "costo_operatore",
+	    		"var10": "tariffa",
+	    		"var11": "rischio",
+	    		"var12": "sede",
+	    		"var13": "euro_ora",
+	    		"var14": "euro_giorno",
+	    		"var15": "euro_km",
+	    		"var16": "euro_tl",
+	    		"var17": "nota"    		
 	    	},	    
 	    },
 	    "columns": [
@@ -25,13 +38,24 @@ $(document).ready(function() {
                 "defaultContent": '',
                 "orderable":      false
             },
-            { "data": "cliente" },
             { "data": "aperta_da" },
-            { "data": "tipo_operatore" },
-            { "data": "sede" },
+            { "data": "cliente" },
+            { "data": "operatore" },     
+            { "data": "tipo_attivita" },
+            { "data": "sede" }
            
                                     
         ],
+    'columnDefs': [{
+         'targets': 6,
+         'searchable': false,
+         'orderable': false,
+         'className': 'dt-body-center',
+         'render': function (data, type, full, meta){
+             return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+         }
+      }],
+     
         "order": [[1, 'asc']]
 	     } );
 	      
@@ -64,6 +88,29 @@ $(document).ready(function() {
 	            tr.addClass('shown');
 	        }
 	    } );
+	    
+	       // Handle form submission event
+   $('#frm-example').on('submit', function(e){
+      var form = this;
+
+      // Iterate over all checkboxes in the table
+      table.$('input[type="checkbox"]').each(function(){
+         // If checkbox doesn't exist in DOM
+         if(!$.contains(document, this)){
+            // If checkbox is checked
+            if(this.checked){
+               // Create a hidden element 
+               $(form).append(
+                  $('<input>')
+                     .attr('type', 'hidden')
+                     .attr('name', this.name)
+                     .val(this.value)
+               );
+            }
+         } 
+      });
+   });
+
 	    
 	    
 	    
@@ -101,12 +148,10 @@ $(document).ready(function() {
 		  var cliente = $('#cliente').val();
 		  var operatore = $('#operatore').val();
 		  var tipo = $('#tipo').val();
-		  var plant = $('#plant').val();
+		  var sede = $('#sede').val();
 		  var request = "offerta";
-		  console.log(apertada);
-		
-		  
-		  var datas = "apertada="+apertada+"&cliente="+cliente+"&operatore="+operatore+"&tipo="+tipo+"&request="+request+"&plant="+plant;
+		 
+		  var datas = "aperta_da="+apertada+"&cliente="+cliente+"&operatore="+operatore+"&tipo_attivita="+tipo+"&request="+request+"&sede="+sede;
 		  
 		  $.ajax({
 			type: "POST",
@@ -238,16 +283,20 @@ function format ( d ) {
     // `d` is the original data object for the row
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
         '<tr>'+
-            '<td>Registrato il:</td>'+
-            '<td>'+d.start_date+'</td>'+
+            '<td>Data Apertura:</td>'+
+            '<td>'+d.data_apertura+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Extension number:</td>'+
-            '<td>'+d.nome+'</td>'+
+            '<td>Cliente Strategico:</td>'+
+            '<td>'+d.cliente_strategico+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>And any further details here (images etc)...</td>'+
+            '<td>Tipo Operatore:</td>'+
+            '<td>'+d.tipo_operatore+' Costo: '+d.costo_operatore+'<br> €/O: '+d.euro_ora+'<br>€/G: '+d.euro_giorno+'<br>€/Km: '+d.euro_km+'<br>€/TL: '+d.euro_tl+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>NOTA:</td>'+
+            '<td>'+d.nota+'</td>'+
         '</tr>'+
     '</table>';
 }

@@ -1,42 +1,40 @@
 <?php
 require "db_aux.php";
+require "utility.php";
 
 //Connetti al DB
-$mysqli = connect_db();
+//$mysqli = connect_db();
 
-//Retrieve Data from  Bootstrap Modal
+
+$con=mysql_connect("localhost","root","pass");
+
+// Check connection
+if (mysqli_connect_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  $con = False;
+}
+            
+mysql_select_db('gest');
+      
+      
 if($_POST['request']=="offerta") {
 
-$table = "of_offerte";
-$col = array('aperta_da', 'cliente', 'operatore', 'tipo_operatore');
-$var1 = $_POST['apertada'];
-$var2 = $_POST['cliente'];
-$var3 = $_POST['operatore'];
-$var4 = $_POST['tipo'];
 
-}else {
-$table = "an_anagrafiche";
-$col = array('nome', 'mobile', 'email', 'tipo_anagrafica');
-$var1 = $_POST['nome'];
-$var2 = $_POST['cell'];
-$var3 = $_POST['email'];
-$var4 = $_POST['tipo'];
+// Insert all the values of $_POST into the database table `of_offerte`, except
+// for $_POST['request'].  Remember, field names are determined by array keys!
+$result = mysql_insert_array("of_offerte", $_POST, "request");
 
 }
+else {
+$result = mysql_insert_array("an_anagrafiche", $_POST, "request");
+}
 
-
-
-$colnames = "`".implode("`, `", $col)."`";
-
- if(($var1 != null) && ($var2 !=null) && ($var3 != null)){
-  $res2 = $mysqli->query("INSERT INTO $table ($colnames) VALUES('$var1','$var2','$var3','$var4')");
-  if($res2){
-    echo "Anagrafica aggiunta!";
-  } else{
-    echo "Errore Database";
-  }
-}else{
-    echo "Errore nell'inserimento dati";
-  }
+// Results
+if( $result['mysql_error'] ) {
+    echo "Query Failed: " . $result['mysql_error'];
+} else {
+    echo "Elemento Aggiutno! <br />";
+}
+// Close database!
 
 ?>

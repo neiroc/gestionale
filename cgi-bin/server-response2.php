@@ -1,4 +1,8 @@
 <?php
+
+//AUTOCOMPLETE FROM DB
+
+
 // connect to database 
 //require('db_aux.php');
 
