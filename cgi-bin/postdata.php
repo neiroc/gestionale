@@ -25,8 +25,13 @@ if($_POST['request']=="offerta") {
 $result = mysql_insert_array("of_offerte", $_POST, "request");
 
 }
-else {
+else if($_POST['request']=="anagrafe") {
 $result = mysql_insert_array("an_anagrafiche", $_POST, "request");
+}
+else{
+ 
+$result = mysql_insert_array("co_commesse", $_POST, "request");
+
 }
 
 // Results

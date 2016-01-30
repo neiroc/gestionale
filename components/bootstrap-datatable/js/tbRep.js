@@ -1,35 +1,34 @@
 $(document).ready(function() {
 	
+		
 		/* Inizializza Tabella */
-				
-	   var table =  $('#tb_off').DataTable({
+		/*		
+	   var table =  $('#tb_comm').DataTable({
 	    "aProcessing": true, 
 	    "aServerSide": true,   	     
 	    "ajax": {
 	    	"url":'cgi-bin/server-response.php',
 	    	"type": "GET",
 	    	"data": { //All data to Get From DB
-	    		"req" : "offerta",
-	    	 "table" : "of_offerte",
-            "var1": "id_offerta", 
+	    		"req" : "commesse",
+	    	   "table" : "co_commesse",
+            "var1": "id_commessa", 
 	    		"var2": "cliente",
-	    		"var3": "costo_proposto",
-	    		"var4": "cliente_strategico",
-	    		"var5": "aperta_da",
-	    		"var6": "data_apertura",
-	    		"var7": "operatore",
-	    		"var8": "tipo_operatore",
-	    		"var9": "tipo_attivita",
-	    	  "var10": "costo_operatore",
-	    	  "var11": "tariffa",
-	    	  "var12": "volume_ore",
-	    	  "var13": "rischio",
-	    	  "var14": "sede",
-	    	  "var15": "euro_ora",
-	    	  "var16": "euro_giorno",
-	    	  "var17": "euro_km",
-	    	  "var18": "euro_tl",
-	    	  "var19": "nota"    		
+	    		"var3": "cliente_strategico",
+	    		"var4": "aperta_da",
+	    		"var5": "data_apertura",
+	    		"var6": "operatore",
+	    		"var7": "tipo_operatore",
+	    		"var8": "tipo_attivita",
+	    		"var9": "costo_operatore",
+	    		"var10": "tariffa",
+	    		"var11": "rischio",
+	    		"var12": "sede",
+	    		"var13": "euro_ora",
+	    		"var14": "euro_giorno",
+	    		"var15": "euro_km",
+	    		"var16": "euro_tl",
+	    		"var17": "nota"    		
 	    	},	    
 	    },
 	    "columns": [
@@ -44,23 +43,12 @@ $(document).ready(function() {
             { "data": "operatore" },     
             { "data": "tipo_attivita" },
             { "data": "sede" }
-            
            
                                     
         ],
- 		
-      "createdRow": function(row, data, dataIndex ) {
-           	        var v = valuta(data);
-						    if (v == "Procedere con l'offerta" )
-						      $(row).addClass( 'important' );
-						    else if (v == "Offerta da discutere con direzione" )
-						      $(row).addClass( 'warning' );
-						    else 
-						      $(row).addClass( 'danger' ); 
-						  },
         "order": [[1, 'asc']]
-	     } );
-	     	      
+	     } );*/
+	      
     
 	    /* Seleziona Righe */
 		 $('#tb_off tbody').on( 'click', 'tr', function () {
@@ -86,12 +74,14 @@ $(document).ready(function() {
 	        }
 	        else {
 	            // Open this row
-	            row.child( format(row.data())).show();
+	            row.child( format(row.data()) ).show();
 	            tr.addClass('shown');
 	        }
 	    } );
 	    
 
+
+	    
 	    
 	    	$('#myModal').on('shown.bs.modal', function () {	    		    		
 		    	 $('.select2').select2({
@@ -262,6 +252,12 @@ $(document).ready(function() {
 	    var rowData = table.rows(rows).data();
 	    $.each($(rowData),function(key,value){
 	        dataArr.push(value["id_offerta"]); 
+	        dataArr.push(value["id_offerta"]); 
+	        dataArr.push(value["id_offerta"]); 
+	        dataArr.push(value["id_offerta"]); 
+	        dataArr.push(value["id_offerta"]); 
+	        dataArr.push(value["id_offerta"]); 
+	        dataArr.push(value["id_offerta"]); 
 	    });
 	    
 	    console.log(dataArr);
@@ -291,139 +287,21 @@ $(document).ready(function() {
 
 
 
-   
-function valuta( d ) {
-	
-   
-   var valutazione;
-   var rischio;
-   var classe_rischio;
-   var costo_industriale = d.costo_operatore*1.15;
-   var marg_lordo = ((d.costo_proposto - d.costo_operatore)/d.costo_proposto)*100;
-   var marg_ind = ((d.costo_proposto - costo_industriale)/d.costo_proposto)*100;
-     
-     
-    //Valutazione Del Rischio. Inserire in un'altra funzione 
-	
-	//Assegna Classe di Rischio    
-    if (d.volume_ore=="<200") 
-    	classe_rischio="A";
-    else if (d.volume_ore=="[200,400]") 
-    	classe_rischio="B";			
-    else 
-      classe_rischio="C";
-      
-   //Assegna Rischio Aziendale 
-    if(marg_ind<0)
-      rischio="ALTO";
-   
-    else if(marg_ind <= 20 && classe_rischio=="A") 
-	   rischio="MEDIO";
-	 else if (marg_ind <= 20) 
-		rischio="ALTO";
-	 else if (marg_ind >= 20 && marg_ind <=25 && classe_rischio=="A") 
-	   rischio="BASSO";
-	 else if (marg_ind >= 20 && marg_ind <=25 || classe_rischio=="B" || classe_rischio=="B" ) 
-	   rischio="MEDIO";
-	 else 
-	   rischio="BASSO";
-	   
-	//Valutazione offerta  	 
-    if (rischio=="ALTO" && d.cliente_strategico=="SI") 
-    	return valutazione="Offerta da discutere con direzione";
-    else if (rischio=="ALTO" && d.cliente_strategico=="NO")
-      return valutazione="Non approvata";
-    else if (rischio=="MEDIO" && d.cliente_strategico=="NO")
-      return valutazione="Offerta da discutere con direzione";
-    else if (rischio=="MEDIO" && d.cliente_strategico=="NO")
-      return valutazione="Offerta da discutere con direzione";
-    else 
-      return valutazione="Procedere con l'offerta"; 
-
-
-
-
-}
-
-
 /* Formatting function for row details - modify as you need */
 function format ( d ) {
-	
-	   var valutazione;
-   var rischio;
-   var classe_rischio;
-   var costo_industriale = d.costo_operatore*1.15;
-   var marg_lordo = ((d.costo_proposto - d.costo_operatore)/d.costo_proposto)*100;
-   var marg_ind = ((d.costo_proposto - costo_industriale)/d.costo_proposto)*100;
-     
-     
-    //Valutazione Del Rischio. Inserire in un'altra funzione 
-	
-	//Assegna Classe di Rischio    
-    if (d.volume_ore=="<200") 
-    	classe_rischio="A";
-    else if (d.volume_ore=="[200,400]") 
-    	classe_rischio="B";			
-    else 
-      classe_rischio="C";
-      
-   //Assegna Rischio Aziendale 
-    if(marg_ind<0)
-      rischio="ALTO";
-   
-    else if(marg_ind <= 20 && classe_rischio=="A" ) 
-	   rischio="MEDIO";
-	 else if (marg_ind <= 20) 
-		rischio="ALTO";
-	 else if (marg_ind >= 20 && marg_ind <=25 && classe_rischio=="A") 
-	   rischio="BASSO";
-	 else if (marg_ind >= 20 && marg_ind <=25 || classe_rischio=="B" || classe_rischio=="B" ) 
-	   rischio="MEDIO";
-	 else 
-	   rischio="BASSO";
-	   
-	//Valutazione offerta  	 
-    if (rischio=="ALTO" && d.cliente_strategico=="SI") 
-    	valutazione="Offerta da discutere con direzione";
-    else if (rischio=="ALTO" && d.cliente_strategico=="NO")
-       valutazione="Non approvata";
-    else if (rischio=="MEDIO" && d.cliente_strategico=="NO")
-       valutazione="Offerta da discutere con direzione";
-    else if (rischio=="MEDIO" && d.cliente_strategico=="NO")
-       valutazione="Offerta da discutere con direzione";
-    else 
-       valutazione="Procedere con l'offerta"; 
-
-      
-
     // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; background-color:white;">'+
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
         '<tr>'+
             '<td>Data Apertura:</td>'+
             '<td>'+d.data_apertura+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Cliente</td>'+
-            '<td>Strategico: '+d.cliente_strategico+'</td>'+
-            '<td>Proposta: '+d.costo_proposto+'</td>'+
+            '<td>Cliente Strategico:</td>'+
+            '<td>'+d.cliente_strategico+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Operatore</td>'+
-            '<td>Tipo: '+d.tipo_operatore+'</td>'+
-            '<td>Costo: '+d.costo_operatore+'</td>'+
-				'<td>Costo Ind.: '+costo_industriale+'</td>'+
-				'<td>Margine Lordo: '+marg_lordo+'%</td>'+
-				'<td>Margine Ind.: '+marg_ind+'%</td>'+
-            '<td>€/O: '+d.euro_ora+'</td>'+
-            '<td>€/G: '+d.euro_giorno+'</td>'+
-            '<td>€/Km: '+d.euro_km+'</td>'+
-            '<td>€/TL: '+d.euro_tl+'</td>'+
-        '</tr>'+
-         '<tr>'+
-            '<td>Rischio</td>'+
-            '<td>Volume ore: '+d.volume_ore+'</td>'+
-            '<td>Classe Rischio: '+classe_rischio+'</td>'+
-            '<td>Valutazione:'+valutazione+' </td>'+
+            '<td>Tipo Operatore:</td>'+
+            '<td>'+d.tipo_operatore+' Costo: '+d.costo_operatore+'<br> €/O: '+d.euro_ora+'<br>€/G: '+d.euro_giorno+'<br>€/Km: '+d.euro_km+'<br>€/TL: '+d.euro_tl+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>NOTA:</td>'+

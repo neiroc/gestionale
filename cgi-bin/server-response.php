@@ -21,7 +21,7 @@
 
 	if($_GET['req'] == "offerta"){
 	$aColumns = array($_GET['var1'],$_GET['var2'],$_GET['var3'],$_GET['var4'],$_GET['var5'],$_GET['var6'],$_GET['var7'],$_GET['var8'], 
-                     $_GET['var9'],$_GET['var10'],$_GET['var11'],$_GET['var12'],$_GET['var13'],$_GET['var14'],$_GET['var15'],$_GET['var16'],$_GET['var17']);
+                     $_GET['var9'],$_GET['var10'],$_GET['var11'],$_GET['var12'],$_GET['var13'],$_GET['var14'],$_GET['var15'],$_GET['var16'],$_GET['var17'],$_GET['var18'],$_GET['var19']);
 	}
 	else {
 		  $aColumns = array($_GET['var1'],$_GET['var2'],$_GET['var3'],$_GET['var4'],$_GET['var5'],$_GET['var6']);

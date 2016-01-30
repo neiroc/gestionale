@@ -16,9 +16,7 @@ table.dataTable {
    
 }
 
-/* Alternated rows color */
-table.dataTable tr.odd { background-color: #E2E4FF; }
-table.dataTable tr.even { background-color: white; }
+
 
 /* Additional CSS for extraInfo, events*/
 
@@ -91,7 +89,7 @@ table.dataTable tbody tr {
   background-color: #ffffff;
 }
 table.dataTable tbody tr.selected {
-  background-color: #B0BED9;
+  background-color: #B0BED9 !important;
 }
 table.dataTable tbody th,
 table.dataTable tbody td {
