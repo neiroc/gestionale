@@ -9,7 +9,8 @@ $(document).ready(function() {
 	    "ajax": {
 	    	"url":'cgi-bin/server-response.php',
 	    	"data": {
-	    		"table": "an_anagrafiche",
+	    		"req" : "anagrafica",
+	    	  "table": "an_anagrafiche",
 	    		"var1": "id_anagrafica", 
 	    		"var2": "nome",
 	    		"var3": "mobile",
@@ -208,10 +209,6 @@ function format ( d ) {
         '<tr>'+
             '<td>Registrato il:</td>'+
             '<td>'+d.start_date+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extension number:</td>'+
-            '<td>'+d.nome+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Extra info:</td>'+

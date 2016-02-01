@@ -38,7 +38,7 @@ $result = mysql_insert_array("co_commesse", $_POST, "request");
 if( $result['mysql_error'] ) {
     echo "Query Failed: " . $result['mysql_error'];
 } else {
-    echo "Elemento Aggiutno! <br />";
+    echo "Elemento Aggiunto !";
 }
 // Close database!
 

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
@@ -49,42 +50,142 @@
 			  </div>
 			  
 			  <div class="modal-body">
-			      <div class="form-group">
-						<label for="nome">Aperta da*</label>
-						<select id="apertada"class="form-control select2" style="width:100%;" tabindex="2">						         
-						</select>
-			      </div>
-			      
-			       <div class="form-group">
-					  <label for="sell">Cliente:</label>					  
-						    <select id="cliente" class="form-control select2" style="width:100%;" tabindex="2">						         
-						    </select>
-
-					 </div>
-			      
-			      <div class="form-group">
-						<label for="email">Operatore</label>
-						<select id="operatore" class="form-control select2" style="width:100%;" tabindex="2">						         
-						</select>
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="sede">Sede</label>
-						<input type="text" class="form-control" id="sede">
-			      </div>
+			  
+			      <div class="form-group col-md-4">
+			      	      
+			    		<label for="nome">Aperta da*</label>
+						<select id="apertada"class="form-control select2"  tabindex="2"></select>
 			     
+			      </div>
 			      
-		
-			       <div class="form-group">
+			     
+				  <div class="form-group col-md-4">
+				  
+					   <label for="sell">Cliente</label>					  
+						<select id="cliente" class="form-control select2"  tabindex="2"></select>
+			      
+			      </div>
+			      
+			       <div class="form-group col-md-2">
+					    <label for="sel1">Strategico</label>
+					    <select class="form-control" id="strategico">
+					    <option>SI</option>
+					    <option>NO</option>
+					    </select>
+			      
+			      </div>
+			      
+			      <div class="form-group col-md-2">
+				  
+					   <label for="sell">Proposta in €</label>
+					   <div class="input-group spinner">
+					    <input type="text" id="proposta" class="form-control" value="10">
+					    <div class="input-group-btn-vertical">
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+					    </div>
+					  </div>					  	
+						
+			      
+			      </div>
+					
+			      <!-- Dati Operatore -->
+			      <div class="form-group col-md-6">
+						<label for="email">Operatore</label>
+						<select id="operatore" class="form-control select2"  tabindex="2">						         
+						</select>
+			      </div>
+			      
+			    <div class="form-group col-md-6">
+						<label for="sel1">Tipo</label>
+					    <select class="form-control" id="tipo">
+					    <option>Interno</option>
+					    <option>Esterno</option>
+					    </select>
+			      </div>
+			      
+			       <div class="form-group col-md-2">
+					   <label for="sell">€/ora</label>
+					   <div class="input-group spinner">
+					    <input type="text" id="euroOra" class="form-control" value="10">
+					    <div class="input-group-btn-vertical">
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+					    </div>
+					  </div>					  	
+			      </div>
+			      
+			       <div class="form-group col-md-2">
+				  
+					   <label for="sell">€/giorno</label>
+					   <div class="input-group spinner">
+					    <input type="text" id="euroGiorno" class="form-control" value="10">
+					    <div class="input-group-btn-vertical">
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+					    </div>
+					  </div>					  	
+			      </div>
+
+
+			       <div class="form-group col-md-2">
+					   <label for="sell">€/km</label>
+					   <div class="input-group spinner">
+					    <input type="text" id="euroKm" class="form-control" value="10">
+					    <div class="input-group-btn-vertical">
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+					    </div>
+					  </div>					  	
+			      </div>
+			      
+			      <div class="form-group col-md-2">
+					   <label for="sell">€/TL</label>
+					   <div class="input-group spinner">
+					    <input type="text" id="euroTl" class="form-control" value="10">
+					    <div class="input-group-btn-vertical">
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+					    </div>
+					  </div>					  	
+			      </div>
+			      
+			         <div class="form-group col-md-4">
+						<label for="sel1">Volume Ore</label>
+					    <select class="form-control" id="volumeOre">
+					    <option><200</option>
+					    <option>[200,400]</option>
+					    <option>>400</option>
+					    </select>
+			      </div>
+			      
+			      
+         
+			         <div class="form-group col-md-6">
 					  <label for="sel1">Tipo Attività:</label>
-					  <select class="form-control" id="tipo">
+					  <select class="form-control" id="tipoAtt">
 					    <option>Controllo Qualità</option>
 					    <option>Consulenza</option>
 					    <option>Formazione</option>
 					    <option>CSL2</option>					  					    
 					  </select>
 					</div>
-		   
+			     	
+						
+			      
+			      
+			      <div class="form-group col-md-6">
+						<label for="sede">Sede</label>
+						<input type="text" class="form-control" id="sede">
+			      </div>
+			      
+			       <div class="form-group">
+						<label for="nome">NOTA</label>
+						<input type="textarea" class="form-control" id="nota">
+			      </div>
+			
+			
+			
 			 </div>
 			  
 			  
@@ -97,14 +198,14 @@
       </div>
       </div>
       
-      <!-- Modal editData-->
-      <div class="modal fade" id="edit_off" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <!-- editModal  Offerte-->
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
 			<div class="modal-content">
 			<form>
 			  <div class="modal-header">
 			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    <h4 class="modal-title" id="myModalLabel">Modifica Anagrafica</h4>
+			    <h4 class="modal-title" id="myModalLabel">Modifica Offerta</h4>
 			  </div>
 			  
 			  <div class="modal-body">
@@ -133,6 +234,11 @@
 					    <option>CSL2</option>					  					    
 					  </select>
 					</div>
+					
+					<div class="form-group">
+						<label for="email">Operatore</label>
+						<input type="tel" class="form-control" id="email2">
+			      </div>
 		   
 			
 			

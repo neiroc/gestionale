@@ -48,8 +48,7 @@ $(document).ready(function() {
            
                                     
         ],
- 		
-      "createdRow": function(row, data, dataIndex ) {
+ 		  "createdRow": function(row, data, dataIndex ) {
            	        var v = valuta(data);
 						    if (v == "Procedere con l'offerta" )
 						      $(row).addClass( 'important' );
@@ -95,6 +94,9 @@ $(document).ready(function() {
 	    
 	    	$('#myModal').on('shown.bs.modal', function () {	    		    		
 		    	 $('.select2').select2({
+		    	 	allowClear: true,	
+		    	 	multiple: true, 
+		    	 	maximumSelectionSize: 1, 	
 		    	 	 ajax: {
 				        url: "cgi-bin/server-response2.php",
 				        dataType: 'json',
@@ -123,14 +125,32 @@ $(document).ready(function() {
 	     	    
 	   /* Aggiungi Elemento */ 
 		$('#save').click(function(){
+			
+		  /* Get Data From Modal*/
+		  var request = "offerta";
+		  
 		  var apertada = $('#apertada').val();
 		  var cliente = $('#cliente').val();
+		  var strategico = $('#strategico').val();
+		  var proposta = $('#proposta').val();
+		  
 		  var operatore = $('#operatore').val();
 		  var tipo = $('#tipo').val();
+		  
+		  var euroOra = $('#euroOra').val();
+		  var euroGiorno = $('#euroGiorno').val();
+		  var euroKm = $('#euroKm').val();
+		  var euroTl = $('#euroTl').val();
+		  var volOre = $('#volumeOre').val();
+		  
+		  var tipoAtt = $('#tipoAtt').val();
 		  var sede = $('#sede').val();
-		  var request = "offerta";
+		  
+		  var nota = $('#nota').val();
 		 
-		  var datas = "aperta_da="+apertada+"&cliente="+cliente+"&operatore="+operatore+"&tipo_attivita="+tipo+"&request="+request+"&sede="+sede;
+		 
+		  var datas = "request="+request+"&aperta_da="+apertada+"&cliente="+cliente+"&cliente_strategico="+strategico+"&costo_proposto="+proposta+"&operatore="+operatore+"&tipo_operatore="+tipo+
+		  "&costo_operatore="+euroOra+"&euro_giorno="+euroGiorno+"&euro_km="+euroKm+"&euro_tl="+euroTl+"&volume_ore="+volOre+"&tipo_attivita="+tipoAtt+"&sede="+sede+"&nota="+nota;
 		  
 		  $.ajax({
 			type: "POST",
@@ -168,13 +188,16 @@ $(document).ready(function() {
 			 var dataArr = [];
 		    var rows = $('tr.selected');
 		    var rowData = table.rows(rows).data();
+		    //console.log(rowData[0]);
+		    //console.log(rowData["cliente"]);
 		    
 		    $.each($(rowData),function(key,value){
-		        dataArr.push(value["nome"]);
-		        dataArr.push(value["mobile"]); 
-		        dataArr.push(value["email"]);
-		        dataArr.push(value["tipo_anagrafica"]);
-		        dataArr.push(value["id_anagrafica"]);
+		    	  console.log(dataArr["aperta_da"]);
+		        dataArr.push(value["aperta_da"]);
+		        dataArr.push(value["cliente"]); 
+		        dataArr.push(value["operatore"]);
+		        dataArr.push(value["sede"]);
+		        dataArr.push(value["costo"]);
 		    });
 		    
 		 $("#nome2").val(dataArr[0]);
@@ -221,6 +244,7 @@ $(document).ready(function() {
 	   
     /* Rimuovi elemento selezionat */
 	 $('#rmData').click( function () {
+	 	//???BootstrapDialog.confirm('Hi Apple, are you sure?');
 
 	    var dataArr = [];
 	    var rows = $('tr.selected');
@@ -261,11 +285,33 @@ $(document).ready(function() {
 	    var rows = $('tr.selected');
 	    var rowData = table.rows(rows).data();
 	    $.each($(rowData),function(key,value){
-	        dataArr.push(value["id_offerta"]); 
+	        dataArr.push(value["id_offerta"]);
+	        
+	        dataArr.push(value["aperta_da"]);
+	        dataArr.push(value["data_apertura"]);
+	        dataArr.push(value["cliente"]); 
+	        dataArr.push(value["cliente_strategico"]); 
+	        dataArr.push(value["costo_proposto"]); 
+	        dataArr.push(value["operatore"]);
+	        dataArr.push(value["tipo_operatore"]);
+	        dataArr.push(value["tipo_attivita"]);
+	        dataArr.push(value["costo_operatore"]);
+	        dataArr.push(value["tariffa"]);
+	        dataArr.push(value["volume_ore"]);
+	       
+	        dataArr.push(value["sede"]);
+	        dataArr.push(value["euro_ora"]); 
+	        dataArr.push(value["euro_giorno"]); 
+	        dataArr.push(value["euro_km"]); 
+	        dataArr.push(value["euro_tl"]); 
+	        dataArr.push(value["nota"]); 
 	    });
 	    
-	    console.log(dataArr);
-	    var datas = "request="+request+"id_offerta="+dataArr[0];
+	    console.log(dataArr[1]);
+	    var datas = "request="+request+"&id="+dataArr[0]+"&aperta_da="+dataArr[1]+"&cliente="+dataArr[3]+"&cliente_strategico="+dataArr[4]+"&costo_proposto="+dataArr[5]+
+	    "&operatore="+dataArr[6]+"&tipo_operatore="+dataArr[7]+"&tipo_attivita="+dataArr[8]+"&costo_operatore="+dataArr[9]+"&tariffa="+dataArr[10]+"&volume_ore="+dataArr[11]+"&sede="+dataArr[12]+"&euro_ora="+dataArr[13]+"&euro_giorno="+dataArr[14]+
+	    "&euro_km="+dataArr[15]+"&euro_tl="+dataArr[16]+"&nota="+dataArr[17];
+	    
 		$.ajax({
 			type: "POST",
 			url: "cgi-bin/postdata.php",
@@ -405,16 +451,16 @@ function format ( d ) {
         '<tr>'+
             '<td>Cliente</td>'+
             '<td>Strategico: '+d.cliente_strategico+'</td>'+
-            '<td>Proposta: '+d.costo_proposto+'</td>'+
+            '<td>Proposta: '+d.costo_proposto+' €/o</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Operatore</td>'+
             '<td>Tipo: '+d.tipo_operatore+'</td>'+
-            '<td>Costo: '+d.costo_operatore+'</td>'+
-				'<td>Costo Ind.: '+costo_industriale+'</td>'+
+            '<td>Costo: '+d.costo_operatore+' €/o</td>'+
+				'<td>Costo Ind.: '+costo_industriale+' €/o</td>'+
 				'<td>Margine Lordo: '+marg_lordo+'%</td>'+
 				'<td>Margine Ind.: '+marg_ind+'%</td>'+
-            '<td>€/O: '+d.euro_ora+'</td>'+
+            /*'<td>€/O: '+d.euro_ora+'</td>'+*/
             '<td>€/G: '+d.euro_giorno+'</td>'+
             '<td>€/Km: '+d.euro_km+'</td>'+
             '<td>€/TL: '+d.euro_tl+'</td>'+
@@ -423,7 +469,7 @@ function format ( d ) {
             '<td>Rischio</td>'+
             '<td>Volume ore: '+d.volume_ore+'</td>'+
             '<td>Classe Rischio: '+classe_rischio+'</td>'+
-            '<td>Valutazione:'+valutazione+' </td>'+
+            '<td>Valutazione: <b>'+valutazione+'</b> </td>'+
         '</tr>'+
         '<tr>'+
             '<td>NOTA:</td>'+
@@ -431,6 +477,30 @@ function format ( d ) {
         '</tr>'+
     '</table>';
 }
+
+/*
+* SPINNER
+*/
+(function ($) {
+	
+	$('.spinner .btn:first-of-type').on('click', function() {
+    var spinner = $(this).parent().parent().find('input');
+    spinner.val(parseInt(spinner.val(), 10) + 1);
+});
+
+$('.spinner .btn:last-of-type').on('click', function() {
+    var spinner = $(this).parent().parent().find('input');
+    spinner.val(parseInt(spinner.val(), 10) - 1);
+});
+	
+	/*
+  $('.spinner .btn:first-of-type').on('click', function() {
+    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+  });
+  $('.spinner .btn:last-of-type').on('click', function() {
+    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+  });*/
+})(jQuery);
 
 
 

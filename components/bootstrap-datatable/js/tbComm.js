@@ -2,7 +2,6 @@ $(document).ready(function() {
 	
 		
 		/* Inizializza Tabella */
-		/*		
 	   var table =  $('#tb_comm').DataTable({
 	    "aProcessing": true, 
 	    "aServerSide": true,   	     
@@ -12,23 +11,25 @@ $(document).ready(function() {
 	    	"data": { //All data to Get From DB
 	    		"req" : "commesse",
 	    	   "table" : "co_commesse",
-            "var1": "id_commessa", 
+            "var1": "id", 
 	    		"var2": "cliente",
-	    		"var3": "cliente_strategico",
-	    		"var4": "aperta_da",
-	    		"var5": "data_apertura",
-	    		"var6": "operatore",
-	    		"var7": "tipo_operatore",
-	    		"var8": "tipo_attivita",
-	    		"var9": "costo_operatore",
-	    		"var10": "tariffa",
-	    		"var11": "rischio",
-	    		"var12": "sede",
-	    		"var13": "euro_ora",
-	    		"var14": "euro_giorno",
-	    		"var15": "euro_km",
-	    		"var16": "euro_tl",
-	    		"var17": "nota"    		
+	    		"var3": "costo_proposto",
+	    		"var4": "cliente_strategico",
+	    		"var5": "aperta_da",
+	    		"var6": "data_apertura",
+	    		"var7": "operatore",
+	    		"var8": "tipo_operatore",
+	    		"var9": "tipo_attivita",
+	    	  "var10": "costo_operatore",
+	    	  "var11": "tariffa",
+	    	  "var12": "volume_ore",
+	    	  
+	    	  "var14": "sede",
+	    	  "var15": "euro_ora",
+	    	  "var16": "euro_giorno",
+	    	  "var17": "euro_km",
+	    	  "var18": "euro_tl",
+	    	  "var19": "nota",    		   		
 	    	},	    
 	    },
 	    "columns": [
@@ -47,11 +48,11 @@ $(document).ready(function() {
                                     
         ],
         "order": [[1, 'asc']]
-	     } );*/
+	     } );
 	      
     
 	    /* Seleziona Righe */
-		 $('#tb_off tbody').on( 'click', 'tr', function () {
+		 $('#tb_comm tbody').on( 'click', 'tr', function () {
 	        if ( $(this).hasClass('selected') ) {
 	            $(this).removeClass('selected');
 	        }
@@ -63,7 +64,7 @@ $(document).ready(function() {
 	    
 	    
 		 // Add event listener for opening and closing details
-	    $('#tb_off tbody').on('click', 'td.details-control', function () {
+	    $('#tb_comm tbody').on('click', 'td.details-control', function () {
 	        var tr = $(this).closest('tr');
 	        var row = table.row( tr );
 	 
@@ -242,47 +243,8 @@ $(document).ready(function() {
 	    } );
 	    
 	    
-	    	   
-    /* Accetta Offerta della riga selezionata */
-	 $('#accept').click( function () {
 
-		 var request = "accetta" 
-	    var dataArr = [];
-	    var rows = $('tr.selected');
-	    var rowData = table.rows(rows).data();
-	    $.each($(rowData),function(key,value){
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	    });
-	    
-	    console.log(dataArr);
-	    var datas = "request="+request+"id_offerta="+dataArr[0];
-		$.ajax({
-			type: "POST",
-			url: "cgi-bin/postdata.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			alert( msg );
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });
-		  
-
-	    } );
-
-}); /*Fine Document Ready*/
-
+});
 
 
 

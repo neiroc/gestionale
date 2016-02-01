@@ -56,7 +56,7 @@ $(document).ready(function(){
     $("#reports").click(function() {
 	 	
         $.ajax({
-            url : "./commesse.html",
+            url : "./reports.html",
             dataType: "html",
             success : function (data) {
                 $("#cont").html(data);
