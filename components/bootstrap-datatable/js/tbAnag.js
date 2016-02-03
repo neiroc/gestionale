@@ -17,6 +17,15 @@ $(document).ready(function() {
 	    		"var4": "email",
 	    		"var5": "start_date",
 	    		"var6": "tipo_anagrafica",
+	    		"var7": "tel_fisso",
+	    		"var8": "sede_legale",
+	    		"var9": "piva",
+	    		"var10": "ind_fatt",
+	    		"var11": "ref_amm",
+	    		"var12": "ref_comm",
+	    		"var13": "tel_refcomm",
+	    		"var14": "email_refcomm",
+
 	    	},	    
 	    },
 	    "columns": [
@@ -67,15 +76,24 @@ $(document).ready(function() {
 	    
 	   /* Aggiungi Elemento */ 
 		$('#save').click(function(){
+		  var request = "anagrafe";
 		  var nome = $('#nome').val();
 		  var cell = $('#cell').val();
+		  var tel = $('#tel').val();
 		  var email = $('#email').val();
 		  var tipo = $('#tipo').val();
-		  var request = "anagrafe";
-
-		
+		  
+		  var sedel = $('#sede_legale').val();
+		  var piva = $('#piva').val();
+		  var ind_fatt = $('#ind_fatt').val();
+		  var ref_amm = $('#ref_amm').val();
+		  var ref_comm = $('#ref_comm').val();
+		  var tel_ref_comm = $('#tel_refcomm').val();
+		  var email_ref_comm = $('#email_refcomm').val();
+		  
 		  /* Le variabile postate devono avere lo stesso nome delle colonne della tabella del DB */
-		  var datas = "nome="+nome+"&mobile="+cell+"&email="+email+"&tipo_anagrafica="+tipo+"&request="+request;
+		  var datas = "request="+request+"&nome="+nome+"&mobile="+cell+"&tel_fisso="+tel+"&email="+email+"&tipo_anagrafica="+tipo+
+		  "&sede_legale="+sedel+"&piva="+piva+"&ind_fatt="+ind_fatt+"&ref_amm="+ref_amm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm;
 		  
 		  $.ajax({
 			type: "POST",
@@ -86,14 +104,14 @@ $(document).ready(function() {
 			
 			alert( msg );
 			
-	
+	     
 		  table.row.add( {
         "nome":       nome,
         "mobile":   cell,
         "email":     email,
         "tipo_anagrafica": tipo
        
-    		} ).draw();
+    		}).draw();
 
 			  }).fail(function() {
 			alert( "error" );
@@ -199,11 +217,45 @@ $(document).ready(function() {
 }); /*Fine Document Ready*/
 
 
+/*Add Dinamically Input Fields when an option is selected*/
+/*
+$('#tipo').change(function(){
+
+    if( $(this).val() == '2'){
+        $('.modal-body').append();
+    }else{
+        //$('#myInput').remove();
+    }
+});*/
+
+function disable(select_val,input_id) {
+                var e = document.getElementById(select_val);
+                var x = document.getElementsByName(input_id);
+                var i;
+                
+                var strUser = e.options[e.selectedIndex].value;
+                if(strUser === "Cliente"){
+                	  //document.getElementById(input_id).disabled = false;
+                    
+							for (i = 0; i < x.length; i++) {
+							    x[i].disabled = false; 
+							   }            
+                }
+                else{
+                  for (i = 0; i < x.length; i++) {
+							    x[i].disabled = true; 
+							   }  
+                }
+}
+
+
 
 
 
 /* Formatting function for row details - modify as you need */
 function format ( d ) {
+	console.log(d);
+	if (d.tipo_anagrafica == "Cliente") {
     // `d` is the original data object for the row
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
         '<tr>'+
@@ -211,10 +263,36 @@ function format ( d ) {
             '<td>'+d.start_date+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>And any further details here (images etc)...</td>'+
+            '<td>Tel. Fisso: '+d.tel_fisso+'</td>'+          
+        '</tr>'+
+        '<tr>'+
+            '<td>Sede: '+d.sede_legale+'</td>'+
+            '<td>Indirizzo Fatt. '+d.ind_fatt+ '</td>'+
+            '<td>P.IVA ' +d.piva+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Ref. Amm.: '+d.ref_amm+'</td>'+
+            '<td>Tel. '+d.ref_amm+'</td>'+
+            '<td>Email  ' +d.email_ref_comm+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Ref. Comm.: '+d.ref_comm+'</td>'+
         '</tr>'+
     '</table>';
+ }
+ else {
+ 	return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+            '<td>Registrato il:</td>'+
+            '<td>'+d.start_date+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Extra info:</td>'+
+            '<td>'+d.tipo_anagrafica+'</td>'+
+        '</tr>'+
+    '</table>';
+ 
+ }
 }
 
 

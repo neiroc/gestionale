@@ -17,7 +17,7 @@ $(document).ready(function() {
 	    		"var4": "cliente_strategico",
 	    		"var5": "aperta_da",
 	    		"var6": "data_apertura",
-	    		"var7": "operatore",
+	    		
 	    		"var8": "tipo_operatore",
 	    		"var9": "tipo_attivita",
 	    	  "var10": "costo_operatore",
@@ -25,8 +25,8 @@ $(document).ready(function() {
 	    	  "var12": "volume_ore",
 	    	  "var13": "rischio",
 	    	  "var14": "sede",
-	    	  "var15": "euro_ora",
-	    	  "var16": "euro_giorno",
+	    	  "var15": "euro_pezzo",
+	    	  "var16": "pagamento",
 	    	  "var17": "euro_km",
 	    	  "var18": "euro_tl",
 	    	  "var19": "nota"    		
@@ -39,9 +39,9 @@ $(document).ready(function() {
                 "defaultContent": '',
                 "orderable":      false
             },
+            { "data": "data_apertura" }, 
             { "data": "aperta_da" },
             { "data": "cliente" },
-            { "data": "operatore" },     
             { "data": "tipo_attivita" },
             { "data": "sede" }
             
@@ -126,7 +126,7 @@ $(document).ready(function() {
 	   /* Aggiungi Elemento */ 
 		$('#save').click(function(){
 			
-		  /* Get Data From Modal*/
+		  /* Get Data From Modal */
 		  var request = "offerta";
 		  
 		  var apertada = $('#apertada').val();
@@ -134,23 +134,24 @@ $(document).ready(function() {
 		  var strategico = $('#strategico').val();
 		  var proposta = $('#proposta').val();
 		  
-		  var operatore = $('#operatore').val();
+		 
 		  var tipo = $('#tipo').val();
 		  
 		  var euroOra = $('#euroOra').val();
-		  var euroGiorno = $('#euroGiorno').val();
+		  var euroPasto = $('#euroPg').val();
 		  var euroKm = $('#euroKm').val();
 		  var euroTl = $('#euroTl').val();
 		  var volOre = $('#volumeOre').val();
 		  
 		  var tipoAtt = $('#tipoAtt').val();
+		  var tipoPag = $('#tipoPag').val();
 		  var sede = $('#sede').val();
 		  
 		  var nota = $('#nota').val();
 		 
 		 
-		  var datas = "request="+request+"&aperta_da="+apertada+"&cliente="+cliente+"&cliente_strategico="+strategico+"&costo_proposto="+proposta+"&operatore="+operatore+"&tipo_operatore="+tipo+
-		  "&costo_operatore="+euroOra+"&euro_giorno="+euroGiorno+"&euro_km="+euroKm+"&euro_tl="+euroTl+"&volume_ore="+volOre+"&tipo_attivita="+tipoAtt+"&sede="+sede+"&nota="+nota;
+		  var datas = "request="+request+"&aperta_da="+apertada+"&cliente="+cliente+"&cliente_strategico="+strategico+"&costo_proposto="+proposta+"&tipo_operatore="+tipo+
+		  "&costo_operatore="+euroOra+"&euro_pastog="+euroPasto+"&euro_km="+euroKm+"&euro_tl="+euroTl+"&volume_ore="+volOre+"&tipo_attivita="+tipoAtt+"&pagamento="+tipoPag+"&sede="+sede+"&nota="+nota;
 		  
 		  $.ajax({
 			type: "POST",
@@ -301,7 +302,7 @@ $(document).ready(function() {
 	       
 	        dataArr.push(value["sede"]);
 	        dataArr.push(value["euro_ora"]); 
-	        dataArr.push(value["euro_giorno"]); 
+	        
 	        dataArr.push(value["euro_km"]); 
 	        dataArr.push(value["euro_tl"]); 
 	        dataArr.push(value["nota"]); 
@@ -309,8 +310,8 @@ $(document).ready(function() {
 	    
 	    console.log(dataArr[1]);
 	    var datas = "request="+request+"&id="+dataArr[0]+"&aperta_da="+dataArr[1]+"&cliente="+dataArr[3]+"&cliente_strategico="+dataArr[4]+"&costo_proposto="+dataArr[5]+
-	    "&operatore="+dataArr[6]+"&tipo_operatore="+dataArr[7]+"&tipo_attivita="+dataArr[8]+"&costo_operatore="+dataArr[9]+"&tariffa="+dataArr[10]+"&volume_ore="+dataArr[11]+"&sede="+dataArr[12]+"&euro_ora="+dataArr[13]+"&euro_giorno="+dataArr[14]+
-	    "&euro_km="+dataArr[15]+"&euro_tl="+dataArr[16]+"&nota="+dataArr[17];
+	    "&operatore="+dataArr[6]+"&tipo_operatore="+dataArr[7]+"&tipo_attivita="+dataArr[8]+"&costo_operatore="+dataArr[9]+"&tariffa="+dataArr[10]+"&volume_ore="+dataArr[11]+"&sede="+dataArr[12]+"&euro_ora="+dataArr[13]+
+	    "&euro_km="+dataArr[14]+"&euro_tl="+dataArr[15]+"&nota="+dataArr[16];
 	    
 		$.ajax({
 			type: "POST",
@@ -443,7 +444,7 @@ function format ( d ) {
       
 
     // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; background-color:white;">'+
+    return '<table  cellpadding="5" cellspacing="0" style="padding-left:50px; background-color:white; ">'+
         '<tr>'+
             '<td>Data Apertura:</td>'+
             '<td>'+d.data_apertura+'</td>'+
@@ -460,8 +461,7 @@ function format ( d ) {
 				'<td>Costo Ind.: '+costo_industriale+' €/o</td>'+
 				'<td>Margine Lordo: '+marg_lordo+'%</td>'+
 				'<td>Margine Ind.: '+marg_ind+'%</td>'+
-            /*'<td>€/O: '+d.euro_ora+'</td>'+*/
-            '<td>€/G: '+d.euro_giorno+'</td>'+
+            '<td>€/pezzo: '+d.euro_pezzo+'</td>'+
             '<td>€/Km: '+d.euro_km+'</td>'+
             '<td>€/TL: '+d.euro_tl+'</td>'+
         '</tr>'+

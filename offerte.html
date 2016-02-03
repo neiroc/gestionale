@@ -52,18 +52,14 @@
 			  <div class="modal-body">
 			  
 			      <div class="form-group col-md-4">
-			      	      
 			    		<label for="nome">Aperta da*</label>
 						<select id="apertada"class="form-control select2"  tabindex="2"></select>
-			     
 			      </div>
 			      
 			     
 				  <div class="form-group col-md-4">
-				  
 					   <label for="sell">Cliente</label>					  
 						<select id="cliente" class="form-control select2"  tabindex="2"></select>
-			      
 			      </div>
 			      
 			       <div class="form-group col-md-2">
@@ -72,11 +68,9 @@
 					    <option>SI</option>
 					    <option>NO</option>
 					    </select>
-			      
 			      </div>
 			      
 			      <div class="form-group col-md-2">
-				  
 					   <label for="sell">Proposta in €</label>
 					   <div class="input-group spinner">
 					    <input type="text" id="proposta" class="form-control" value="10">
@@ -90,36 +84,23 @@
 			      </div>
 					
 			      <!-- Dati Operatore -->
-			      <div class="form-group col-md-6">
-						<label for="email">Operatore</label>
-						<select id="operatore" class="form-control select2"  tabindex="2">						         
-						</select>
-			      </div>
+			 
 			      
-			    <div class="form-group col-md-6">
-						<label for="sel1">Tipo</label>
+			      <div class="form-group col-md-2">
+						<label for="sel1">Operatori Prev.</label>
 					    <select class="form-control" id="tipo">
 					    <option>Interno</option>
 					    <option>Esterno</option>
 					    </select>
 			      </div>
 			      
-			       <div class="form-group col-md-2">
-					   <label for="sell">€/ora</label>
-					   <div class="input-group spinner">
-					    <input type="text" id="euroOra" class="form-control" value="10">
-					    <div class="input-group-btn-vertical">
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-					    </div>
-					  </div>					  	
-			      </div>
+			       
 			      
 			       <div class="form-group col-md-2">
 				  
-					   <label for="sell">€/giorno</label>
+					   <label for="sell">€/pezzo</label>
 					   <div class="input-group spinner">
-					    <input type="text" id="euroGiorno" class="form-control" value="10">
+					    <input type="text" id="euroPezzo" class="form-control" value="0.05">
 					    <div class="input-group-btn-vertical">
 					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
 					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -150,7 +131,18 @@
 					  </div>					  	
 			      </div>
 			      
-			         <div class="form-group col-md-4">
+			      <div class="form-group col-md-2">
+					   <label for="sell">€/Pasto giorno</label>
+					   <div class="input-group spinner">
+					    <input type="text" id="euroPg" class="form-control" value="10">
+					    <div class="input-group-btn-vertical">
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+					    </div>
+					  </div>					  	
+			      </div>
+			      
+			         <div class="form-group col-md-2">
 						<label for="sel1">Volume Ore</label>
 					    <select class="form-control" id="volumeOre">
 					    <option><200</option>
@@ -159,9 +151,19 @@
 					    </select>
 			      </div>
 			      
+			      <div class="form-group col-md-4">
+					  <label for="sel1">Tipo Pagamento:</label>
+					  <select class="form-control" id="tipoPag">
+					    <option>Contanti</option>
+					    <option>Assegno</option>
+					    <option>Bonifico</option>
+					    <option>VISA</option>					  					    
+					  </select>
+					</div>
+			      
 			      
          
-			         <div class="form-group col-md-6">
+			         <div class="form-group col-md-4">
 					  <label for="sel1">Tipo Attività:</label>
 					  <select class="form-control" id="tipoAtt">
 					    <option>Controllo Qualità</option>
@@ -174,7 +176,7 @@
 						
 			      
 			      
-			      <div class="form-group col-md-6">
+			      <div class="form-group col-md-4">
 						<label for="sede">Sede</label>
 						<input type="text" class="form-control" id="sede">
 			      </div>
@@ -235,11 +237,7 @@
 					  </select>
 					</div>
 					
-					<div class="form-group">
-						<label for="email">Operatore</label>
-						<input type="tel" class="form-control" id="email2">
-			      </div>
-		   
+					
 			
 			
 		   
@@ -265,9 +263,9 @@
 	            <thead> 
 	            <tr>
 		            <th></th>
+		            <th>Data</th>
 		            <th>Aperta da</th>
 		            <th>Cliente</th>  
-		            <th>Operatore</th>
 		            <th>Tipo Attività</th>
                   <th>Plant</th>
                   <!-- <th></th> Checkbox-->

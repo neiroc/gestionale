@@ -26,7 +26,7 @@
 	   	<div class="panel-body">
 	      <!-- Operation's Button trigger modal -->
 	      <div class="btn-group" role="group" aria-label="...">
-	      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addData">Aggiungi</button>
+	      <button type="button" href="#myModal" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
 	      <button type="button" id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
 	      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
 	      </div>		     
@@ -36,7 +36,7 @@
 
 
       <!-- Modal addData-->
-      <div class="modal fade" id="addData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
 			<div class="modal-content">
 			<form>
@@ -46,34 +46,89 @@
 			  </div>
 			  
 			  <div class="modal-body">
-			      <div class="form-group">
-						<label for="nome">Nome e Cognome*</label>
+			  
+			      <div class="form-group col-md-6">
+						<label for="nome">Nome e Cognome / Ragione Sociale *</label>
 						<input type="text" class="form-control" id="nome">
 			      </div>
 			      
-			      <div class="form-group">
+			      <div class="form-group col-md-6">
+					  <label for="sel1">Tipo Anagrafica </label>
+					  <select class="form-control" id="tipo" onchange="disable('tipo', 'w_s_other')">
+					    <option value="Operatore">Operatore</option>
+					    <option value="Cliente">Cliente</option>
+					    <option value="Dipendente">Dipendente</option>
+					    <option value="Amministratore">Amministratore</option>
+					    <option value="Amministratore">Consulente Esterno</option>
+					  </select>
+					</div>
+			      
+			      <div class="form-group col-md-4">
 						<label for="mobile">Cellulare</label>
-						<input type="tel" class="form-control" id="cell">
+						<div class="input-group">
+							<div class="input-group-addon"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span></div>
+							<input type="tel" class="form-control" id="cell">
+						</div>
 			      </div>
 			      
-			      <div class="form-group">
-						<label for="email">Em@il</label>
-						<input type="tel" class="form-control" id="email">
+			       <div class="form-group col-md-4">
+						<label for="email">Tel.Fisso</label>
+						<div class="input-group">
+							<div class="input-group-addon"><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span></div>
+							<input type="tel" class="form-control" id="tel">
+						</div>
+			      </div>
+			      
+			       <div class="form-group col-md-4">
+						<label for="email">Email</label>
+						<div class="input-group">
+							<div class="input-group-addon"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></div>
+							<input type="tel" class="form-control" id="email">
+						</div>
+			      </div>
+			      
+			     
+			      
+			      <div class="form-group col-md-4">
+						<label for="email">Sede Legale</label>
+						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="sede_legale">
+			      </div>
+			      
+			       <div class="form-group col-md-4">
+						<label for="email">P.IVA</label>
+						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="piva">
+			      </div>
+			      
+			      <div class="form-group col-md-4">
+						<label for="email">Indirizzo di fatturazione</label>
+						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="ind_fatt">
+			      </div>
+			      
+			      <div class="form-group col-md-6">
+						<label for="email">Referente Amministrativo</label>
+						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="ref_amm">
+			      </div>
+			      
+			      <div class="form-group col-md-6">
+						<label for="email">Referente Commerciale</label>
+						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="ref_comm">
+			      </div>
+			      
+			       <div class="form-group col-md-6">
+						<label for="email">Tel.Ref.Comm.</label>
+						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="tel_refcomm">
+			      </div>
+			      
+			      <div class="form-group col-md-6">
+						<label for="email">Email Ref.Commerciale</label>
+						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="email_refcomm">
 			      </div>
 			      
 		
-			       <div class="form-group">
-					  <label for="sel1">Tipo:</label>
-					  <select class="form-control" id="tipo">
-					    <option>Cliente</option>
-					    <option>Operatore</option>
-					    <option>Dipendente</option>
-					    <option>Amministratore</option>
-					  </select>
-					</div>
-		   
+			       
+		 
 			
-			  </div>
+			  </div><!-- Fine Modal Body -->
 			  
 			  <div class="modal-footer">
 			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
