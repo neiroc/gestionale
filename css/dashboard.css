@@ -12,6 +12,16 @@ max-width: 900px;
 margin: 0 auto;
 }
 
+/*
+table.dataTable tbody tr.selected{
+background-color: yellow !important;
+color: white;
+}*/
+
+#val{
+
+font-weight: bold; 
+}
 
 /* ROW COLOR */
 .important{

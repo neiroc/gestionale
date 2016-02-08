@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
 
 	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
@@ -38,167 +39,195 @@
 		
 
       <!-- Modal addData-->
-      <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  data-modal-index="1">
       <div class="modal-dialog">
 			<div class="modal-content">
 			
 			
-			<form>
 			  <div class="modal-header">
 			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			    <h4 class="modal-title" id="myModalLabel">Aggiungi Offerta</h4>
 			  </div>
 			  
 			  <div class="modal-body">
-			  
-			      <div class="form-group col-md-4">
-			    		<label for="nome">Aperta da*</label>
-						<select id="apertada"class="form-control select2"  tabindex="2"></select>
+			      
+			      <div class="row">
+				      <div class="form-group col-md-4 ">
+				    		<label for="nome">Aperta da*</label>
+							<select id="apertada"class="form-control select2"  tabindex="2"></select>
+				      </div>
+				      
+				                     
+
+			      <div class="form-group col-md-2">	  
+					   <label for="sell">Fattore</label>
+					   <input id="fattore" type="text" value="1.15" name="mySpinner2">
+				  	
 			      </div>
 			      
 			     
-				  <div class="form-group col-md-4">
-					   <label for="sell">Cliente</label>					  
-						<select id="cliente" class="form-control select2"  tabindex="2"></select>
-			      </div>
-			      
-			       <div class="form-group col-md-2">
+				      
+				          <div class="form-group col-md-3 col-md-offset-3">
+						   <label for="sell">Proposta in €</label>
+						   <input id="proposta" type="text" value="20" name="mySpinner" onchange="valuta2()" class="spin">
+				      </div>
+			     </div> 
+			     
+			     <div class="row">
+					  <div class="form-group col-md-4">
+						   <label for="sell">Cliente</label>					  
+							<select id="cliente" class="form-control select2"  tabindex="2"></select>
+				      </div>
+				      
+				      <div class="form-group col-md-2">
 					    <label for="sel1">Strategico</label>
 					    <select class="form-control" id="strategico">
 					    <option>SI</option>
 					    <option>NO</option>
 					    </select>
+			         </div>
+			      
+				      
+				          <div class="form-group col-md-3  col-md-offset-3">
+					  
+						   <label for="sell">a ora</label>
+						   <input id="euroOra" type="text" value="15" name="mySpinner">
+						</div>
 			      </div>
 			      
-			      <div class="form-group col-md-2">
-					   <label for="sell">Proposta in €</label>
-					   <div class="input-group spinner">
-					    <input type="text" id="proposta" class="form-control" value="10">
-					    <div class="input-group-btn-vertical">
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-					    </div>
-					  </div>					  	
+				   <div class="row">
+		            <div class=" form-group  col-md-4">
+						  <label for="sel1">Tipo Attività:</label>
+						  <select class="form-control" id="tipoAtt">
+						    <option>Controllo Qualità</option>
+						    <option>Consulenza</option>
+						    <option>Formazione</option>
+						    <option>CSL2</option>					  					    
+						  </select>
+						</div>
 						
-			      
+						 <div class="form-group col-md-2">
+					     <label>+ / -</label><br>
+						  <a data-toggle="modal" class="btn btn-default" href="#stack3" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+						  <a  class="btn btn-default "><span class="glyphicon glyphicon-minus " aria-hidden="true"></span></a>
+						</div>
+						
+						<div class="form-group col-md-2">
+						  <label>A Pezzo</label><br>
+						  <input id="pezzo" type="checkbox"  onchange="disable('pezzo', 'euroOra', 'euroPezzo')">
+						 </div>
+					  
+					  
+						  <div class="form-group col-md-3 col-md-offset-1">
+				  
+					   <label for="sell">a pezzo</label>
+					   <input  disabled id="euroPezzo" type="text" value="0.10" name="mySpinner">
 			      </div>
-					
-			      <!-- Dati Operatore -->
-			 
+			      </div>
 			      
-			      <div class="form-group col-md-2">
+			      <div class="row">
+			       <div class="form-group col-md-4">
+						<label for="sede">Sede</label>
+						<input type="text" class="form-control" id="sede">
+			      </div>
+			      
+			      <div class="form-group col-md-2 ">
 						<label for="sel1">Operatori Prev.</label>
 					    <select class="form-control" id="tipo">
 					    <option>Interno</option>
 					    <option>Esterno</option>
 					    </select>
+					</div>    
+			      
+			       <div class="form-group col-md-3 col-md-offset-3">
+					   <label for="sell">a km</label>
+					   <input id="euroKm" type="text" value="0" name="mySpinner">
+				  	
+			      </div>
 			      </div>
 			      
-			       
 			      
-			       <div class="form-group col-md-2">
-				  
-					   <label for="sell">€/pezzo</label>
-					   <div class="input-group spinner">
-					    <input type="text" id="euroPezzo" class="form-control" value="0.05">
-					    <div class="input-group-btn-vertical">
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-					    </div>
-					  </div>					  	
-			      </div>
-
-
-			       <div class="form-group col-md-2">
-					   <label for="sell">€/km</label>
-					   <div class="input-group spinner">
-					    <input type="text" id="euroKm" class="form-control" value="10">
-					    <div class="input-group-btn-vertical">
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-					    </div>
-					  </div>					  	
-			      </div>
-			      
-			      <div class="form-group col-md-2">
-					   <label for="sell">€/TL</label>
-					   <div class="input-group spinner">
-					    <input type="text" id="euroTl" class="form-control" value="10">
-					    <div class="input-group-btn-vertical">
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-					    </div>
-					  </div>					  	
-			      </div>
-			      
-			      <div class="form-group col-md-2">
-					   <label for="sell">€/Pasto giorno</label>
-					   <div class="input-group spinner">
-					    <input type="text" id="euroPg" class="form-control" value="10">
-					    <div class="input-group-btn-vertical">
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-					      <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-					    </div>
-					  </div>					  	
-			      </div>
-			      
-			         <div class="form-group col-md-2">
-						<label for="sel1">Volume Ore</label>
-					    <select class="form-control" id="volumeOre">
-					    <option><200</option>
-					    <option>[200,400]</option>
-					    <option>>400</option>
-					    </select>
-			      </div>
-			      
-			      <div class="form-group col-md-4">
-					  <label for="sel1">Tipo Pagamento:</label>
-					  <select class="form-control" id="tipoPag">
-					    <option>Contanti</option>
-					    <option>Assegno</option>
-					    <option>Bonifico</option>
-					    <option>VISA</option>					  					    
-					  </select>
-					</div>
-			      
-			      
-         
-			         <div class="form-group col-md-4">
-					  <label for="sel1">Tipo Attività:</label>
-					  <select class="form-control" id="tipoAtt">
-					    <option>Controllo Qualità</option>
-					    <option>Consulenza</option>
-					    <option>Formazione</option>
-					    <option>CSL2</option>					  					    
-					  </select>
-					</div>
-			     	
+			       <div class="row">
+				      <div class="form-group col-md-4">
+						  <label for="sel1">Tipo Pagamento:</label>
+						  <select class="form-control" id="tipoPag">
+						    <option>Contanti</option>
+						    <option>Assegno</option>
+						    <option>Bonifico</option>
+						    <option>VISA</option>					  					    
+						  </select>
+						</div>
 						
-			      
-			      
-			      <div class="form-group col-md-4">
-						<label for="sede">Sede</label>
-						<input type="text" class="form-control" id="sede">
+						   <div class="form-group col-md-2">
+							<label for="sel1">Volume Ore</label>
+						    <select class="form-control valuta" id="volumeOre">
+						    <option><200</option>
+						    <option>[200,400]</option>
+						    <option>>400</option>
+						    </select>
+				      </div>
+						
+						 
+				      <div class="form-group col-md-3 col-md-offset-3">
+						   <label for="sell">per TL</label>
+						   <input id="euroTl" type="text" value="0" name="mySpinner">
+				  	
+				      </div>
 			      </div>
+
 			      
-			       <div class="form-group">
+			     <div class="row">
+			      <div class="form-group col-md-8">
 						<label for="nome">NOTA</label>
 						<input type="textarea" class="form-control" id="nota">
 			      </div>
+			       <div class="form-group col-md-3 col-md-offset-1">
+					   <label for="sell">a pasto</label>
+					   <input id="euroPg" type="text" value="0" name="mySpinner">
+			      </div>
+			     </div>
+			     
+			     <div class="alert alert-warning" role="alert">
+			       VALUTAZIONE:
+					 <span class="valutazione" id="val"></span>
+			     
+			     </div>
+
+
 			
-			
-			
-			 </div>
+			     
 			  
-			  
+			  	 
+		   </div> <!-- End ModalBody -->
+		
 			  <div class="modal-footer">
 			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
 			    <button type="button" id="save" class="btn btn-primary">Salva</button>
 			  </div>
-		  </form>
+	
+       </div> <!-- End Modal Content -->
+     </div> <!-- Modal Dialog -->
+   </div> <!-- Modal -->
+      
+		 <div class="modal" id="stack3">
+			<div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		          <h4 class="modal-title">Second Modal title</h4>
+		        </div>
+		        <div class="modal-body">
+		         <label for="nome">Nuovo Tipo Attività</label>
+					<input type="text" class="form-control" id="att">
+		        </div>
+		        <div class="modal-footer">
+		          <a href="#" data-dismiss="modal" class="btn">Close</a>
+		          <a id="saveAtt" class="btn btn-primary">Save changes</a>
+		        </div>
+		      </div>
+		    </div>
 		</div>
-      </div>
-      </div>
+
       
       <!-- editModal  Offerte-->
       <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -236,11 +265,6 @@
 					    <option>CSL2</option>					  					    
 					  </select>
 					</div>
-					
-					
-			
-			
-		   
 			 </div>
 			  
 			  
@@ -252,8 +276,11 @@
 			 </div>
       </div>
       </div>
-          
-          
+      
+      
+
+			          
+			          
           <!-- Risultati sulla Tabella -->
           <div class="table-responsive">
            
@@ -287,10 +314,12 @@
             
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    	 <script src="js/jquery.bootstrap-touchspin.min.js"></script> 
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="components/bootstrap-datatable/js/tbOff.js"></script>
     <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
-	 <script src="https://cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script> 
+	 <script src="https://cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script>
+
 </body>        
 </html>

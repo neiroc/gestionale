@@ -1,8 +1,12 @@
+//GLOBAL VARIABLES 
+ 
+var table;
+
 $(document).ready(function() {
 	
 		
 		/* Inizializza Tabella */
-	   var table =  $('#tb_comm').DataTable({
+	   table =  $('#tb_comm').DataTable({
 	    "aProcessing": true, 
 	    "aServerSide": true,   	     
 	    "ajax": {
@@ -23,7 +27,7 @@ $(document).ready(function() {
 	    	  "var10": "costo_operatore",
 	    	  "var11": "tariffa",
 	    	  "var12": "volume_ore",
-	    	  
+	    	  "var13": "id_commessa",
 	    	  "var14": "sede",
 	    	  "var15": "euro_ora",
 	    	  "var16": "euro_giorno",
@@ -41,7 +45,6 @@ $(document).ready(function() {
             },
             { "data": "aperta_da" },
             { "data": "cliente" },
-            { "data": "operatore" },     
             { "data": "tipo_attivita" },
             { "data": "sede" }
            
@@ -242,9 +245,9 @@ $(document).ready(function() {
 	        table.row('.selected').remove().draw( false );
 	    } );
 	    
-	    
 
-});
+
+}); <!-- Fine Document Ready -->
 
 
 
@@ -254,8 +257,8 @@ function format ( d ) {
     // `d` is the original data object for the row
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
         '<tr>'+
-            '<td>Data Apertura:</td>'+
-            '<td>'+d.data_apertura+'</td>'+
+            '<td>ID Commessa:</td>'+
+            '<td>'+d.id_commessa+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Cliente Strategico:</td>'+

@@ -7,8 +7,13 @@
   
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.1/css/buttons.dataTables.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="components/bootstrap-datatable/css/bootstrap-datetimepicker.min.css" >
+    <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
 
+
+    
 	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
 
@@ -26,12 +31,72 @@
   			<div class="panel-body">
 	      <!-- Operation's Button trigger modal -->
 	      <div class="btn-group" role="group" aria-label="...">	      
-	      <button type="button" href="#myModal" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
-	      <button type="button" id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
+	      <button type="button" disabled href="#myModal" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
+	      <button type="button" disabled id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
 	      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
-	      </div>	         		     
+	      </div>
+	      <button type="button" disabled id="addHours" class="btn btn-default" data-toggle="modal">Inserisci Ore</button>	         		     
  			</div>
 		</div>
+	
+		
+<div>
+
+  <!-- Nav tabs -->
+  <ul id="myTab"class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+    <li role="presentation"><a href="#ore" aria-controls="profile" role="tab" data-toggle="tab" onchange="disable2(addHours)">Ore</a></li>
+  </ul>
+  <br>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+  
+    <div role="tabpanel" class="tab-pane active" id="home">       
+	    <div class="table-responsive">
+	           <table id="tb_comm" class="display"  cellspacing="0" width="100%">
+	            <tbody> 
+		            <thead> 
+		            <tr>
+			            <th></th>
+			            <th>Aperta da</th>
+			            <th>Cliente</th>  
+			            <th>Tipo Attività</th>
+	                  <th>Plant</th>
+	                  
+	
+		            </tr> 
+		            </thead> 
+	            </tbody>
+	            </table>
+	     </div>
+  </div>
+    
+   <div role="tabpanel" class="tab-pane" id="ore">
+   
+   	    <div class="table-responsive">
+	           <table id="tb_ore" class="display"  cellspacing="0" width="100%">
+	            <tbody> 
+		            <thead> 
+		            <tr>
+<!-- 			            <th></th> -->
+			            <th>Data</th>
+			            <th>Operatore</th>  
+			            <th>Ore Std</th>  
+			            <th>Ore Extra</th>  
+			            <th>Ore Festivi</th>  
+			            <th>Ore Sabato</th>  
+		            </tr> 
+		            </thead> 
+	            </tbody>
+	            </table>
+	     </div>
+
+
+ </div>
+
+
+</div>
 		
 		
 
@@ -147,39 +212,125 @@
 			 </div>
       </div>
       </div>
+      
+      
+      <!-- Modal Insert Hours-->
+      <div class="modal fade" id="hoursModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+			<div class="modal-content">
+			
+			
+			<form>
+			  <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			    <h4 class="modal-title" id="myModalLabel">Inserimento Ore</h4>
+			  </div>
+			  
+			  <div class="modal-body">
+			  
+			  <div class="row">
+				    <div class='col-sm-6'>
+				      <div class="form-group">
+							<label for="nome">ID commessa</label>
+							<input id="id_commessa" disabled class="form-control" style="width:100%;" tabindex="2">						         
+				      </div>
+				    </div>
+				      
+			      <div class='col-sm-6'>
+		            <div class="form-group">
+		              <label for="nome">Data</label>
+		                <div class='input-group date' id='datetimepicker1'>
+		                    <input id="datatime" type='text' class="form-control" >
+		                    <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
+		            </div>
+	            </div>
+            </div>
+ 
+			      <div class="form-group">
+						<label for="email">Operatore</label>
+						<select id="operatore2" class="form-control select2" style="width:100%;" tabindex="2">						         
+						</select>
+			      </div>
+			      
+			      <div class="row">
+				      <div class="col-md-3">
+					      <div class="form-group">
+								<label for="sede">Ore Standard</label>
+								<input id="ore_std" type="text" value="8" name="mySpinner">
+							
+					      </div>
+					     </div>
+					    
+					      
+					      <div class="col-md-3">
+					      <div class="form-group">
+								<label for="sede">Ore Extra</label>
+								<input id="ore_extra" type="text" value="0" name="mySpinner">
+					      </div>
+					      </div>
+					      
+					      <div class="col-md-3">
+					      <div class="form-group">
+								<label for="sede">Ore Festivi</label>
+								<input id="ore_fest" type="text" value="0" name="mySpinner">
+					      </div>
+					     </div>
+					     
+					     <div class="col-md-3">
+					     <div class="form-group">
+								<label for="sede">Ore Sabato</label>
+								<input id="ore_sabato" type="text" value="0" name="mySpinner">
+					      </div>
+					      </div>
+				     </div>
+ 
+			 </div>
+			  
+			  
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+			    <button type="button" id="saveHours" class="btn btn-primary">Salva</button>
+			  </div>
+		  </form>
+		</div>
+      </div>
+      </div>
           
           
-          <!-- Risultati sulla Tabella -->
-          <div class="table-responsive">
-           <table id="tb_comm" class="display"  cellspacing="0" width="100%">
-            <tbody> 
-	            <thead> 
-	            <tr>
-		            <th></th>
-		            <th>Aperta da</th>
-		            <th>Cliente</th>  
-		            <th>Operatore</th>
-		            <th>Tipo Attività</th>
-                  <th>Plant</th>
-                  
 
-	            </tr> 
-	            </thead> 
-            </tbody>
-            </table>
-        </div>
-    </div>
+    </div> <!-- MAIN -->
     
-    <!-- Bootstrap core JavaScript
+    <!--  JavaScript Kore
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
             
     <script src="js/jquery-1.11.3.js"></script>
+    <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script> 
+    <!-- try BUTTON--> 
+    <script src="//cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.1/js/buttons.flash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    
+    <script src="https://cdn.datatables.net/buttons/1.1.1/js/buttons.html5.min.js"></script>
+
+    <script src="js/moment.min.js"></script>
+    <script type="text/javascript" src="components/bootstrap-datatable/js/transition.js"></script>
+    <script type="text/javascript" src="components/bootstrap-datatable/js/collapse.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-    <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
+    
+    
     <script src="components/bootstrap-datatable/js/tbComm.js"></script>
+    <script src="components/bootstrap-datatable/js/tbOre.js"></script>
     <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
-	 <script src="https://cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script> 
+	 
+	 <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+	 <script src="js/jquery.bootstrap-touchspin.min.js"></script>
 </body>        
 </html>

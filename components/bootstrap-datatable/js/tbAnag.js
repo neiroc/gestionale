@@ -40,6 +40,13 @@ $(document).ready(function() {
             { "data": "email" },
             { "data": "tipo_anagrafica" }                       
         ],
+          "columnDefs": [ {
+		    "targets": 3,
+		    "data": "download_link",
+		    "render": function ( data, type, full, meta ) {
+		      return '<a href="mailto:'+data+'">'+data+'</a>';
+		    }
+		  } ],
         "order": [[1, 'asc']]
 	     } );
 	      
@@ -94,17 +101,15 @@ $(document).ready(function() {
 		  /* Le variabile postate devono avere lo stesso nome delle colonne della tabella del DB */
 		  var datas = "request="+request+"&nome="+nome+"&mobile="+cell+"&tel_fisso="+tel+"&email="+email+"&tipo_anagrafica="+tipo+
 		  "&sede_legale="+sedel+"&piva="+piva+"&ind_fatt="+ind_fatt+"&ref_amm="+ref_amm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm;
-		  
+		  var m;
 		  $.ajax({
 			type: "POST",
 			url: "cgi-bin/postdata.php",
 			data: datas,
 			dataType: "html"
 			  }).done(function( msg ) {
-			
-			alert( msg );
-			
-	     
+	
+		
 		  table.row.add( {
         "nome":       nome,
         "mobile":   cell,
@@ -112,12 +117,15 @@ $(document).ready(function() {
         "tipo_anagrafica": tipo
        
     		}).draw();
+    	
+			  
 
 			  }).fail(function() {
-			alert( "error" );
+			alert( "Server Error" );
 			  }).always(function() {
-			alert( "finished" );
+			alert( "Finished" );
 			  });
+
 	  });
 	  
 	  
