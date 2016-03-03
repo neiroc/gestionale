@@ -17,7 +17,7 @@ if (mysqli_connect_errno()){
 mysql_select_db('gest');
 
 
-if($_POST['request']=="anagrafe") {
+if($_POST['request']=="anagrafica") {
 	if($_POST['nome']!=NULL) 	
 		$result = mysql_insert_array("an_anagrafiche", $_POST, "request");
 	else{

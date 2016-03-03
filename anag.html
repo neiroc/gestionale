@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link  rel="stylesheet" href="css/jquery-confirm.min.css">
 	
 	 <!-- Custom styles for this template --> 
     <link href="css/dashboard.css" rel="stylesheet">
@@ -26,7 +27,7 @@
 	   	<div class="panel-body">
 	      <!-- Operation's Button trigger modal -->
 	      <div class="btn-group" role="group" aria-label="...">
-	      <button type="button" href="#myModal" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
+	      <button type="button" id="addData" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
 	      <button type="button" id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
 	      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
 	      </div>		     
@@ -39,7 +40,7 @@
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
 			<div class="modal-content">
-			<form>
+			
 			  <div class="modal-header">
 			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			    <h4 class="modal-title" id="myModalLabel">Nuova Anagrafica</h4>
@@ -47,35 +48,39 @@
 			  
 			  <div class="modal-body">
 			  
+			  <div class="row">
 			      <div class="form-group col-md-6">
-						<label for="nome">Nome e Cognome / Ragione Sociale *</label>
+						<label>Nome e Cognome / Ragione Sociale *</label>
 						<input type="text" class="form-control" id="nome">
 			      </div>
 			      
 			      <div class="form-group col-md-6">
 					  <label for="sel1">Tipo Anagrafica </label>
 					  <select class="form-control" id="tipo" onchange="disable('tipo', 'w_s_other')">
-					    <option value="Operatore">Operatore</option>
+					    <option value="Operatore Interno">Operatore Interno</option>
+					    <option value="Operatore Esterno">Operatore Esterno</option>
+					    <option value="Team Leader">Team Leader</option>
 					    <option value="Cliente">Cliente</option>
-					    <option value="Dipendente">Dipendente</option>
 					    <option value="Amministratore">Amministratore</option>
-					    <option value="Amministratore">Consulente Esterno</option>
+					    <option value="Consulente Esterno">Consulente Esterno</option>
 					  </select>
 					</div>
-			      
+			  </div>
+			  
+			  <div class="row">
 			      <div class="form-group col-md-4">
 						<label for="mobile">Cellulare</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span></div>
-							<input type="tel" class="form-control" id="cell">
+							<input class="form-control" id="cell">
 						</div>
 			      </div>
 			      
 			       <div class="form-group col-md-4">
-						<label for="email">Tel.Fisso</label>
+						<label>Tel.Fisso</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span></div>
-							<input type="tel" class="form-control" id="tel">
+							<input  class="form-control" id="tel_fisso">
 						</div>
 			      </div>
 			      
@@ -83,111 +88,63 @@
 						<label for="email">Email</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></div>
-							<input type="tel" class="form-control" id="email">
+							<input class="form-control" id="email">
 						</div>
 			      </div>
-			      
-			     
-			      
+			  </div>
+			  
+			  <div class="row">   
 			      <div class="form-group col-md-4">
-						<label for="email">Sede Legale</label>
-						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="sede_legale">
+						<label>Sede Legale</label>
+						<input name="w_s_other" disabled  class="form-control" id="sede_legale">
 			      </div>
 			      
 			       <div class="form-group col-md-4">
-						<label for="email">P.IVA</label>
-						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="piva">
+						<label>P.IVA</label>
+						<input name="w_s_other"  disabled class="form-control" id="piva">
 			      </div>
 			      
 			      <div class="form-group col-md-4">
-						<label for="email">Indirizzo di fatturazione</label>
-						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="ind_fatt">
+						<label>Indirizzo di fatturazione</label>
+						<input name="w_s_other"  disabled  class="form-control" id="ind_fatt">
+			      </div>
+			  </div>
+			  
+			  <div  class="row"> 
+			      <div class="form-group col-md-6">
+						<label>Referente Amministrativo</label>
+						<input name="w_s_other"  disabled class="form-control" id="ref_amm">
 			      </div>
 			      
 			      <div class="form-group col-md-6">
-						<label for="email">Referente Amministrativo</label>
-						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="ref_amm">
+						<label>Referente Commerciale</label>
+						<input name="w_s_other"   disabled  class="form-control" id="ref_comm">
 			      </div>
+			  </div>
 			      
-			      <div class="form-group col-md-6">
-						<label for="email">Referente Commerciale</label>
-						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="ref_comm">
-			      </div>
-			      
+			  <div class="row">    
 			       <div class="form-group col-md-6">
-						<label for="email">Tel.Ref.Comm.</label>
-						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="tel_refcomm">
+						<label>Tel.Ref.Comm.</label>
+						<input name="w_s_other"   disabled  class="form-control" id="tel_refcomm">
 			      </div>
 			      
 			      <div class="form-group col-md-6">
-						<label for="email">Email Ref.Commerciale</label>
-						<input name="w_s_other"   disabled value="" type="tel" class="form-control" id="email_refcomm">
+						<label>Email Ref.Commerciale</label>
+						<input name="w_s_other"   disabled  class="form-control" id="email_refcomm">
 			      </div>
-			      
-		
-			       
-		 
+			 </div>     
 			
-			  </div><!-- Fine Modal Body -->
+			 </div><!-- Fine Modal Body -->
 			  
 			  <div class="modal-footer">
 			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
 			    <button type="button" id="save" class="btn btn-primary">Salva</button>
 			  </div>
-			 </form>
-			 </div>
-      </div>
-      </div>
-      
-      <!-- Modal editData-->
-      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-			<div class="modal-content">
-			<form>
-			  <div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    <h4 class="modal-title" id="myModalLabel">Modifica Anagrafica</h4>
-			  </div>
-			  
-			  <div class="modal-body">
-			      <div class="form-group">
-						<label for="nome">Nome e Cognome*</label>
-						<input type="text" class="form-control" id="nome2">
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="mobile">Cellulare</label>
-						<input type="tel" class="form-control" id="cell2">
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="email">Em@il</label>
-						<input type="tel" class="form-control" id="email2">
-			      </div>
-			      
-		
-			       <div class="form-group">
-					  <label for="sel1">Tipo:</label>
-					  <select class="form-control" id="tipo2">
-					    <option>Cliente</option>
-					    <option>Operatore</option>
-					    <option>Dipendente</option>
-					    <option>Amministratore</option>
-					  </select>
-					</div>
-		   
-			
-			  </div>
-			  
-			  <div class="modal-footer">
-			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-			    <button type="button" id="savechanges" class="btn btn-primary">Salva</button>
-			  </div>
-			 </form>
-			 </div>
-      </div>
-      </div>
-          
+			 
+		 </div>
+     </div>
+     </div> <!-- Fine Modal -->
+
           
           <!-- Risultati sulla Tabella -->
           <div class="table-responsive">
@@ -217,6 +174,7 @@
 
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-confirm.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="components/bootstrap-datatable/js/tbAnag.js"></script>
     <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>

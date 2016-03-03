@@ -57,7 +57,7 @@ $(document).ready(function() {
 	    /* Seleziona Righe */
 		 $('#tb_comm tbody').on( 'click', 'tr', function () {
 	        if ( $(this).hasClass('selected') ) {
-	            $(this).removeClass('selected');
+	            //$(this).removeClass('selected');
 	        }
 	        else {
 	            table.$('tr.selected').removeClass('selected');
@@ -155,14 +155,14 @@ $(document).ready(function() {
 	   /*Edit Data from Table. Scrivere codice + pulito*/
 
 		$('#editData').click(function(){
-			
 			var $rows = table.$('tr.selected');
+		   var rows = $('tr.selected');
+		   var rowData = table.rows(rows).data();
+			
 			if ($rows.length) {
 			 
 			 var dataArr = [];
-		    var rows = $('tr.selected');
-		    var rowData = table.rows(rows).data();
-		    
+	    
 		    $.each($(rowData),function(key,value){
 		        dataArr.push(value["nome"]);
 		        dataArr.push(value["mobile"]); 
@@ -208,41 +208,74 @@ $(document).ready(function() {
 		
 		 
 		  
-		  	} else alert("Non hai selezionato nessuna riga")
+		  	} else {
+		  		$.alert({
+						title : false,
+					   confirmButton : 'OPS!',	
+						content:'Seleziona prima una riga!'
+					    });
+		     }
 		
 		});
 
 	   
     /* Rimuovi elemento selezionat */
 	 $('#rmData').click( function () {
+         var $rows = table.$('tr.selected');
+		   var rows = $('tr.selected');
+		   var rowData = table.rows(rows).data();
+		   var datas;
+		   
+		   if ($rows.length) {
+		   	
+		   		$.confirm({
+				    title: 'Rimuovi',
+				    content: 'Sicuro di voler eliminare questa commessa?',
+				    confirmButton: 'SI',
+                cancelButton: 'NO',
+				    confirm: function(){
+				    			   
+				    $.each($(rowData),function(key,value){
+				        datas = "request=commessa&id="+value["id_commessa"]; //"name" being the value of your first column.
+				    });
+				    
+						$.ajax({
+							type: "POST",
+							url: "cgi-bin/delete.php",
+							data: datas,
+							dataType: "html"
+							  }).done(function( msg ) {
+						
+						  }).fail(function() {
+						alert( "error" );
+						  }).always(function() {
+						alert( "finished" );
+						  });
+	
+		             table.row('.selected').remove().draw( false );
+				    	 
+				       $.alert({
+				       title:false,
+				       content : 'Commessa Eliminata!',
+				       confirmButton: 'DAJE!'
+				       });
+				    },
+				    cancel: function(){
+				    $.alert('Visto che non eri sicuro!')
+				    }
+				 
+				});
 
-	    var dataArr = [];
-	    var rows = $('tr.selected');
-	    var rowData = table.rows(rows).data();
-	    $.each($(rowData),function(key,value){
-	        dataArr.push(value["id_anagrafica"]); //"name" being the value of your first column.
-	    });
-	    
-	    console.log(dataArr);
-	    var datas = "id="+dataArr;
-		$.ajax({
-			type: "POST",
-			url: "cgi-bin/delete.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			alert( msg );
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });
-		  
-
-	        table.row('.selected').remove().draw( false );
+	        
+	     }else {
+	     	$.alert({
+						title : false,
+					   confirmButton : 'OPS!',	
+						content:'Seleziona prima una riga!'
+					    });
+	     }
+	     	
+	     	
 	    } );
 	    
 
@@ -254,19 +287,79 @@ $(document).ready(function() {
 
 /* Formatting function for row details - modify as you need */
 function format ( d ) {
+		var valutazione;
+   var rischio;
+   var classe_rischio;
+   var costo_industriale = d.euro_ora*1.15;
+   var marg_lordo = ((d.costo_proposto - d.euro_ora)/d.costo_proposto)*100;
+   var marg_ind = ((d.costo_proposto - costo_industriale)/d.costo_proposto)*100;
+     
+     
+    //Valutazione Del Rischio. Inserire in un'altra funzione 
+	
+	//Assegna Classe di Rischio    
+    if (d.volume_ore=="<200") 
+    	classe_rischio="A";
+    else if (d.volume_ore=="[200,400]") 
+    	classe_rischio="B";			
+    else 
+      classe_rischio="C";
+      
+   //Assegna Rischio Aziendale 
+    if(marg_ind<0)
+      rischio="ALTO";
+   
+    else if(marg_ind <= 20 && classe_rischio=="A" ) 
+	   rischio="MEDIO";
+	 else if (marg_ind <= 20) 
+		rischio="ALTO";
+	 else if (marg_ind >= 20 && marg_ind <=25 && classe_rischio=="A") 
+	   rischio="BASSO";
+	 else if (marg_ind >= 20 && marg_ind <=25 || classe_rischio=="B" || classe_rischio=="B" ) 
+	   rischio="MEDIO";
+	 else 
+	   rischio="BASSO";
+	   
+	//Valutazione offerta  	 
+    if (rischio=="ALTO" && d.cliente_strategico=="SI") 
+    	valutazione="Offerta da discutere con direzione";
+    else if (rischio=="ALTO" && d.cliente_strategico=="NO")
+       valutazione="Non approvata";
+    else if (rischio=="MEDIO" && d.cliente_strategico=="NO")
+       valutazione="Offerta da discutere con direzione";
+    else if (rischio=="MEDIO" && d.cliente_strategico=="NO")
+       valutazione="Offerta da discutere con direzione";
+    else 
+       valutazione="Procedere con l'offerta"; 
+
+      
     // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+    return '<table  cellpadding="5" cellspacing="0" style="padding-left:50px; background-color:white; ">'+
         '<tr>'+
-            '<td>ID Commessa:</td>'+
-            '<td>'+d.id_commessa+'</td>'+
+            '<td>Data Apertura:</td>'+
+            '<td>'+d.data_apertura+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Cliente Strategico:</td>'+
-            '<td>'+d.cliente_strategico+'</td>'+
+            '<td>Cliente</td>'+
+            '<td>Strategico: '+d.cliente_strategico+'</td>'+
+            '<td>Proposta: '+d.costo_proposto+' €/o</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Tipo Operatore:</td>'+
-            '<td>'+d.tipo_operatore+' Costo: '+d.costo_operatore+'<br> €/O: '+d.euro_ora+'<br>€/G: '+d.euro_giorno+'<br>€/Km: '+d.euro_km+'<br>€/TL: '+d.euro_tl+'</td>'+
+            '<td>Operatore</td>'+
+            '<td>Tipo: '+d.tipo_operatore+'</td>'+
+            '<td>Costo: '+d.euro_ora+' €/o</td>'+
+				'<td>Costo Ind.: '+costo_industriale+' €/o</td>'+
+				'<td>Margine Lordo: '+marg_lordo+'%</td>'+
+				'<td>Margine Ind.: '+marg_ind+'%</td>'+
+            '<td>€/pezzo: '+d.euro_pezzo+'</td>'+
+            '<td>€/Km: '+d.euro_km+'</td>'+
+            '<td>€/TL: '+d.euro_tl+'</td>'+
+        '</tr>'+
+         '<tr>'+
+            '<td>Rischio</td>'+
+            '<td>Volume ore: '+d.volume_ore+'</td>'+
+            '<td>Classe Rischio: '+classe_rischio+'</td>'+
+            '<td>Valutazione: <b>'+valutazione+'</b> </td>'+
         '</tr>'+
         '<tr>'+
             '<td>NOTA:</td>'+

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+
 		/* Inizializza Tabella */
 				
 	   var table =  $('#tb_off').DataTable({
@@ -59,12 +59,12 @@ $(document).ready(function() {
 						  },
         "order": [[1, 'asc']]
 	     } );
-	     	      
-    
+	     
+
 	    /* Seleziona Righe */
 		 $('#tb_off tbody').on( 'click', 'tr', function () {
 	        if ( $(this).hasClass('selected') ) {
-	            $(this).removeClass('selected');
+	            //$(this).removeClass('selected');
 	        }
 	        else {
 	            table.$('tr.selected').removeClass('selected');
@@ -72,7 +72,7 @@ $(document).ready(function() {
 	        }
 	    } );
 	    
-	    
+
 		 // Add event listener for opening and closing details
 	    $('#tb_off tbody').on('click', 'td.details-control', function () {
 	        var tr = $(this).closest('tr');
@@ -120,7 +120,10 @@ $(document).ready(function() {
 			});
 			
 	    
-	     	    
+$('#addData').click(function(e){
+	
+	$('#myModal').modal('show');
+	 
 	   /* Aggiungi Elemento */ 
 		$('#save').click(function(){
 			
@@ -132,7 +135,6 @@ $(document).ready(function() {
 		  var strategico = $('#strategico').val();
 		  var proposta = $('#proposta').val();
 		  
-		 
 		  var tipo = $('#tipo').val();
 		  
 		  var euroOra = $('#euroOra').val();
@@ -146,242 +148,289 @@ $(document).ready(function() {
 		  var sede = $('#sede').val();
 		  
 		  var nota = $('#nota').val();
+		  var quadro;
+		  
+		  //tipo offerta
+			if ($('#quadro').is(":checked"))
+					quadro="SI";
+			else 
+			      quadro="NO";		
+			
 		 
-		 
-		  var datas = "request="+request+"&aperta_da="+apertada+"&cliente="+cliente+"&cliente_strategico="+strategico+"&costo_proposto="+proposta+"&tipo_operatore="+tipo+
+		  var datas = "request="+request+"&aperta_da="+apertada+"&cliente="+cliente+"&cliente_strategico="+strategico+"&quadro="+quadro+"&costo_proposto="+proposta+"&tipo_operatore="+tipo+
 		  "&euro_ora="+euroOra+"&euro_pastog="+euroPasto+"&euro_km="+euroKm+"&euro_tl="+euroTl+"&volume_ore="+volOre+"&tipo_attivita="+tipoAtt+"&pagamento="+tipoPag+"&sede="+sede+"&nota="+nota;
 		  
-		  $.ajax({
-			type: "POST",
-			url: "cgi-bin/postdata.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			
-			
-			if (msg=="  Errore") {
-		                          alert("Errore");
+		  if (apertada != null && cliente != null) {
+		  	
+		  	//Prevent Multiple Fired Events			
+			 var me = $(this);
+          e.preventDefault();
 
-		   /* $(this).after(
-        '<div class="alert alert-success alert-dismissable">'+
-            '<button type="button" class="close" ' + 
-                    'data-dismiss="alert" aria-hidden="true">' + 
-                '&times;' + 
-            '</button>' + 
-            'Password Changed' + 
-         '</div>');*/
-
-			
-			}
-	/*
-		  table.row.add( {
-        "nome":       nome,
-        "mobile":   cell,
-        "email":     email,
-        "tipo_anagrafica": tipo
-       
-    		} ).draw();*/
-
-			  }).fail(function() {
-			alert( "error aa" );
-			  }).always(function() {
-			alert( "finished" );
-			  });
-	  });
+		    if ( me.data('requestRunning') ) {
+		        return;
+		    }
+          me.data('requestRunning', true);
+		  
+			  $.ajax({
+				type: "POST",
+				url: "cgi-bin/postdata.php",
+				data: datas,
+				dataType: "html",
+				success: function () {
+					$.alert({
+		          title: false,
+				    content: 'Offerta aggiunta correttamente!',
+				    confirmButton : 'OK!', 
+					});
+				},
+				complete: function () {
+				me.data('requestRunning', false);
+				}
+		     });
+	  
+	    }else {
+				$.alert({
+					title:false,
+					confirmButton : 'OPS!',
+				   content: 'Inserisci il nome di chi apre l`offerta e quello del cliente!'
+				});
+		  }
+      });
+    });
 	  
 	  
 	   /*Edit Data from Table. Scrivere codice + pulito*/
 
 		$('#editData').click(function(){
-			
 			var $rows = table.$('tr.selected');
+		   var rows = $('tr.selected');
+		   var rowData = table.rows(rows).data();
+		   var id; //aperta_da, cliente, tipo_att, operatore, sede, costo;
+		   var datas;
+			
+			
 			if ($rows.length) {
-			 
-			 var dataArr = [];
-		    var rows = $('tr.selected');
-		    var rowData = table.rows(rows).data();
-		    //console.log(rowData[0]);
-		    //console.log(rowData["cliente"]);
-		    
-		    $.each($(rowData),function(key,value){
-		    	  console.log(dataArr["aperta_da"]);
-		        dataArr.push(value["aperta_da"]);
-		        dataArr.push(value["cliente"]); 
-		        dataArr.push(value["operatore"]);
-		        dataArr.push(value["sede"]);
-		        dataArr.push(value["costo"]);
-		    });
-		    
-		 $("#nome2").val(dataArr[0]);
-		 $("#cell2").val(dataArr[1]);
-		 $("#email2").val(dataArr[2]);
-		 $("#tipo2").val(dataArr[3]);
-		  
-		  $('#editModal').modal('show'); 
+
+			    $.each($(rowData),function(key,value){		    	  
+			    	  id = value["id_offerta"];
+			    	  
+			    	  //Load Values
+			    	  $('#proposta').val(value["costo_proposto"]);
+			    	  $('#euroOra').val(value["euro_ora"]);
+			    	  $('#euroPg').val(value["euro_pastog"]);
+			    	  $('#euroKm').val(value["euro_km"]);
+			    	  $('#euroTl').val(value["euro_tl"]);
+			    	  $('#volumeOre').val(value["volume_ore"]);
+			    	  $("#sede").val(value["sede"]);
+			    	  $('#nota').val(value["nota"]) 
+			    });
+
+			    $('#myModal').modal('show'); 
 		  
 				/* Save Changes */
-				$('#savechanges').click(function(){
-				  var nome = $('#nome2').val();
-				  var cell = $('#cell2').val();
-				  var email = $('#email2').val();
-				  var tipo = $('#tipo2').val();
-				
-				  
-				  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo+"&id="+dataArr[4];
-				  
-				  $.ajax({
-					type: "POST",
-					url: "cgi-bin/edit.php",
-					data: datas,
-					dataType: "html"
-					  }).done(function( msg ) {
-					alert( msg );
-				
-						//viewdata();
-						
-						  }).fail(function() {
-						alert( "error" );
-						  }).always(function() {
-						alert( "finished" );
-						  });
-				});
-		
-		
-		 
+				$('#save').click(function(e){
+
+				  var aperta_da =  $('#apertada').val();
+				  var cliente = $('#cliente').val();
+				  var strategico = $('#strategico').val();
+		        var proposta = $('#proposta').val();
+
+		        var tipo = $('#tipo').val();
 		  
-		  	} else alert("Non hai selezionato nessuna riga")
+				  var euroOra = $('#euroOra').val();
+				  var euroPasto = $('#euroPg').val();
+				  var euroKm = $('#euroKm').val();
+				  var euroTl = $('#euroTl').val();
+				  var volOre = $('#volumeOre').val();
+				  
+				  var tipoAtt = $('#tipoAtt').val();
+				  var tipoPag = $('#tipoPag').val();
+				  var sede = $('#sede').val();
+				  
+				  var nota = $('#nota').val();
+				  
+
+				  datas = "request=offerta&id_offerta="+id+"&aperta_da="+aperta_da+"&cliente="+cliente+"&cliente_strategico="+strategico+"&costo_proposto="+proposta+"&tipo_operatore="+tipo+
+		  "&euro_ora="+euroOra+"&euro_pastog="+euroPasto+"&euro_km="+euroKm+"&euro_tl="+euroTl+"&volume_ore="+volOre+"&tipo_attivita="+tipoAtt+"&pagamento="+tipoPag+"&sede="+sede+"&nota="+nota;
+
+
+					if (aperta_da != null && cliente != null) {
+						
+					//Prevent Multiple Fired Events			
+					 var me = $(this);
+		          e.preventDefault();
 		
+				    if ( me.data('requestRunning') ) {
+				        return;
+				    }
+		          me.data('requestRunning', true);
+						
+						  $.ajax({
+							type: "POST",
+							url: "cgi-bin/edit.php",
+							data: datas,
+							dataType: "html",
+							success: function () {
+								$.alert({
+									title:false,
+									confirmButton : 'DAJE!',
+								   content: 'Offerta modificata correttamente!'
+								});
+							
+							},
+							complete: function () {
+								me.data('requestRunning', false);
+							},
+							error: function () {
+								alert("Error AJAX Call!");
+							}
+							});
+					
+				   }else {
+						$.alert({
+							title:false,
+							confirmButton : 'OPS!',
+						   content: 'Inserisci il nome di chi apre l`offerta e quello del cliente!'
+						});
+				   }
+
+		  	   });
+		  	 
+			   }else{ 
+			   $.alert({
+						title:false,
+						confirmButton : 'OPS!',
+					   content: 'Seleziona prima una riga!'
+					});
+			   }
 		});
 
 	   
     /* Rimuovi elemento selezionat */
 	 $('#rmData').click( function () {
-	 	//???BootstrapDialog.confirm('Hi Apple, are you sure?');
+	 	
+	 	   var $rows = table.$('tr.selected');
+		   var rows = $('tr.selected');
+		   var rowData = table.rows(rows).data();
+		   var id;
 
-	    var dataArr = [];
-	    var rows = $('tr.selected');
-	    var rowData = table.rows(rows).data();
-	    $.each($(rowData),function(key,value){
-	        dataArr.push(value["id_anagrafica"]); //"name" being the value of your first column.
-	    });
-	    
-	    
-	    var datas = "id="+dataArr;
-		$.ajax({
-			type: "POST",
-			url: "cgi-bin/delete.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			alert( msg );
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });
-		  
+			if ($rows.length){
 
-	        table.row('.selected').remove().draw( false );
+				$.confirm({
+				    title: 'Rimuovi',
+				    content: 'Sicuro di voler eliminare questa offerta?',
+				    confirmButton: 'SI',
+                cancelButton: 'NO',
+				    confirm: function(){
+				    	 
+
+					    var rowData = table.rows(rows).data();
+					    $.each($(rowData),function(key,value){
+					      id = value["id_offerta"]; //"name" being the value of your first column.
+					    });
+					    
+					    	
+					    var datas = "request=offerta&id="+id;
+						 $.ajax({
+							type: "POST",
+							url: "cgi-bin/delete.php",
+							data: datas,
+							dataType: "html"
+							  }).done(function(  ) {
+				
+								  }).fail(function() {
+								//alert( "error" );
+								  }).always(function() {
+								//alert( "finished" );
+								  });
+						  
+				
+					     table.row('.selected').remove().draw( false );
+				
+				        $.alert('Offerta Eliminata!');
+				    },
+				    cancel: function(){
+				        $.alert('Visto che non eri sicuro!')
+				    }
+				 
+				});
+				
+			} else { 
+			   $.alert({
+				title : false,
+			   confirmButton : 'OPS!',	
+				content:'Seleziona prima una riga!'
+			    });
+			 }
+
 	    } );
 	    
 	    
 	    	   
     /* Accetta Offerta della riga selezionata */
-	 $('#accept').click( function () {
-
-		 var request = "accetta" 
-	    var dataArr = [];
-	    var rows = $('tr.selected');
-	    var rowData = table.rows(rows).data();
-	    $.each($(rowData),function(key,value){
-	        dataArr.push(value["id_offerta"]);
+	 $('#accept').click( function () { 
+         var $rows = table.$('tr.selected');
+		   var rows = $('tr.selected');
+		   var rowData = table.rows(rows).data();
+		   var datas;
+		   var id, aperta_da, data_a, cliente, cliente_strategico, costo_proposto, operatore, tipo_operatore, tipo_att, eo, tariffa, vo, sede, ek, etl, nota;
+		   
+	      $.each($(rowData),function(key,value){
+	    	   	
+	        id = value["id_offerta"];
+	        aperta_da = value["aperta_da"];
+	        data_a = value["data_apertura"];
+	        cliente = value["cliente"]; 
+	        cliente_strategico = value["cliente_strategico"]; 
+	        costo_proposto = value["costo_proposto"]; 
+	        operatore = value["operatore"];
+	        tipo_operatore = value["tipo_operatore"];
+	        tipo_att = value["tipo_attivita"];
+	        eo = value["euro_ora"];
+	        tariffa = value["tariffa"];
+	        vo = value["volume_ore"];
+	        sede = value["sede"];
+	        ek = value["euro_km"]; 
+	        etl = value["euro_tl"]; 
+	        nota = value["nota"];
 	        
-	        dataArr.push(value["aperta_da"]);
-	        dataArr.push(value["data_apertura"]);
-	        dataArr.push(value["cliente"]); 
-	        dataArr.push(value["cliente_strategico"]); 
-	        dataArr.push(value["costo_proposto"]); 
-	        dataArr.push(value["operatore"]);
-	        dataArr.push(value["tipo_operatore"]);
-	        dataArr.push(value["tipo_attivita"]);
-	        dataArr.push(value["euro_ora"]);
-	        dataArr.push(value["tariffa"]);
-	        dataArr.push(value["volume_ore"]);
-	       
-	        dataArr.push(value["sede"]);
-	        dataArr.push(value["euro_ora"]); 
 	        
-	        dataArr.push(value["euro_km"]); 
-	        dataArr.push(value["euro_tl"]); 
-	        dataArr.push(value["nota"]); 
-	    });
-	    
-	    //console.log(dataArr[1]);
-	    var datas = "request="+request+"&id_commessa="+dataArr[0]+"&aperta_da="+dataArr[1]+"&cliente="+dataArr[3]+"&cliente_strategico="+dataArr[4]+"&costo_proposto="+dataArr[5]+
-	    "&operatore="+dataArr[6]+"&tipo_operatore="+dataArr[7]+"&tipo_attivita="+dataArr[8]+"&euro_ora="+dataArr[9]+"&tariffa="+dataArr[10]+"&volume_ore="+dataArr[11]+"&sede="+dataArr[12]+"&euro_ora="+dataArr[13]+
-	    "&euro_km="+dataArr[14]+"&euro_tl="+dataArr[15]+"&nota="+dataArr[16];
-	    
-		$.ajax({
-			type: "POST",
-			url: "cgi-bin/postdata.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			alert( msg );
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });
-		  
-
-	    } );
-	    
-	    
-	        /* Rimuovi elemento selezionat */
-	 $('#addHours').click( function () {
-	 	//???BootstrapDialog.confirm('Hi Apple, are you sure?');
-
-	    var dataArr = [];
-	    var rows = $('tr.selected');
-	    var rowData = table.rows(rows).data();
-	    $.each($(rowData),function(key,value){
-	        //dataArr.push(value["id_anagrafica"]); //"name" being the value of your first column.
-	    });
-	    
-
-	    /*
-	    var datas = "id="+dataArr;
-		$.ajax({
-			type: "POST",
-			url: "cgi-bin/delete.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			alert( msg );
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });*/
-		  
-		  
-		  
-
+		    datas = "request=accetta&id_commessa="+value["id_offerta"]+"&aperta_da="+aperta_da+"&cliente="+cliente+"&cliente_strategico="+cliente_strategico+"&costo_proposto="+costo_proposto+
+		    "&operatore="+operatore+"&tipo_operatore="+tipo_operatore+"&tipo_attivita="+tipo_att+"&euro_ora="+eo+"&tariffa="+tariffa+"&volume_ore="+vo+"&sede="+sede+
+		    "&euro_km="+ek+"&euro_tl="+etl+"&nota="+nota; 
 	        
-	    } );
+	        });
+			    
+			   if($rows.length){
+			   	 
+				$.ajax({
+					type: "POST",
+					url: "cgi-bin/postdata.php",
+					data: datas,
+					dataType: "html"
+					  }).done(function( msg ) {
+			
+		
+				
+				  }).fail(function() {
+				alert( "error" );
+				  }).always(function() {
+				alert( "finished" );
+				  });
+				  
+		      }else {
+		      	 $.alert({
+						title : false,
+					   confirmButton : 'OPS!',	
+						content:'Seleziona prima una riga!'
+					    });
+			   }
+
+	  });
+	    
+
 	    
 //SPINNERS
-
 $("input[name='mySpinner']").TouchSpin({
       verticalbuttons: true,
       postfix: '€',
@@ -461,6 +510,7 @@ function valuta2() {
   var rischio;  
   var cliente_strategico = $('#strategico').val();
   var costo_proposto = $('#proposta').val();
+  var fattore = $('#fattore').val();
 
 
   var euro_ora = $('#euroOra').val();
@@ -470,8 +520,7 @@ function valuta2() {
   var volume_ore = $('#volumeOre').val();
   
 
-  
-  var costo_industriale = euro_ora*1.15;
+  var costo_industriale = euro_ora*fattore;
   var marg_lordo = ((costo_proposto - euro_ora)/costo_proposto)*100;
   var marg_ind = ((costo_proposto - costo_industriale)/costo_proposto)*100;
      
@@ -619,7 +668,15 @@ function disable(select_val,input_id,input_id2) {
               	    document.getElementById(input_id).disabled = false;
                 	 document.getElementById(input_id2).disabled = true;
    			}
-}				
+}
+
+function changev(sel) {
+if (sel.value == "interno") 
+  $(euroOra).val(11.00);
+else
+  $(euroOra).val(15.00);
+}			
+					
 							       
                 
               

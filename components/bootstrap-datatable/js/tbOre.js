@@ -192,8 +192,12 @@ $('#addHours').click(function(){
  
 
 //SPINNERS
-
     $("input[name='mySpinner']").TouchSpin({
+    	max: 8,
+      verticalbuttons: true
+    });
+    
+    $("input[name='mySpinner2']").TouchSpin({
     	
       verticalbuttons: true
     });
@@ -204,8 +208,9 @@ $('#addHours').click(function(){
 
 function disable2(select_val) {
 $('#addHours').prop("disabled",false);
-}			
-					
+}
+
+				
 
 
 

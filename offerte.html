@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
+    <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
+    <link  rel="stylesheet" href="css/jquery-confirm.min.css">
 
 	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
@@ -28,7 +29,7 @@
   			<div class="panel-body">
 	      <!-- Operation's Button trigger modal -->
 	      <div class="btn-group" role="group" aria-label="...">	      
-		      <button type="button" href="#myModal" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
+		      <button type="button" id="addData" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
 		      <button type="button" id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
 		      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
 	      </div>
@@ -52,7 +53,7 @@
 			  <div class="modal-body">
 			      
 			      <div class="row">
-				      <div class="form-group col-md-4 ">
+				      <div class="form-group col-md-4">
 				    		<label for="nome">Aperta da*</label>
 							<select id="apertada"class="form-control select2"  tabindex="2"></select>
 				      </div>
@@ -62,12 +63,16 @@
 			      <div class="form-group col-md-2">	  
 					   <label for="sell">Fattore</label>
 					   <input id="fattore" type="text" value="1.15" name="mySpinner2">
-				  	
-			      </div>
+				  	</div>
+			      
+			      <div class="form-group col-md-2">
+						  <label>Off.Quadro</label><br>
+						  <input id="quadro" type="checkbox">
+				   </div>
 			      
 			     
 				      
-				          <div class="form-group col-md-3 col-md-offset-3">
+				          <div class="form-group col-md-3 col-md-offset-1">
 						   <label for="sell">Proposta in €</label>
 						   <input id="proposta" type="text" value="20" name="mySpinner" onchange="valuta2()" class="spin">
 				      </div>
@@ -91,7 +96,7 @@
 				          <div class="form-group col-md-3  col-md-offset-3">
 					  
 						   <label for="sell">a ora</label>
-						   <input id="euroOra" type="text" value="15" name="mySpinner">
+						   <input id="euroOra" type="text" value="11" name="mySpinner">
 						</div>
 			      </div>
 			      
@@ -118,9 +123,8 @@
 						 </div>
 					  
 					  
-						  <div class="form-group col-md-3 col-md-offset-1">
-				  
-					   <label for="sell">a pezzo</label>
+				  <div class="form-group col-md-3 col-md-offset-1">
+				  		<label for="sell">a pezzo</label>
 					   <input  disabled id="euroPezzo" type="text" value="0.10" name="mySpinner">
 			      </div>
 			      </div>
@@ -133,14 +137,14 @@
 			      
 			      <div class="form-group col-md-2 ">
 						<label for="sel1">Operatori Prev.</label>
-					    <select class="form-control" id="tipo">
-					    <option>Interno</option>
-					    <option>Esterno</option>
+					    <select class="form-control" id="tipo" onchange="changev(this)">
+					    <option value="interno">Interno</option>
+					    <option value="esterno">Esterno</option>
 					    </select>
 					</div>    
 			      
 			       <div class="form-group col-md-3 col-md-offset-3">
-					   <label for="sell">a km</label>
+					   <label for="sell">costo a km</label>
 					   <input id="euroKm" type="text" value="0" name="mySpinner">
 				  	
 			      </div>
@@ -214,7 +218,7 @@
 		      <div class="modal-content">
 		        <div class="modal-header">
 		          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		          <h4 class="modal-title">Second Modal title</h4>
+		          <h4 class="modal-title">Aggiungi attività</h4>
 		        </div>
 		        <div class="modal-body">
 		         <label for="nome">Nuovo Tipo Attività</label>
@@ -229,63 +233,13 @@
 		</div>
 
       
-      <!-- editModal  Offerte-->
-      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-			<div class="modal-content">
-			<form>
-			  <div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    <h4 class="modal-title" id="myModalLabel">Modifica Offerta</h4>
-			  </div>
-			  
-			  <div class="modal-body">
-			      <div class="form-group">
-						<label for="nome">Aperta da*</label>
-						<input type="text" class="form-control" id="nome2">
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="cliente">Cliente</label>
-						<input type="text" class="form-control" id="cell2">
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="email">Operatore</label>
-						<input type="tel" class="form-control" id="email2">
-			      </div>
-			      
-		
-			       <div class="form-group">
-					  <label for="sel1">Tipo Attività:</label>
-					  <select class="form-control " id="tipo2">
-					    <option>Controllo Qualità</option>
-					    <option>Consulenza</option>
-					    <option>Formazione</option>
-					    <option>CSL2</option>					  					    
-					  </select>
-					</div>
-			 </div>
-			  
-			  
-			  <div class="modal-footer">
-			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-			    <button type="button" id="savechanges" class="btn btn-primary">Salva</button>
-			  </div>
-			 </form>
-			 </div>
-      </div>
-      </div>
-      
-      
-
-			          
+	          
 			          
           <!-- Risultati sulla Tabella -->
           <div class="table-responsive">
            
  
-            <table id="tb_off" cellspacing="0" width="100%">
+            <table id="tb_off"  cellspacing="0" width="100%">
             <tbody> 
 	            <thead> 
 	            <tr>
@@ -295,8 +249,6 @@
 		            <th>Cliente</th>  
 		            <th>Tipo Attività</th>
                   <th>Plant</th>
-                  <!-- <th></th> Checkbox-->
-
 	            </tr> 
 	            </thead> 
             </tbody>
@@ -314,12 +266,13 @@
             
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    	 <script src="js/jquery.bootstrap-touchspin.min.js"></script> 
+    <script src="js/jquery-confirm.min.js"></script>
+    <script src="js/jquery.bootstrap-touchspin.min.js"></script> 
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="components/bootstrap-datatable/js/tbOff.js"></script>
     <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
 	 <script src="https://cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script>
-
+	 
 </body>        
 </html>

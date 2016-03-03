@@ -49,12 +49,14 @@ $(document).ready(function() {
 		  } ],
         "order": [[1, 'asc']]
 	     } );
+	     
+	
 	      
     
 	    /* Seleziona Righe */
 		 $('#tb_anag tbody').on( 'click', 'tr', function () {
 	        if ( $(this).hasClass('selected') ) {
-	            $(this).removeClass('selected');
+	            //$(this).removeClass('selected');
 	        }
 	        else {
 	            table.$('tr.selected').removeClass('selected');
@@ -63,7 +65,7 @@ $(document).ready(function() {
 	    } );
 	    
 	    
-		 // Add event listener for opening and closing details
+		 // Mostra dettagli
 	    $('#tb_anag tbody').on('click', 'td.details-control', function () {
 	        var tr = $(this).closest('tr');
 	        var row = table.row( tr );
@@ -81,160 +83,245 @@ $(document).ready(function() {
 	    } );
 	    
 	    
-	   /* Aggiungi Elemento */ 
-		$('#save').click(function(){
-		  var request = "anagrafe";
-		  var nome = $('#nome').val();
-		  var cell = $('#cell').val();
-		  var tel = $('#tel').val();
-		  var email = $('#email').val();
-		  var tipo = $('#tipo').val();
-		  
-		  var sedel = $('#sede_legale').val();
-		  var piva = $('#piva').val();
-		  var ind_fatt = $('#ind_fatt').val();
-		  var ref_amm = $('#ref_amm').val();
-		  var ref_comm = $('#ref_comm').val();
-		  var tel_ref_comm = $('#tel_refcomm').val();
-		  var email_ref_comm = $('#email_refcomm').val();
-		  
-		  /* Le variabile postate devono avere lo stesso nome delle colonne della tabella del DB */
-		  var datas = "request="+request+"&nome="+nome+"&mobile="+cell+"&tel_fisso="+tel+"&email="+email+"&tipo_anagrafica="+tipo+
-		  "&sede_legale="+sedel+"&piva="+piva+"&ind_fatt="+ind_fatt+"&ref_amm="+ref_amm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm;
-		  var m;
-		  $.ajax({
-			type: "POST",
-			url: "cgi-bin/postdata.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-	
+		$('#addData').click(function(){
 		
-		  table.row.add( {
-        "nome":       nome,
-        "mobile":   cell,
-        "email":     email,
-        "tipo_anagrafica": tipo
-       
-    		}).draw();
-    	
+			$('#myModal').modal('show'); 
+			    
+		   /* Aggiungi Elemento */ 
+			$('#save').click(function(e1){
 			  
-
-			  }).fail(function() {
-			alert( "Server Error" );
-			  }).always(function() {
-			alert( "Finished" );
-			  });
-
-	  });
+			  var nome = $('#nome').val();
+			  var cell = $('#cell').val();
+			  var tel = $('#tel_fisso').val();
+			  var email = $('#email').val();
+			  var tipo = $('#tipo').val();		  
+			  var sedel = $('#sede_legale').val();
+			  var piva = $('#piva').val();
+			  var ind_fatt = $('#ind_fatt').val();
+			  var ref_amm = $('#ref_amm').val();
+			  var ref_comm = $('#ref_comm').val();
+			  var tel_ref_comm = $('#tel_refcomm').val();
+			  var email_ref_comm = $('#email_refcomm').val();
+			  
+			  /* Le variabile postate devono avere lo stesso nome delle colonne della tabella del DB */
+			  var datas = "request=anagrafica&nome="+nome+"&mobile="+cell+"&tel_fisso="+tel+"&email="+email+"&tipo_anagrafica="+tipo+
+			  "&sede_legale="+sedel+"&piva="+piva+"&ind_fatt="+ind_fatt+"&ref_amm="+ref_amm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm;
+			
+           if (nome != null) {
+           	
+           	 //Prevent Multiple Fired Events			
+				 var me1 = $(this);
+	          //e1.preventDefault();
+	
+			    if ( me1.data('requestRunning') ) {
+			        return;
+			    }
+	          me1.data('requestRunning', true);			  
+			  
+				  $.ajax({
+					type: "POST",
+					url: "cgi-bin/postdata.php",
+					data: datas,
+					dataType: "html",
+					success : function () {
+							$.alert({
+					          title: false,
+							    content: 'Anagrafica salvata correttamente!',
+							    confirmButton : 'DAJE', 
+							    confirm: function(){
+								  
+									table.row.add( {
+						        "nome":       nome,
+						        "mobile":   cell,
+						        "email":     email,
+						        "tipo_anagrafica": tipo
+						       
+						    		}).draw();
+					
+					          }
+							});
+					},
+					complete : function () {
+					  			me1.data('requestRunning', false);
+	            },
+	            error: function () {
+	            alert("Errore AJAX Call");                 
+	            }
+			   });
+		   
+		   }else{
+				$.alert({
+				title : false,
+			   confirmButton : 'OPS!',	
+				content:'Inserisci prima un nome!'
+			    });
+			} 
+ 
+			});
+		});
 	  
 	  
 	   /*Edit Data from Table. Scrivere codice + pulito*/
 
 		$('#editData').click(function(){
 			
+			
 			var $rows = table.$('tr.selected');
+			
 			if ($rows.length) {
 			 
-			 var dataArr = [];
+			 var id;
 		    var rows = $('tr.selected');
 		    var rowData = table.rows(rows).data();
-		    console.log(rowData);
+
 		    $.each($(rowData),function(key,value){
-		        dataArr.push(value["nome"]);
-		        dataArr.push(value["mobile"]); 
-		        dataArr.push(value["email"]);
-		        dataArr.push(value["tipo_anagrafica"]);
-		        dataArr.push(value["id_anagrafica"]);
+		        id = value["id_anagrafica"];
+		        $("#nome").val(value["nome"]);
+		        $("#cell").val(value["mobile"]);
+		        $("#tel_fisso").val(value["tel_fisso"]); 
+		        $("#email").val(value["email"]);
+		        
+		        $("#sede_legale").val(value["sede_legale"]); 
+		        $("#piva").val(value["piva"]); 
+		        $("#ind_fatt").val(value["ind_fatt"]); 
+		        $("#ref_amm").val(value["ref_amm"]); 
+		        $("#ref_comm").val(value["ref_comm"]); 
+		        $("#tel_refcomm").val(value["tel_refcomm"]); 
+		        $("#email_refcomm").val(value["email_refcomm"]); 
 		    });
-		    
-		 $("#nome2").val(dataArr[0]);
-		 $("#cell2").val(dataArr[1]);
-		 $("#email2").val(dataArr[2]);
-		 $("#tipo2").val(dataArr[3]);
+
 		  
-		  $('#editModal').modal('show'); 
+		  $('#myModal').modal('show'); 
 		  
 				/* Save Changes */
-				$('#savechanges').click(function(){
-				  var nome = $('#nome2').val();
-				  var cell = $('#cell2').val();
-				  var email = $('#email2').val();
-				  var tipo = $('#tipo2').val();
+				$('#save').click(function(e){
+						
+					 //Prevent Multiple Fired Events
+					 			
+					 var me = $(this);
+		          //e.preventDefault();
+		
+				    if ( me.data('requestRunning') ) {
+				        return;
+				    }
+		          me.data('requestRunning', true);
+					
+					
+					
+				  var nome = $('#nome').val();
+				  var cell = $('#cell').val();
+				  var tel  = $('#tel_fisso').val();
+				  var email= $('#email').val();
+				  var tipo = $('#tipo').val();		  
+				  var sedel = $('#sede_legale').val();
+				  var piva = $('#piva').val();
+				  console.log(piva);
+				  var ind_fatt = $('#ind_fatt').val();
+				  var ref_amm = $('#ref_amm').val();
+				  var ref_comm = $('#ref_comm').val();
+				  var tel_ref_comm = $('#tel_refcomm').val();
+				  var email_ref_comm = $('#email_refcomm').val();
+			  
 				
 				  
-				  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo+"&id="+dataArr[4];
+				  var datas = "request=anagrafica&id="+id+"&nome="+nome+"&cell="+cell+"&tel_fisso="+tel+"&email="+email+"&tipo="+tipo+"&sede_legale="+sedel+"&piva="+piva+"&ind_fatt="+ind_fatt+
+				               "&ref_amm="+ref_amm+"&ref_comm="+ref_comm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm;
 				  
 				  $.ajax({
 					type: "POST",
 					url: "cgi-bin/edit.php",
 					data: datas,
-					dataType: "html"
-					  }).done(function( msg ) {
-					alert( msg );
-				
-						//viewdata();
-						
-						  }).fail(function() {
-						alert( "error" );
-						  }).always(function() {
-						alert( "finished" );
-						  });
+					dataType: "html",
+					success: function(msg) {
+                  	$.alert({
+				          title: false,
+						    content: 'Anagrafica modificata!',
+						    confirmButton : 'DAJE', 
+						    });
+	            },
+               complete: function() {
+               me.data('requestRunning', false);
+               },
+               error: function () {
+               alert("Errore AJAX Call");                 
+               }
+          
+				  });
 				});
-		
 		
 		 
 		  
-		  	} else alert("Non hai selezionato nessuna riga")
+		  	} else {
+				$.alert({
+	         title : false,
+			   confirmButton : 'OPS!',	
+				content:'Seleziona prima una riga!'});	  	
+		  	}
+		 
 		
 		});
 
 	   
     /* Rimuovi elemento selezionat */
 	 $('#rmData').click( function () {
-
-	    var dataArr = [];
+       var $rows = table.$('tr.selected');
+	    var id;
 	    var rows = $('tr.selected');
 	    var rowData = table.rows(rows).data();
+	   
 	    $.each($(rowData),function(key,value){
-	        dataArr.push(value["id_anagrafica"]); //"name" being the value of your first column.
+	    id = value["id_anagrafica"]; //"name" being the value of your first column.
 	    });
 	    
-	    console.log(dataArr);
-	    var datas = "id="+dataArr;
-		$.ajax({
-			type: "POST",
-			url: "cgi-bin/delete.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			alert( msg );
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });
-		  
+	    		   
+	    		   if($rows.length){
+					
+					$.confirm({
+				    title: 'Rimuovi',
+				    content: 'Sicuro di voler eliminare questa anagrafica?',
+				    confirmButton: 'SI',
+                cancelButton: 'NO',
+				    confirm: function(){
+				    	
+					var datas = "request=anagrafica&id="+id;
+					$.ajax({
+						type: "POST",
+						url: "cgi-bin/delete.php",
+						data: datas,
+						dataType: "html"
+						  }).done(function( msg ) {
+				     table.row('.selected').remove().draw( false );
+					  }).fail(function() {
+					  alert( "Error" );
+					  }).always(function() {
+					//alert( "finished" );
+					  });
+	
+					  $.alert('Anagrafica Eliminata!');				        		
+					  
+					  
+				    },
+				    cancel: function(){
+				        $.alert('Visto che non eri sicuro!')
+				    }
 
-	        table.row('.selected').remove().draw( false );
+				    
+				   });
+				
+				}else{ $.alert({
+				title : false,
+			   confirmButton : 'OPS!',	
+				content:'Seleziona prima una riga!'
+			    });
+			    }			    
+				
+				
+
 	    } );
 
 }); /*Fine Document Ready*/
 
 
-/*Add Dinamically Input Fields when an option is selected*/
-/*
-$('#tipo').change(function(){
-
-    if( $(this).val() == '2'){
-        $('.modal-body').append();
-    }else{
-        //$('#myInput').remove();
-    }
-});*/
 
 function disable(select_val,input_id) {
                 var e = document.getElementById(select_val);
@@ -262,7 +349,7 @@ function disable(select_val,input_id) {
 
 /* Formatting function for row details - modify as you need */
 function format ( d ) {
-	console.log(d);
+	
 	if (d.tipo_anagrafica == "Cliente") {
     // `d` is the original data object for the row
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
@@ -280,11 +367,12 @@ function format ( d ) {
         '</tr>'+
         '<tr>'+
             '<td>Ref. Amm.: '+d.ref_amm+'</td>'+
-            '<td>Tel. '+d.ref_amm+'</td>'+
-            '<td>Email  ' +d.email_ref_comm+'</td>'+
+            
         '</tr>'+
         '<tr>'+
             '<td>Ref. Comm.: '+d.ref_comm+'</td>'+
+            '<td>Tel. '+d.ref_comm+'</td>'+
+            '<td>Email  ' +d.email_ref_comm+'</td>'+
         '</tr>'+
     '</table>';
  }
