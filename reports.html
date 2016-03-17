@@ -6,11 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >
+<!--    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >-->
+    <link rel="stylesheet" href="components/bootstrap-datatable/css/bootstrap-datetimepicker.min.css" >
+    
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
 	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
+    
 
     <title></title>
     
@@ -26,162 +31,107 @@
   			<div class="panel-body">
 	      <!-- Operation's Button trigger modal -->
 	      <div class="btn-group" role="group" aria-label="...">	      
-		      <button type="button" href="#myModal" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
-		      <button type="button" id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
-		      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
+		      <button type="button" href="#myModal" class="btn btn-primary" data-toggle="modal">Mostra</button>
+
 	      </div>
  			</div>
 		</div>
 		
-		
+	  <!-- Nav tabs -->
+	  <ul id="myTab" class="nav nav-tabs" role="tablist">
+	    <li role="presentation" class="active"><a href="#commesse" aria-controls="home" role="tab" data-toggle="tab">Commesse</a></li>
+	    <li role="presentation"><a href="#report" aria-controls="profile" role="tab" data-toggle="tab" >Report</a></li>
+	  </ul>
+	  <br>
+	
 
-      <!-- Modal addData-->
-      <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-			<div class="modal-content">
-			
-			
-			<form>
-			  <div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    <h4 class="modal-title" id="myModalLabel">Aggiungi Offerta</h4>
-			  </div>
+		    
+		     <!-- Tab panes -->
+			  <div class="tab-content">
 			  
-			  <div class="modal-body">
-			      <div class="form-group">
-						<label for="nome">Aperta da*</label>
-						<select id="apertada"class="form-control select2" style="width:100%;" tabindex="2">						         
-						</select>
+					 <div role="tabpanel" class="tab-pane active" id="commesse">
+					 <div class="row">
+					    <div class="form-group col-md-12">
+					    <h3> Commesse attive:</h3>
+					    
+					        
+					         <!--   <div class='input-group date' id='datetimepicker2'>
+					                <input type='text' class="form-control" />
+					                <span class="input-group-addon">
+					                    <span class="glyphicon glyphicon-calendar">
+					                    </span>
+					                </span>
+					            </div>-->
+					       
+					    </div>
+					 </div>       
+					 
+					  <div class="table-responsive">
+					  <table id="tb_rep" class="display"  cellspacing="0" width="100%">
+						<tbody> 
+						   <thead> 
+						   <tr>
+						      <th>Data apertura</th>
+						      <th>Tipo Attività</th>
+						      <th>Sede</th>
+						   </tr> 
+						   </thead> 
+						</tbody>
+						</table>
+					  </div>
 			      </div>
-			      
-			       <div class="form-group">
-					  <label for="sell">Cliente:</label>					  
-						    <select id="cliente" class="form-control select2" style="width:100%;" tabindex="2">						         
-						    </select>
-
-					 </div>
-			      
-			      <div class="form-group">
-						<label for="email">Operatore</label>
-						<select id="operatore" class="form-control select2" style="width:100%;" tabindex="2">						         
-						</select>
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="sede">Sede</label>
-						<input type="text" class="form-control" id="sede">
-			      </div>
-			     
-			      
-		
-			       <div class="form-group">
-					  <label for="sel1">Tipo Attività:</label>
-					  <select class="form-control" id="tipo">
-					    <option>Controllo Qualità</option>
-					    <option>Consulenza</option>
-					    <option>Formazione</option>
-					    <option>CSL2</option>					  					    
-					  </select>
-					</div>
-		   
+			  
+			    
+			   <div role="tabpanel" class="tab-pane" id="report">
+			   
+			   	    <div class="table-responsive">
+				           <table id="tb_client" class="display"  cellspacing="0" width="100%">
+				            <tbody> 
+					            <thead> 
+						            <th>Data</th>
+						            <th>Operatore</th>  
+						            <th>Ore Std</th>  
+						            <th>Ore Extra/Notte</th>  
+						            <th>Ore Festivi</th>  
+						            <th>Ore Sabato</th>  
+					            </tr> 
+					            </thead> 
+				            </tbody>
+				            </table>
+				     </div>
+			
 			 </div>
-			  
-			  
-			  <div class="modal-footer">
-			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-			    <button type="button" id="save" class="btn btn-primary">Salva</button>
-			  </div>
-		  </form>
-		</div>
-      </div>
-      </div>
-      
-      <!-- Modal editData-->
-      <div class="modal fade" id="edit_off" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-			<div class="modal-content">
-			<form>
-			  <div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    <h4 class="modal-title" id="myModalLabel">Modifica Anagrafica</h4>
-			  </div>
-			  
-			  <div class="modal-body">
-			      <div class="form-group">
-						<label for="nome">Aperta da*</label>
-						<input type="text" class="form-control" id="nome2">
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="cliente">Cliente</label>
-						<input type="text" class="form-control" id="cell2">
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="email">Operatore</label>
-						<input type="tel" class="form-control" id="email2">
-			      </div>
-			      
-		
-			       <div class="form-group">
-					  <label for="sel1">Tipo Attività:</label>
-					  <select class="form-control " id="tipo2">
-					    <option>Controllo Qualità</option>
-					    <option>Consulenza</option>
-					    <option>Formazione</option>
-					    <option>CSL2</option>					  					    
-					  </select>
-					</div>
-		   
 			
 			
-		   
-			 </div>
-			  
-			  
-			  <div class="modal-footer">
-			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-			    <button type="button" id="savechanges" class="btn btn-primary">Salva</button>
-			  </div>
-			 </form>
-			 </div>
-      </div>
-      </div>
-          
-          
-          <!-- Risultati sulla Tabella -->
-          <div class="table-responsive">
-           
+			</div>
+    
+    
+    
+    
+		           
+   </div>
 
-            <table id="tb_off" cellspacing="0" width="100%">
-            <tbody> 
-	            <thead> 
-	            <tr>
-		            <th></th>
-		            <th>Aperta da</th>
-		            <th>Cliente</th>  
-		            <th>Operatore</th>
-		            <th>Tipo Attività</th>
-                  <th>Plant</th>
-                  <!-- <th></th> Checkbox-->
-
-	            </tr> 
-	            </thead> 
-            </tbody>
-            </table>
-          </div>
-      </div>
+     
     
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-            
+
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script type="text/javascript" src="components/bootstrap-datatable/js/transition.js"></script>
+    <script type="text/javascript" src="components/bootstrap-datatable/js/collapse.js"></script>
+    
+    <script type="text/javascript" src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="components/bootstrap-datatable/js/tbRep.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+   
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
-    <!-- <script src="components/bootstrap-datatable/js/tbRep.js"></script> -->
+
     <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
-	 <script src="https://cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script> 
+
 </body>        
 </html>

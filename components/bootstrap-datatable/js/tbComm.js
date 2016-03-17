@@ -1,5 +1,4 @@
 //GLOBAL VARIABLES 
- 
 var table;
 
 $(document).ready(function() {
@@ -21,7 +20,7 @@ $(document).ready(function() {
 	    		"var4": "cliente_strategico",
 	    		"var5": "aperta_da",
 	    		"var6": "data_apertura",
-	    		"var7": "operatore",
+	    		"var7": "quadro",
 	    		"var8": "tipo_operatore",
 	    		"var9": "tipo_attivita",
 	    	  "var10": "costo_operatore",
@@ -33,7 +32,9 @@ $(document).ready(function() {
 	    	  "var16": "euro_giorno",
 	    	  "var17": "euro_km",
 	    	  "var18": "euro_tl",
-	    	  "var19": "nota",    		   		
+	    	  "var19": "nota",
+	    	  "var20": "a_pezzo",
+           "var21": "euro_pezzo"    		   		
 	    	},	    
 	    },
 	    "columns": [
@@ -124,7 +125,7 @@ $(document).ready(function() {
 		  var sede = $('#sede').val();
 		  var request = "offerta";
 		 
-		  var datas = "aperta_da="+apertada+"&cliente="+cliente+"&operatore="+operatore+"&tipo_attivita="+tipo+"&request="+request+"&sede="+sede;
+		  var datas = "aperta_da="+apertada+"&cliente="+cliente+"&tipo_attivita="+tipo+"&request="+request+"&sede="+sede;
 		  
 		  $.ajax({
 			type: "POST",
@@ -338,6 +339,10 @@ function format ( d ) {
         '<tr>'+
             '<td>Data Apertura:</td>'+
             '<td>'+d.data_apertura+'</td>'+
+        '</tr>'+
+         '<tr>'+
+            '<td>Quadro : '+d.quadro+'</td>'+
+            '<td>A pezzi : '+d.a_pezzo+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Cliente</td>'+

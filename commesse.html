@@ -31,7 +31,7 @@
   			<div class="panel-body">
 	      <!-- Operation's Button trigger modal -->
 	      <div class="btn-group" role="group" aria-label="...">	      
-	      <button type="button" disabled href="#myModal" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
+	      <button type="button" disabled id="addData" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
 	      <button type="button" disabled id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
 	      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
 	      </div>
@@ -71,148 +71,110 @@
 	            </table>
 	     </div>
   </div>
+  
     
    <div role="tabpanel" class="tab-pane" id="ore">
+   
+            <div class="row">
+				    <div class="form-group col-md-2">
+				    <label>Seleziona mese :</label>
+				        
+				            <div class='input-group date' id='datetimepicker2'>
+				                <input type='text' class="form-control" />
+				                <span class="input-group-addon">
+				                    <span class="glyphicon glyphicon-calendar">
+				                    </span>
+				                </span>
+				            </div>
+				       
+				    </div>
+				    
+				    <div class="col-md-2 col-md-offset-2">
+				     <h2 id="month"></h2>
+				    </div>
+			   </div> 
    
    	    <div class="table-responsive">
 	           <table id="tb_ore" class="display"  cellspacing="0" width="100%">
 	            <tbody> 
-		            <thead> 
+		            <thead id="tb_head" >
+		             
 		            <tr>
-<!-- 			            <th></th> -->
 			            <th>Data</th>
 			            <th>Operatore</th>  
 			            <th>Ore Std</th>  
 			            <th>Ore Extra/Notte</th>  
 			            <th>Ore Festivi</th>  
 			            <th>Ore Sabato</th>  
-		            </tr> 
+		            </tr>
+		            
 		            </thead> 
 	            </tbody>
 	            </table>
 	     </div>
+	     <br><br><br>
+	     
+	     <table id="summary" class="table table-nonfluid" width="auto">
 
+				 <caption>SUMMARY</caption>
+			    
+			    <thead>    
+			    	  <tr>
+			            <th scope="col" rowspan="2">Main mode</th>
+			            
+			        </tr>
+			        
+			        <tr>
+			            <th scope="col">Ore</th>
+			            <th>Costo</th>
+			            <th>Totale</th>
+			        </tr>        
+			    </thead>
+			    
+			    <tfoot>
+			    	<tr>
+			        	<th scope="row">Totale</th>
+			            <td></td>
+			          
+			        </tr>
+			    </tfoot>
+			    
+			    <tbody>
+			    	<tr>
+			    		<th>Tot. ore standard</th>
+			    		   <td id="td1"></td>
+			    		   <td id="td1_1"></td>
+			    		   <td id="td1_2"></td>
+			       </tr>
+			        
+			        <tr>
+			        	<th>Tot. ore extra (+25%)</th>
+			            <td id="td2"></td>
+			            <td id="td2_1"></td>
+			            <td id="td2_2"></td>
+			        </tr>
+			        
+			        <tr>
+			        	<th>Tot. ore sabato (+20%)</th>
+			            <td id="td3"></td>
+			            <td id="td3_1"></td>
+			            <td id="td3_2"></td>
+			        <tr>
+			        	<th>Ore Totali Festivi </th>
+			            <td id="td4"></td>
+			            <td id="td4_1"></td>
+			            <td id="td4_2"></td>
+			        </tr>
+			        
+			    </tbody>
+			
+			</table>
 
  </div>
 
 
 </div>
 		
-		
-
-      <!-- Modal addData-->
-      <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-			<div class="modal-content">
-			
-			
-			<form>
-			  <div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    <h4 class="modal-title" id="myModalLabel">Aggiungi Offerta</h4>
-			  </div>
-			  
-			  <div class="modal-body">
-			      <div class="form-group">
-						<label for="nome">Aperta da*</label>
-						<select id="apertada"class="form-control select2" style="width:100%;" tabindex="2">						         
-						</select>
-			      </div>
-			      
-			       <div class="form-group">
-					  <label for="sell">Cliente:</label>					  
-						    <select id="cliente" class="form-control select2" style="width:100%;" tabindex="2">						         
-						    </select>
-
-					 </div>
-			      
-			      <div class="form-group">
-						<label for="email">Operatore</label>
-						<select id="operatore" class="form-control select2" style="width:100%;" tabindex="2">						         
-						</select>
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="sede">Sede</label>
-						<input type="text" class="form-control" id="sede">
-			      </div>
-			     
-			      
-		
-			       <div class="form-group">
-					  <label for="sel1">Tipo Attività:</label>
-					  <select class="form-control" id="tipo">
-					    <option>Controllo Qualità</option>
-					    <option>Consulenza</option>
-					    <option>Formazione</option>
-					    <option>CSL2</option>					  					    
-					  </select>
-					</div>
-		   
-			 </div>
-			  
-			  
-			  <div class="modal-footer">
-			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-			    <button type="button" id="save" class="btn btn-primary">Salva</button>
-			  </div>
-		  </form>
-		</div>
-      </div>
-      </div>
-      
-      <!-- Modal editData-->
-      <div class="modal fade" id="edit_off" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-			<div class="modal-content">
-			<form>
-			  <div class="modal-header">
-			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    <h4 class="modal-title" id="myModalLabel">Modifica Anagrafica</h4>
-			  </div>
-			  
-			  <div class="modal-body">
-			      <div class="form-group">
-						<label for="nome">Aperta da*</label>
-						<input type="text" class="form-control" id="nome2">
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="cliente">Cliente</label>
-						<input type="text" class="form-control" id="cell2">
-			      </div>
-			      
-			      <div class="form-group">
-						<label for="email">Operatore</label>
-						<input type="tel" class="form-control" id="email2">
-			      </div>
-			      
-		
-			       <div class="form-group">
-					  <label for="sel1">Tipo Attività:</label>
-					  <select class="form-control " id="tipo2">
-					    <option>Controllo Qualità</option>
-					    <option>Consulenza</option>
-					    <option>Formazione</option>
-					    <option>CSL2</option>					  					    
-					  </select>
-					</div>
-		   
-			
-			
-		   
-			 </div>
-			  
-			  
-			  <div class="modal-footer">
-			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
-			    <button type="button" id="savechanges" class="btn btn-primary">Salva</button>
-			  </div>
-			 </form>
-			 </div>
-      </div>
-      </div>
-      
       
       <!-- Modal Insert Hours-->
       <div class="modal fade" id="hoursModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -248,13 +210,24 @@
 		            </div>
 	            </div>
             </div>
- 
-			      <div class="form-group">
+            
+            <div class="row">
+             <div class="col-md-6">
+ 			      <div class="form-group">
 						<label for="email">Operatore</label>
-						<select id="operatore2" class="form-control select2" style="width:100%;" tabindex="2">						         
+						<select id="operatore2" class="form-control select2" tabindex="2">						         
 						</select>
 			      </div>
-			      
+			    </div>
+			  
+			    <div class="col-md-6">
+			      <div class="form-group">
+						<label>Sede</label>
+						<input type='text'  class="form-control" id="sede">						         
+					</div>
+				 </div>	
+			   </div>
+			   
 			      <div class="row">
 				      <div class="col-md-3">
 					      <div class="form-group">
@@ -340,28 +313,31 @@
     <!-- Placed at the end of the document so the pages load faster -->
             
     <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.bootstrap-touchspin.min.js"></script>
+
+    
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
     <script src="components/bootstrap-datatable/js/tbComm.js"></script>
-    <script src="components/bootstrap-datatable/js/tbOre.js"></script> 
+    <script src="components/bootstrap-datatable/js/tbOre.js"></script>
+     
     
-    <!-- try BUTTON--> 
+    <!-- PDF BUTTON --> 
     <script src="//cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.1.1/js/buttons.flash.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
     <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.1.1/js/buttons.html5.min.js"></script>
-
+		
+	<!-- Datapicker -->	
     <script src="js/moment.min.js"></script>
     <script type="text/javascript" src="components/bootstrap-datatable/js/transition.js"></script>
     <script type="text/javascript" src="components/bootstrap-datatable/js/collapse.js"></script>
-    <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-
     <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
 
-	 <script src="js/jquery.bootstrap-touchspin.min.js"></script>
+	
 </body>        
 </html>

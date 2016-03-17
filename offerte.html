@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="components/bootstrap-datatable/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="css/select2.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css" >
     <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
-    <link  rel="stylesheet" href="css/jquery-confirm.min.css">
+    <link rel="stylesheet" href="css/jquery-confirm.min.css">
 
 	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
@@ -39,7 +39,7 @@
 		
 		
 
-      <!-- Modal addData-->
+      <!-- Modal addEditData-->
       <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  data-modal-index="1">
       <div class="modal-dialog">
 			<div class="modal-content">
@@ -67,13 +67,13 @@
 			      
 			      <div class="form-group col-md-2">
 						  <label>Off.Quadro</label><br>
-						  <input id="quadro" type="checkbox">
+						  <input id="quadro" type="checkbox" onchange="disable1('quadro', 'sede')">
 				   </div>
 			      
 			     
 				      
 				          <div class="form-group col-md-3 col-md-offset-1">
-						   <label for="sell">Proposta in €</label>
+						   <label for="sell">€/ora</label>
 						   <input id="proposta" type="text" value="20" name="mySpinner" onchange="valuta2()" class="spin">
 				      </div>
 			     </div> 
@@ -93,11 +93,7 @@
 			         </div>
 			      
 				      
-				          <div class="form-group col-md-3  col-md-offset-3">
-					  
-						   <label for="sell">a ora</label>
-						   <input id="euroOra" type="text" value="11" name="mySpinner">
-						</div>
+				     
 			      </div>
 			      
 				   <div class="row">
@@ -119,13 +115,13 @@
 						
 						<div class="form-group col-md-2">
 						  <label>A Pezzo</label><br>
-						  <input id="pezzo" type="checkbox"  onchange="disable('pezzo', 'euroOra', 'euroPezzo')">
+						  <input id="pezzo" type="checkbox"  onchange="disable('pezzo', 'proposta', 'euroPezzo')">
 						 </div>
 					  
 					  
 				  <div class="form-group col-md-3 col-md-offset-1">
 				  		<label for="sell">a pezzo</label>
-					   <input  disabled id="euroPezzo" type="text" value="0.10" name="mySpinner">
+					   <input disabled id="euroPezzo" type="text" value="0.10" name="mySpinner">
 			      </div>
 			      </div>
 			      
@@ -141,9 +137,14 @@
 					    <option value="interno">Interno</option>
 					    <option value="esterno">Esterno</option>
 					    </select>
-					</div>    
+					</div>
+					
+					 <div class="form-group col-md-3">
+					  	   <label for="sell">a ora</label>
+						   <input id="euroOra" type="text" value="11" name="mySpinner">
+				    </div>    
 			      
-			       <div class="form-group col-md-3 col-md-offset-3">
+			       <div class="form-group col-md-3">
 					   <label for="sell">costo a km</label>
 					   <input id="euroKm" type="text" value="0" name="mySpinner">
 				  	
@@ -266,13 +267,15 @@
             
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.11/sorting/datetime-moment.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
     <script src="js/jquery.bootstrap-touchspin.min.js"></script> 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+    <script src="js/select2.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="components/bootstrap-datatable/js/tbOff.js"></script>
-    <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
-	 <script src="https://cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script>
+    <script src="components/bootstrap-datatable/js/dataTables.select.min.js"></script>
+	 <script src="components/bootstrap-datatable/js/dataTables.buttons.min.js"></script>
 	 
 </body>        
 </html>

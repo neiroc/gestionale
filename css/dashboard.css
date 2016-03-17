@@ -12,6 +12,30 @@ max-width: 900px;
 margin: 0 auto;
 }
 
+.table-nonfluid {
+   width: auto !important;
+}
+
+#logout {
+    margin-top: 10%;
+    margin-left: 16%;
+}
+
+
+
+/* Form Validation Style*/
+input:focus:invalid,
+textarea:focus:invalid{
+	border:solid 2px #F5192F;
+}
+
+input:focus:valid,
+textarea:focus:valid{
+	border:solid 2px #18E109;
+	background-color:#fff;
+}
+
+
 /*
 table.dataTable tbody tr.selected{
 background-color: yellow !important;
@@ -19,7 +43,6 @@ color: white;
 }*/
 
 #val{
-
 font-weight: bold; 
 }
 

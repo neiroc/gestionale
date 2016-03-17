@@ -1,4 +1,21 @@
 $(document).ready(function() {
+	
+  //Data Sorting 
+  $.fn.dataTable.moment = function (format, locale) {
+  var types = $.fn.dataTable.ext.type;
+
+  // Add type detection
+  types.detect.unshift(function (d) {                
+      return moment(strip(d), format, locale, true).isValid() ?
+          'moment-' + format :
+          null;
+  });
+
+  // Add sorting method - use an integer for the sorting
+  types.order['moment-' + format + '-pre'] = function (d) {
+    return moment(strip(d), format, locale, true).unix();
+  };
+};
 
 		/* Inizializza Tabella */
 				
@@ -17,7 +34,7 @@ $(document).ready(function() {
 	    		"var4": "cliente_strategico",
 	    		"var5": "aperta_da",
 	    		"var6": "data_apertura",
-	    		
+	    		"var7": "quadro",
 	    		"var8": "tipo_operatore",
 	    		"var9": "tipo_attivita",
 	    	  "var10": "euro_ora",
@@ -29,7 +46,8 @@ $(document).ready(function() {
 	    	  "var16": "pagamento",
 	    	  "var17": "euro_km",
 	    	  "var18": "euro_tl",
-	    	  "var19": "nota"    		
+	    	  "var19": "nota" ,
+	    	  "var20": "a_pezzo"   		
 	    	},	    
 	    },
 	    "columns": [
@@ -57,7 +75,7 @@ $(document).ready(function() {
 						    else 
 						      $(row).addClass( 'danger' ); 
 						  },
-        "order": [[1, 'asc']]
+        "order": [[1, 'desc']]
 	     } );
 	     
 
@@ -131,6 +149,7 @@ $('#addData').click(function(e){
 		  var request = "offerta";
 		  
 		  var apertada = $('#apertada').val();
+		  var data_apertura = moment().format('DD/MM/YYYY');
 		  var cliente = $('#cliente').val();
 		  var strategico = $('#strategico').val();
 		  var proposta = $('#proposta').val();
@@ -149,15 +168,23 @@ $('#addData').click(function(e){
 		  
 		  var nota = $('#nota').val();
 		  var quadro;
+        var a_pezzo;
 		  
 		  //tipo offerta
 			if ($('#quadro').is(":checked"))
 					quadro="SI";
 			else 
-			      quadro="NO";		
+			      quadro="NO";
+			      
+			if ($('#pezzo').is(":checked"))
+					a_pezzo="SI";
+			else 
+			      a_pezzo="NO";      
+			      
+			      		
 			
 		 
-		  var datas = "request="+request+"&aperta_da="+apertada+"&cliente="+cliente+"&cliente_strategico="+strategico+"&quadro="+quadro+"&costo_proposto="+proposta+"&tipo_operatore="+tipo+
+		  var datas = "request="+request+"&aperta_da="+apertada+"&data_apertura="+data_apertura+"&cliente="+cliente+"&cliente_strategico="+strategico+"&quadro="+quadro+"&a_pezzo="+a_pezzo+"&costo_proposto="+proposta+"&tipo_operatore="+tipo+
 		  "&euro_ora="+euroOra+"&euro_pastog="+euroPasto+"&euro_km="+euroKm+"&euro_tl="+euroTl+"&volume_ore="+volOre+"&tipo_attivita="+tipoAtt+"&pagamento="+tipoPag+"&sede="+sede+"&nota="+nota;
 		  
 		  if (apertada != null && cliente != null) {
@@ -372,12 +399,14 @@ $('#addData').click(function(e){
          var $rows = table.$('tr.selected');
 		   var rows = $('tr.selected');
 		   var rowData = table.rows(rows).data();
-		   var datas;
-		   var id, aperta_da, data_a, cliente, cliente_strategico, costo_proposto, operatore, tipo_operatore, tipo_att, eo, tariffa, vo, sede, ek, etl, nota;
+		   var datas, datas1, datas2;
+		   var id, quadro, aperta_da, data_a, cliente, cliente_strategico, costo_proposto, operatore, tipo_operatore, tipo_att, eo, tariffa, vo, sede, ek, etl, nota;
 		   
 	      $.each($(rowData),function(key,value){
 	    	   	
 	        id = value["id_offerta"];
+	        quadro = value["quadro"];
+	        a_pezzo = value["a_pezzo"];
 	        aperta_da = value["aperta_da"];
 	        data_a = value["data_apertura"];
 	        cliente = value["cliente"]; 
@@ -395,18 +424,21 @@ $('#addData').click(function(e){
 	        nota = value["nota"];
 	        
 	        
-		    datas = "request=accetta&id_commessa="+value["id_offerta"]+"&aperta_da="+aperta_da+"&cliente="+cliente+"&cliente_strategico="+cliente_strategico+"&costo_proposto="+costo_proposto+
-		    "&operatore="+operatore+"&tipo_operatore="+tipo_operatore+"&tipo_attivita="+tipo_att+"&euro_ora="+eo+"&tariffa="+tariffa+"&volume_ore="+vo+"&sede="+sede+
-		    "&euro_km="+ek+"&euro_tl="+etl+"&nota="+nota; 
+		    datas1 = "request=accetta&id_commessa="+value["id_offerta"]+"&aperta_da="+aperta_da+"&data_apertura="+data_a+"&cliente="+cliente+"&cliente_strategico="+cliente_strategico+"&costo_proposto="+costo_proposto+
+		    "&tipo_operatore="+tipo_operatore+"&tipo_attivita="+tipo_att+"&euro_ora="+eo+"&tariffa="+tariffa+"&volume_ore="+vo+"&sede="+sede+
+		    "&euro_km="+ek+"&euro_tl="+etl+"&nota="+nota+"&quadro="+quadro+"&a_pezzo="+a_pezzo; 
+
 	        
 	        });
 			    
 			   if($rows.length){
-			   	 
+			     
+			 
+			     	 
 				$.ajax({
 					type: "POST",
 					url: "cgi-bin/postdata.php",
-					data: datas,
+					data: datas1,
 					dataType: "html"
 					  }).done(function( msg ) {
 			
@@ -575,9 +607,9 @@ function format ( d ) {
 	var valutazione;
    var rischio;
    var classe_rischio;
-   var costo_industriale = d.euro_ora*1.15;
-   var marg_lordo = ((d.costo_proposto - d.euro_ora)/d.costo_proposto)*100;
-   var marg_ind = ((d.costo_proposto - costo_industriale)/d.costo_proposto)*100;
+   var costo_industriale = (d.euro_ora*1.15).toFixed(2);
+   var marg_lordo = (((d.costo_proposto - d.euro_ora)/d.costo_proposto)*100).toFixed(2);
+   var marg_ind = (((d.costo_proposto - costo_industriale)/d.costo_proposto)*100).toFixed(2);
      
      
     //Valutazione Del Rischio. Inserire in un'altra funzione 
@@ -626,6 +658,10 @@ function format ( d ) {
             '<td>'+d.data_apertura+'</td>'+
         '</tr>'+
         '<tr>'+
+            '<td>Quadro : '+d.quadro+'</td>'+
+            '<td>A pezzi : '+d.a_pezzo+'</td>'+
+        '</tr>'+
+        '<tr>'+
             '<td>Cliente</td>'+
             '<td>Strategico: '+d.cliente_strategico+'</td>'+
             '<td>Proposta: '+d.costo_proposto+' €/o</td>'+
@@ -670,11 +706,21 @@ function disable(select_val,input_id,input_id2) {
    			}
 }
 
+function disable1(select_val,input_id) {
+              var x=document.getElementById(select_val).checked;
+              
+              if(x == true)
+                	 document.getElementById(input_id).disabled = true;
+              else 
+              	    document.getElementById(input_id).disabled = false;
+   			
+}
+
 function changev(sel) {
 if (sel.value == "interno") 
   $(euroOra).val(11.00);
 else
-  $(euroOra).val(15.00);
+  $(euroOra).val(14.00);
 }			
 					
 							       

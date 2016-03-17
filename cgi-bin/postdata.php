@@ -37,12 +37,13 @@ if($_POST['request']=="offerta") {
 }
 
 
-
 if($_POST['request']=="accetta"){
  
 $result = mysql_insert_array("co_commesse", $_POST, "request");
 
 }
+
+
 
 if($_POST['request']=="ore"){
 		if(($_POST['operatore']!="null") && ($_POST['data']!="null")) {

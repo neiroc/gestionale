@@ -1,314 +1,144 @@
 $(document).ready(function() {
 	
-		
-		/* Inizializza Tabella */
-		/*		
-	   var table =  $('#tb_comm').DataTable({
+//GLOBAL	
+var tableRep;
+var tableHours;
+var id_commessa;
+
+// Other Feautures		
+ $(function () {
+                $('#datetimepicker2').datetimepicker({      
+	                viewMode: 'months',
+	                format: 'MM/YYYY',
+	                widgetPositioning: {
+	                horizontal: 'right',
+	                vertical: 'bottom',
+	                useCurrent:'false'
+                   }
+                });
+ });
+ 
+ 
+var nome = $.cookie('nome');
+
+  	/* Inizializza Tabella */
+				
+	    tableRep = $('#tb_rep').DataTable({
+
 	    "aProcessing": true, 
-	    "aServerSide": true,   	     
+	    "aServerSide": true,
+	
+	     retrieve: true, //Reinitialize datatable
 	    "ajax": {
-	    	"url":'cgi-bin/server-response.php',
+	    	"url":'cgi-bin/get.php',
 	    	"type": "GET",
 	    	"data": { //All data to Get From DB
-	    		"req" : "commesse",
+	    		"req" : "report",
 	    	   "table" : "co_commesse",
-            "var1": "id_commessa", 
-	    		"var2": "cliente",
-	    		"var3": "cliente_strategico",
-	    		"var4": "aperta_da",
-	    		"var5": "data_apertura",
-	    		"var6": "operatore",
-	    		"var7": "tipo_operatore",
-	    		"var8": "tipo_attivita",
-	    		"var9": "costo_operatore",
-	    		"var10": "tariffa",
-	    		"var11": "rischio",
-	    		"var12": "sede",
-	    		"var13": "euro_ora",
-	    		"var14": "euro_giorno",
-	    		"var15": "euro_km",
-	    		"var16": "euro_tl",
-	    		"var17": "nota"    		
-	    	},	    
-	    },
+	    	   "nome" :   nome,
+	    	   "var1" : "id_commessa",
+	    	},
+	     },
+		 "language": {
+               "zeroRecords":    "Nessun risultato trovato",
+        },
 	    "columns": [
-            {
-                "className":      'details-control',    
-                "data":           null,
-                "defaultContent": '',
-                "orderable":      false
-            },
-            { "data": "aperta_da" },
-            { "data": "cliente" },
-            { "data": "operatore" },     
+            { "data": "data_apertura" },
             { "data": "tipo_attivita" },
-            { "data": "sede" }
-           
-                                    
+            { "data": "sede" },
+                                               
         ],
+ 
         "order": [[1, 'asc']]
-	     } );*/
+	     } );
+	     
+	
 	      
     
 	    /* Seleziona Righe */
-		 $('#tb_off tbody').on( 'click', 'tr', function () {
+	    $('#tb_rep tbody').on( 'click', 'tr', function () {
+
+		   		    
+		   		   
 	        if ( $(this).hasClass('selected') ) {
 	            $(this).removeClass('selected');
 	        }
 	        else {
-	            table.$('tr.selected').removeClass('selected');
-	            $(this).addClass('selected');
+	            tableRep.$('tr.selected').removeClass('selected');
+	            $(this).addClass('selected');		   		
 	        }
-	    } );
-	    
-	    
-		 // Add event listener for opening and closing details
-	    $('#tb_off tbody').on('click', 'td.details-control', function () {
-	        var tr = $(this).closest('tr');
-	        var row = table.row( tr );
-	 
-	        if ( row.child.isShown() ) {
-	            // This row is already open - close it
-	            row.child.hide();
-	            tr.removeClass('shown');
-	        }
-	        else {
-	            // Open this row
-	            row.child( format(row.data()) ).show();
-	            tr.addClass('shown');
-	        }
-	    } );
-	    
-
-
-	    
-	    
-	    	$('#myModal').on('shown.bs.modal', function () {	    		    		
-		    	 $('.select2').select2({
-		    	 	 ajax: {
-				        url: "cgi-bin/server-response2.php",
-				        dataType: 'json',
-				        delay: 250,
-				        data: function (params) {
-				            return {
-				                q: params.term // search term
-				            };
-				        },
-				        processResults: function (data) {
-				            // parse the results into the format expected by Select2.
-				            // since we are using custom formatting functions we do not need to
-				            // alter the remote JSON data
-				            return {
-				                results: data
-				            };
-				        },
-				        cache: true
-				    },
-				    minimumInputLength: 2,
-				    placeholder: "Seleziona...",
-				});
-			});
-			
-	    
-	     	    
-	   /* Aggiungi Elemento */ 
-		$('#save').click(function(){
-		  var apertada = $('#apertada').val();
-		  var cliente = $('#cliente').val();
-		  var operatore = $('#operatore').val();
-		  var tipo = $('#tipo').val();
-		  var sede = $('#sede').val();
-		  var request = "offerta";
-		 
-		  var datas = "aperta_da="+apertada+"&cliente="+cliente+"&operatore="+operatore+"&tipo_attivita="+tipo+"&request="+request+"&sede="+sede;
-		  
-		  $.ajax({
-			type: "POST",
-			url: "cgi-bin/postdata.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			
-			alert( msg );
-			
-	/*
-		  table.row.add( {
-        "nome":       nome,
-        "mobile":   cell,
-        "email":     email,
-        "tipo_anagrafica": tipo
-       
-    		} ).draw();*/
-
-			  }).fail(function() {
-			alert( "error aa" );
-			  }).always(function() {
-			alert( "finished" );
-			  });
-	  });
-	  
-	  
-	   /*Edit Data from Table. Scrivere codice + pulito*/
-
-		$('#editData').click(function(){
-			
-			var $rows = table.$('tr.selected');
-			if ($rows.length) {
-			 
-			 var dataArr = [];
-		    var rows = $('tr.selected');
-		    var rowData = table.rows(rows).data();
-		    
-		    $.each($(rowData),function(key,value){
-		        dataArr.push(value["nome"]);
-		        dataArr.push(value["mobile"]); 
-		        dataArr.push(value["email"]);
-		        dataArr.push(value["tipo_anagrafica"]);
-		        dataArr.push(value["id_anagrafica"]);
-		    });
-		    
-		 $("#nome2").val(dataArr[0]);
-		 $("#cell2").val(dataArr[1]);
-		 $("#email2").val(dataArr[2]);
-		 $("#tipo2").val(dataArr[3]);
-		  
-		  $('#editModal').modal('show'); 
-		  
-				/* Save Changes */
-				$('#savechanges').click(function(){
-				  var nome = $('#nome2').val();
-				  var cell = $('#cell2').val();
-				  var email = $('#email2').val();
-				  var tipo = $('#tipo2').val();
-				
-				  
-				  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo+"&id="+dataArr[4];
-				  
-				  $.ajax({
-					type: "POST",
-					url: "cgi-bin/edit.php",
-					data: datas,
-					dataType: "html"
-					  }).done(function( msg ) {
-					alert( msg );
-				
-						//viewdata();
-						
-						  }).fail(function() {
-						alert( "error" );
-						  }).always(function() {
-						alert( "finished" );
-						  });
-				});
-		
-		
-		 
-		  
-		  	} else alert("Non hai selezionato nessuna riga")
-		
-		});
-
-	   
-    /* Rimuovi elemento selezionat */
-	 $('#rmData').click( function () {
-
-	    var dataArr = [];
-	    var rows = $('tr.selected');
-	    var rowData = table.rows(rows).data();
-	    $.each($(rowData),function(key,value){
-	        dataArr.push(value["id_anagrafica"]); //"name" being the value of your first column.
 	    });
 	    
-	    console.log(dataArr);
-	    var datas = "id="+dataArr;
-		$.ajax({
-			type: "POST",
-			url: "cgi-bin/delete.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			alert( msg );
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });
-		  
-
-	        table.row('.selected').remove().draw( false );
-	    } );
 	    
 	    
-	    	   
-    /* Accetta Offerta della riga selezionata */
-	 $('#accept').click( function () {
 
-		 var request = "accetta" 
-	    var dataArr = [];
-	    var rows = $('tr.selected');
-	    var rowData = table.rows(rows).data();
-	    $.each($(rowData),function(key,value){
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	        dataArr.push(value["id_offerta"]); 
-	    });
+
+	
+//Tab Panel1	    
+$('#myTab a[href="#report"]').click(function (e) {
+
+var $rows = tableRep.$('tr.selected');	
+	
+if ($rows.length) {
 	    
-	    console.log(dataArr);
-	    var datas = "request="+request+"id_offerta="+dataArr[0];
-		$.ajax({
-			type: "POST",
-			url: "cgi-bin/postdata.php",
-			data: datas,
-			dataType: "html"
-			  }).done(function( msg ) {
-			alert( msg );
-		
-		//viewdata();
-		
-		  }).fail(function() {
-		alert( "error" );
-		  }).always(function() {
-		alert( "finished" );
-		  });
-		  
+   var rowData = tableRep.rows($rows).data();
+   
+    $.each($(rowData),function(key,value){
+    id_commessa = value["id_commessa"];
+     });
+     
+     				  
+   tableHours =  $('#tb_client').DataTable({
+ 	   dom: 'Bfrtip',
+      buttons: [
+        'pdf'
+    ], 
+	    "aProcessing": true, 
+	    "aServerSide": true,
+	     retrieve: true, //Reinitialize datatable
+	    "ajax": {
+	    	"url":'cgi-bin/get.php',
+	    	"type": "GET",
+	    	"data": { //All data to Get From DB
+	    		"req" : "ore",
+	    	   "table" : "co_ore",
+            "var1": id_commessa, 
+	    		"var2": "cliente",
+	    		
+	    	},
+	     },
+	    "language": {
+               "zeroRecords":    "Nessun risultato trovato",
+        }, 
+	    "columns": [
 
-	    } );
+            { "data": "data" },
+            { "data": "operatore" },
+            { "data": "ore_std" },
+            { "data": "ore_extra" },
+            { "data": "ore_fest" },
+            { "data": "ore_sabato" },
 
-}); /*Fine Document Ready*/
-
-
-
-
-
-/* Formatting function for row details - modify as you need */
-function format ( d ) {
-    // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-        '<tr>'+
-            '<td>Data Apertura:</td>'+
-            '<td>'+d.data_apertura+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Cliente Strategico:</td>'+
-            '<td>'+d.cliente_strategico+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Tipo Operatore:</td>'+
-            '<td>'+d.tipo_operatore+' Costo: '+d.costo_operatore+'<br> €/O: '+d.euro_ora+'<br>€/G: '+d.euro_giorno+'<br>€/Km: '+d.euro_km+'<br>€/TL: '+d.euro_tl+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>NOTA:</td>'+
-            '<td>'+d.nota+'</td>'+
-        '</tr>'+
-    '</table>';
+                                    
+        ],
+ 
+        "order": [[0, 'desc']]
+	     } );
+	     
+}else {
+alert("Selezione una riga");
 }
+
+
+
+});
+
+
+	    
+
+
+});
+	    
 
 
 

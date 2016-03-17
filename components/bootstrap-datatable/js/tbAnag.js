@@ -28,6 +28,7 @@ $(document).ready(function() {
 
 	    	},	    
 	    },
+
 	    "columns": [
             {
                 "className":      'details-control',    
@@ -87,8 +88,9 @@ $(document).ready(function() {
 		
 			$('#myModal').modal('show'); 
 			    
-		   /* Aggiungi Elemento */ 
-			$('#save').click(function(e1){
+		   /* Aggiungi Elemento */
+		    
+			$('#save1').submit(function(){
 			  
 			  var nome = $('#nome').val();
 			  var cell = $('#cell').val();
@@ -155,7 +157,10 @@ $(document).ready(function() {
 			   confirmButton : 'OPS!',	
 				content:'Inserisci prima un nome!'
 			    });
-			} 
+			}
+			
+			$('#myModal').modal('toggle');
+			return false; // avoid to execute the actual submit of the form. 
  
 			});
 		});
@@ -180,6 +185,7 @@ $(document).ready(function() {
 		        $("#cell").val(value["mobile"]);
 		        $("#tel_fisso").val(value["tel_fisso"]); 
 		        $("#email").val(value["email"]);
+		        $("#tipo").val(value["tipo_anagrafica"]);
 		        
 		        $("#sede_legale").val(value["sede_legale"]); 
 		        $("#piva").val(value["piva"]); 
@@ -194,7 +200,7 @@ $(document).ready(function() {
 		  $('#myModal').modal('show'); 
 		  
 				/* Save Changes */
-				$('#save').click(function(e){
+				$('#save1').submit(function(e){
 						
 					 //Prevent Multiple Fired Events
 					 			
@@ -247,6 +253,9 @@ $(document).ready(function() {
                }
           
 				  });
+				  
+				  $('#myModal').modal('toggle');
+				  return false; // avoid to execute the actual submit of the form. 
 				});
 		
 		 
@@ -257,6 +266,8 @@ $(document).ready(function() {
 			   confirmButton : 'OPS!',	
 				content:'Seleziona prima una riga!'});	  	
 		  	}
+		  	
+			
 		 
 		
 		});
@@ -354,8 +365,7 @@ function format ( d ) {
     // `d` is the original data object for the row
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
         '<tr>'+
-            '<td>Registrato il:</td>'+
-            '<td>'+d.start_date+'</td>'+
+            '<td>Registrato il: '+d.start_date+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Tel. Fisso: '+d.tel_fisso+'</td>'+          
@@ -366,24 +376,24 @@ function format ( d ) {
             '<td>P.IVA ' +d.piva+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Ref. Amm.: '+d.ref_amm+'</td>'+
+            '<td>Ref. Amm. : '+d.ref_amm+'</td>'+
             
         '</tr>'+
         '<tr>'+
-            '<td>Ref. Comm.: '+d.ref_comm+'</td>'+
-            '<td>Tel. '+d.ref_comm+'</td>'+
-            '<td>Email  ' +d.email_ref_comm+'</td>'+
+            '<td>Ref. Comm. : '+d.ref_comm+'</td>'+
+            '<td>Tel. :'+d.ref_comm+'</td>'+
+            '<td>Email  :' +d.email_refcomm+'</td>'+
         '</tr>'+
     '</table>';
  }
  else {
  	return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
         '<tr>'+
-            '<td>Registrato il:</td>'+
+            '<td>Registrato il :</td>'+
             '<td>'+d.start_date+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Extra info:</td>'+
+            '<td>Extra info :</td>'+
             '<td>'+d.tipo_anagrafica+'</td>'+
         '</tr>'+
     '</table>';

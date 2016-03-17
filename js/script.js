@@ -1,5 +1,10 @@
 $(document).ready(function(){
 	
+	var upUs;
+	
+	upUser();
+	$(".dropdown-toggle").dropdown();
+	
 	//Full Calendar
 	    $('#calendar').fullCalendar({
         googleCalendarApiKey: 'AIzaSyBQ34QWTgrT3ZGrwB65VTlR35lsuaNvHXo',
@@ -66,14 +71,16 @@ $(document).ready(function(){
         });        
     });
     
-        
-    $('.nav li a').click(function() {
-      $('.nav li').removeClass();
+  $('.nav-sidebar li a').click(function() {
+      $('.nav-sidebar li').removeClass();
       $(this).parent().addClass("active");
-        
-        });
-    
-    
+  });
+  
+    //aggiorna l'user in navbar
+function upUser(){
+	upUs=$.cookie('nome');
+	$('#navuser1').html('<span class="glyphicon glyphicon-user"></span> ' + upUs);
+}
 	
 	
 	
