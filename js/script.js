@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+
 	var upUs;
 	
 	upUser();
@@ -18,9 +18,10 @@ $(document).ready(function(){
 			},
 			editable: true,
     });
-	
-	 $("#anag").click(function() {
-	 	
+	/*
+	 $("#anag").click(function(e) {
+	 	e.preventDefault();
+
         $.ajax({
             url : "./anag.html",
             dataType: "html",
@@ -32,8 +33,9 @@ $(document).ready(function(){
         });        
     });
     
-     $("#off").click(function() {
-	 	
+     $("#off").click(function(e) {
+	 	e.preventDefault();
+
         $.ajax({
             url : "./offerte.html",
             dataType: "html",
@@ -45,8 +47,9 @@ $(document).ready(function(){
         });        
     });
     
-    $("#comm").click(function() {
-	 	
+    $("#comm").click(function(e) {
+	 	e.preventDefault();
+
         $.ajax({
             url : "./commesse.html",
             dataType: "html",
@@ -58,19 +61,19 @@ $(document).ready(function(){
         });        
     });
     
-    $("#reports").click(function() {
-	 	
-        $.ajax({
+    $("#reports").click(function(e) {
+	 	//e.preventDefault();
+	 	//e.preventDefault();
+                $("#cont").load("./reports.html");
+        /*$.ajax({
             url : "./reports.html",
             dataType: "html",
             success : function (data) {
                 $("#cont").html(data);
-                
             }
-            
-        });        
-    });
-    
+        });       
+    });*/
+   
   $('.nav-sidebar li a').click(function() {
       $('.nav-sidebar li').removeClass();
       $(this).parent().addClass("active");

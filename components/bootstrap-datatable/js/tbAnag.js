@@ -5,7 +5,10 @@ $(document).ready(function() {
 				
 	   var table =  $('#tb_anag').DataTable({
 	    "aProcessing": true, 
-	    "aServerSide": true,   	     
+	    "aServerSide": true,
+	    "initComplete": function(settings, json) {
+        $('#tb_anag tbody tr:eq(0)').click();
+        },    	     
 	    "ajax": {
 	    	"url":'cgi-bin/server-response.php',
 	    	"data": {

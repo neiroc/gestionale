@@ -1,27 +1,18 @@
 $(document).ready(function() {
-	
-  //Data Sorting 
-  $.fn.dataTable.moment = function (format, locale) {
-  var types = $.fn.dataTable.ext.type;
+	console.log(moment().format('YYYY-MM-DD'));
 
-  // Add type detection
-  types.detect.unshift(function (d) {                
-      return moment(strip(d), format, locale, true).isValid() ?
-          'moment-' + format :
-          null;
-  });
 
-  // Add sorting method - use an integer for the sorting
-  types.order['moment-' + format + '-pre'] = function (d) {
-    return moment(strip(d), format, locale, true).unix();
-  };
-};
+  //$.fn.dataTable.moment( 'DD/MM/YYYY' );
+
 
 		/* Inizializza Tabella */
 				
 	   var table =  $('#tb_off').DataTable({
 	    "aProcessing": true, 
-	    "aServerSide": true,   	     
+	    "aServerSide": true,
+	    "initComplete": function(settings, json) {
+        $('#tb_off tbody tr:eq(0)').click();
+        },    	     
 	    "ajax": {
 	    	"url":'cgi-bin/server-response.php',
 	    	"type": "GET",
@@ -149,7 +140,7 @@ $('#addData').click(function(e){
 		  var request = "offerta";
 		  
 		  var apertada = $('#apertada').val();
-		  var data_apertura = moment().format('DD/MM/YYYY');
+		  var data_apertura = moment().format('YYYY-MM-DD');
 		  var cliente = $('#cliente').val();
 		  var strategico = $('#strategico').val();
 		  var proposta = $('#proposta').val();
@@ -653,10 +644,6 @@ function format ( d ) {
 
     // `d` is the original data object for the row
     return '<table  cellpadding="5" cellspacing="0" style="padding-left:50px; background-color:white; ">'+
-        '<tr>'+
-            '<td>Data Apertura:</td>'+
-            '<td>'+d.data_apertura+'</td>'+
-        '</tr>'+
         '<tr>'+
             '<td>Quadro : '+d.quadro+'</td>'+
             '<td>A pezzi : '+d.a_pezzo+'</td>'+

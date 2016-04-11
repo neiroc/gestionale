@@ -9,6 +9,10 @@
 <!--    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >-->
     <link rel="stylesheet" href="components/bootstrap-datatable/css/bootstrap-datetimepicker.min.css" >
+    <link rel="stylesheet" href="css/morris.css" >
+        <link rel="stylesheet" href="css/jquery-confirm.min.css">
+
+    
     
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -22,25 +26,72 @@
 </head>
 
 <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">ContractGest</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            
+            <!--User Menu-->
+				<li class="dropdown">
+					<a id="navuser1" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#"></a>
+					<ul class="dropdown-menu" id="usermenu">
+						<form>
+							<div>
+							<li>
+								<button type="button" class="btn btn-danger" id="logout">
+									<span class="glyphicon glyphicon-off"></span>
+									Logout
+								</button>
+							</li>
+						  </div>
+						</form>
+					</ul>
+				</li>
+
+            <li><a href="#">Settings</a></li>
+            
+            <li><a href="#">Help</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+    
+    
+    <!-- SIDEBAR  -->
+    <div class="container-fluid">
      
+      
+	      <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="client.html">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li class="active"><a href="./reports.html">Reports<span class="sb-img glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></li>
+          </ul>
+         
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT --> 
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
     <h2 class="sub-header">Reports</h2>
           
-      <div class="panel panel-default">
-  			<div class="panel-body">
-	      <!-- Operation's Button trigger modal -->
-	      <div class="btn-group" role="group" aria-label="...">	      
-		      <button type="button" href="#myModal" class="btn btn-primary" data-toggle="modal">Mostra</button>
-
-	      </div>
- 			</div>
-		</div>
 		
 	  <!-- Nav tabs -->
 	  <ul id="myTab" class="nav nav-tabs" role="tablist">
 	    <li role="presentation" class="active"><a href="#commesse" aria-controls="home" role="tab" data-toggle="tab">Commesse</a></li>
 	    <li role="presentation"><a href="#report" aria-controls="profile" role="tab" data-toggle="tab" >Report</a></li>
+	    <li role="presentation"><a href="#difetti" aria-controls="profile" role="tab" data-toggle="tab" >Difetti</a></li>
 	  </ul>
 	  <br>
 	
@@ -51,23 +102,45 @@
 			  
 					 <div role="tabpanel" class="tab-pane active" id="commesse">
 					 <div class="row">
-					    <div class="form-group col-md-12">
-					    <h3> Commesse attive:</h3>
-					    
-					        
-					         <!--   <div class='input-group date' id='datetimepicker2'>
-					                <input type='text' class="form-control" />
+		 
+					    <div class='col-md-3'>
+					        <div class="form-group">
+					        <label>Da :</label>
+					            <div class='input-group date' id='data_inizio'>
+					                <input type='text' class="form-control input-sm" />
 					                <span class="input-group-addon">
-					                    <span class="glyphicon glyphicon-calendar">
-					                    </span>
+					                    <span class="glyphicon glyphicon-calendar"></span>
 					                </span>
-					            </div>-->
-					       
+					            </div>
+					        </div>
 					    </div>
-					 </div>       
+					    
+					  
+					    <div class='col-md-3'>
+					        <div class="form-group">
+					          <label>Al :</label>
+					            <div class='input-group date' id='data_fine'>
+					                <input type='text' class="form-control input-sm" />
+					                <span class="input-group-addon">
+					                    <span class="glyphicon glyphicon-calendar"></span>
+					                </span>
+					            </div>
+					        </div>
+					    </div>
+					    
+					    <div class='col-md-2'>
+					   
+					    <button id="mostra" type="button" class="btn btn-primary alignment btn-sm">Mostra</button>
+					  
+					    </div>
+		
+					 </div>
+					 
+					 
+					        
 					 
 					  <div class="table-responsive">
-					  <table id="tb_rep" class="display"  cellspacing="0" width="100%">
+					  <table id="tb_comm" class="display" width="100%">
 						<tbody> 
 						   <thead> 
 						   <tr>
@@ -79,21 +152,50 @@
 						</tbody>
 						</table>
 					  </div>
+					  
+					
 			      </div>
 			  
 			    
-			   <div role="tabpanel" class="tab-pane" id="report">
+			   <div role="tabpanel" class="tab-pane" id="difetti">
 			   
 			   	    <div class="table-responsive">
-				           <table id="tb_client" class="display"  cellspacing="0" width="100%">
+				           <table id="tb_defects" class="display compact" width="100%">
+				            <tbody> 
+					            <thead>
+					            <tr>
+					                <th>Data</th>
+					                <th>Seq.Inizio</th>
+					                <th>Seq.Fine</th>
+					                <th>Controllati</th>
+					                <th>Difetti</th>
+							          <th>Rilavorati</th>    
+							          <th>OK</th>  
+					            </tr> 
+					            </thead> 
+				            </tbody>
+				            </table>
+				     </div>
+				     
+                <!-- GRAFICO DIFETTI --> 
+                  <div class"row">
+					    <div class="text-center">
+					      <label class="label label-warning">Pareto Difetti</label>
+                     <div id="pareto-difetti"></div>
+					    </div>				    
+				      </div>
+				    
+			 </div>
+			 
+			 <div role="tabpanel" class="tab-pane" id="report">
+			   
+			   	    <div class="table-responsive">
+				           <table id="tb_hours" class="display compact" width="100%">
 				            <tbody> 
 					            <thead> 
 						            <th>Data</th>
 						            <th>Operatore</th>  
-						            <th>Ore Std</th>  
-						            <th>Ore Extra/Notte</th>  
-						            <th>Ore Festivi</th>  
-						            <th>Ore Sabato</th>  
+						            <th>Totale Ore</th>  
 					            </tr> 
 					            </thead> 
 				            </tbody>
@@ -104,7 +206,7 @@
 			
 			
 			</div>
-    
+   
     
     
     
@@ -116,22 +218,27 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-
+   
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/moment.min.js"></script>
     <script type="text/javascript" src="components/bootstrap-datatable/js/transition.js"></script>
     <script type="text/javascript" src="components/bootstrap-datatable/js/collapse.js"></script>
+    <script src="js/morris.js"></script>
+    <script src="js/raphael-min.js"></script>
+    <script src="js/jquery-confirm.min.js"></script>
     
     <script type="text/javascript" src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>
     <script src="components/bootstrap-datatable/js/tbRep.js"></script>
+		    
     <script src="js/jquery.cookie.js"></script>
-   
+    <script src="js/login.js"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
 
     <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
+
 
 </body>        
 </html>

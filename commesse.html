@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.1.1/css/buttons.dataTables.min.css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="components/bootstrap-datatable/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="components/bootstrap-datatable/css/buttons.dataTables.min.css">
+    <link href="css/select2.min.css" rel="stylesheet" >
     <link rel="stylesheet" href="components/bootstrap-datatable/css/bootstrap-datetimepicker.min.css" >
     <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
 
@@ -31,11 +31,12 @@
   			<div class="panel-body">
 	      <!-- Operation's Button trigger modal -->
 	      <div class="btn-group" role="group" aria-label="...">	      
-	      <button type="button" disabled id="addData" class="btn btn-primary" data-toggle="modal">Aggiungi</button>
-	      <button type="button" disabled id="editData" class="btn btn-warning" data-toggle="modal" >Modifica</button>
-	      <button type="button" id="rmData" class="btn btn-danger" data-toggle="modal">Rimuovi</button>
+	      <button type="button" disabled id="addData" class="btn btn-primary btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Aggiungi</button>
+	      <button type="button" disabled id="editData" class="btn btn-warning btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Modifica</button>
+	      <button type="button" id="rmData" class="btn btn-danger btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Rimuovi</button>
 	      </div>
-	      <button type="button" disabled id="addHours" class="btn btn-default" data-toggle="modal">Inserisci Ore</button>	         		     
+	      <button type="button" id="addHours" class="btn btn-default btn-sm" data-toggle="modal">Inserisci Ore</button>	         		     
+	      <button type="button" id="addDefects" class="btn btn-default btn-sm" data-toggle="modal">Inserisci Difetti</button>	         		     
  			</div>
 		</div>
 	
@@ -46,6 +47,7 @@
   <ul id="myTab"class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
     <li role="presentation"><a href="#ore" aria-controls="profile" role="tab" data-toggle="tab" onchange="disable2(addHours)">Ore</a></li>
+    <li role="presentation"><a href="#ore_generali" aria-controls="profile" role="tab" data-toggle="tab">Ore Generali</a></li>
   </ul>
   <br>
 
@@ -59,12 +61,10 @@
 		            <thead> 
 		            <tr>
 			            <th></th>
-			            <th>Aperta da</th>
+			            <th>ID commessa</th>
 			            <th>Cliente</th>  
 			            <th>Tipo Attività</th>
 	                  <th>Plant</th>
-	                  
-	
 		            </tr> 
 		            </thead> 
 	            </tbody>
@@ -160,7 +160,7 @@
 			            <td id="td3_1"></td>
 			            <td id="td3_2"></td>
 			        <tr>
-			        	<th>Ore Totali Festivi </th>
+			        	<th>Tot. ore festivi (+50%) </th>
 			            <td id="td4"></td>
 			            <td id="td4_1"></td>
 			            <td id="td4_2"></td>
@@ -171,6 +171,63 @@
 			</table>
 
  </div>
+ 
+ <div role="tabpanel" class="tab-pane" id="ore_generali"> 
+ 
+ 
+		 <div class="row">
+		 
+		    <div class='col-md-3'>
+		        <div class="form-group">
+		        <label>Da :</label>
+		            <div class='input-group date' id='data_inizio'>
+		                <input type='text' class="form-control" />
+		                <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                </span>
+		            </div>
+		        </div>
+		    </div>
+		    
+		  
+		    <div class='col-md-3'>
+		        <div class="form-group">
+		          <label>Al :</label>
+		            <div class='input-group date' id='data_fine'>
+		                <input type='text' class="form-control" />
+		                <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                </span>
+		            </div>
+		        </div>
+		    </div>
+		    
+		    <div class='col-md-2'>
+		   
+		    <button id="mostra" type="button" class="btn btn-primary alignment">Mostra</button>
+		  
+		    </div>
+		</div>      
+		
+	    <div class="table-responsive">
+	           <table id="tb_ore_generali" class="display"  cellspacing="0" width="100%">
+	            <tbody> 
+		            <thead id="head_ore_gen"> 
+		            <tr>
+			            <th>Data</th>
+			            <th>ID Commessa</th>
+			            <th>Operatore</th>  
+			            <th>Ore Std</th>  
+			            <th>Ore Extra/Notte</th>  
+			            <th>Ore Festivi</th>  
+			            <th>Ore Sabato</th>  
+			            <th>Sede</th>  
+		            </tr> 
+		            </thead> 
+	            </tbody>
+	            </table>
+	     </div>
+  </div>
 
 
 </div>
@@ -191,12 +248,21 @@
 			  <div class="modal-body">
 			  
 			  <div class="row">
-				    <div class='col-sm-6'>
+				    <div class='col-sm-3'>
 				      <div class="form-group">
 							<label for="nome">ID commessa</label>
 							<input id="id_commessa" disabled class="form-control" style="width:100%;" tabindex="2">						         
 				      </div>
 				    </div>
+				    
+				    <div class="form-group col-md-3">
+					    <label for="sel1">Att. Commerciale</label>
+					    <select class="form-control" id="strategico">
+						    <option>NO</option>
+						    <option>SI</option>
+					    </select>
+		          </div>
+					  
 				      
 			      <div class='col-sm-6'>
 		            <div class="form-group">
@@ -285,11 +351,18 @@
 					     
 					     <div class="col-md-3">
 					     <div class="form-group">
-								<label for="sede">Costo Ora</label>
+								<label for="sede">€/pasto</label>
 								<input id="costo_ora" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
 
+				   </div>
+				   
+				   <div class="row">
+						<div class="form-group col-md-12">
+	               <label for="nome">NOTA</label>
+							<textarea class="form-control autogrow" id="nota"></textarea>					
+						</div>				   
 				   </div>
  
 			 </div>
@@ -304,6 +377,143 @@
       </div>
       </div>
           
+      <!-- Modal Insert Defects -->
+      <div class="modal fade" id="defectsModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+			<div class="modal-content">
+			
+			
+			<form>
+			  <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			    <h4 class="modal-title" id="myModalLabel">Inserimento Difetti</h4>
+			  </div>
+			  
+			  <div class="modal-body">
+			  
+		
+			  <div class="row">
+				    <div class='col-sm-3'>
+				      <div class="form-group">
+							<label for="nome">ID commessa</label>
+							<input id="id_commessa2" disabled class="form-control" style="width:100%;" tabindex="2">						         
+				      </div>
+				    </div>
+				    
+			      <div class='col-sm-6'>
+		            <div class="form-group">
+		              <label for="nome">Data</label>
+		                <div class='input-group date' id='datetimepicker7'>
+		                    <input id="datatime" type='text' class="form-control" >
+		                    <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
+		            </div>
+	            </div>
+            </div>
+            
+            <div class="row">
+			  
+			    <div class="col-md-6">
+			      <div class="form-group">
+						<label>Sede</label>
+						<input type='text'  class="form-control" id="sede">						         
+					</div>
+				 </div>	
+			   </div>
+			   
+			  <div class="panel panel-primary">
+			  <div class="panel-heading">Difetti Riscontrati   
+			  <button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+			  </div>
+			  <div id="defectsPanel"class="panel-body">
+			      <div class="row">
+			      
+				      <div class="col-md-3">
+					      <div class="form-group">
+								<label id="label1"></label>
+								<input id="difetto1" type="text" value="0" name="mySpinner">
+							
+					      </div>
+					     </div>
+					    
+					      
+					      <div class="col-md-3">
+					      <div class="form-group">
+								<label id="label2"></label>
+								<input id="difetto2" type="text" value="0" name="mySpinner">
+					      </div>
+					      </div>
+					      
+					      <div class="col-md-3">
+					      <div class="form-group">
+								<label id="label3"></label>
+								<input id="difetto3" type="text" value="0" name="mySpinner">
+					      </div>
+					     </div>
+					     
+					     <div class="col-md-3">
+					     <div class="form-group">
+								<label id="label4"></label>
+								<input id="difetto4" type="text" value="0" name="mySpinner">
+					      </div>
+					     </div>
+					</div>     
+					     
+					<div class="row">
+					     
+					     <div class="col-md-3">
+					     <div class="form-group">
+								<label id="label5"></label>
+								<input id="difetto5" type="text" value="0" name="mySpinner2">
+					      </div>
+					     </div>
+					     
+					     <div class="col-md-3">
+					     <div class="form-group">
+								<label id="label6"></label>
+								<input id="difetto6" type="text" value="0" name="mySpinner2">
+					      </div>
+					     </div>
+					     
+					     <div class="col-md-3">
+					     <div class="form-group">
+								<label id="label7"></label>
+								<input id="difetto7" type="text" value="0" name="mySpinner2">
+					      </div>
+					     </div>
+					     
+					     <div class="col-md-3">
+					     <div class="form-group">
+								<label id="label8"></label>
+								<input id="difetto8" type="text" value="0" name="mySpinner2">
+					      </div>
+					     </div>
+
+				   </div>
+				   
+				   </div>
+				   </div>
+				   
+				   <div class="row">
+						<div class="form-group col-md-12">
+	               <label for="nome">NOTA</label>
+							<textarea class="form-control autogrow" id="nota"></textarea>					
+						</div>				   
+				   </div>
+ 
+			 </div>
+			  
+			  
+			  <div class="modal-footer">
+			    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+			    <button type="button" id="saveDefects" class="btn btn-primary">Salva</button>
+			  </div>
+		  </form>
+		</div>
+      </div>
+      </div>      
           
 
     </div> <!-- MAIN -->
@@ -319,9 +529,12 @@
     
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
+    
+    <!-- DataTable Js Filez -->
     <script src="components/bootstrap-datatable/js/tbComm.js"></script>
     <script src="components/bootstrap-datatable/js/tbOre.js"></script>
-     
+    <script src="components/bootstrap-datatable/js/tbOreGen.js"></script>
+    <script src="components/bootstrap-datatable/js/tbDefects.js"></script>
     
     <!-- PDF BUTTON --> 
     <script src="//cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script>

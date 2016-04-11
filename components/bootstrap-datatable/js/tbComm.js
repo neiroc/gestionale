@@ -2,12 +2,16 @@
 var table;
 
 $(document).ready(function() {
+
 	
 		
 		/* Inizializza Tabella */
 	   table =  $('#tb_comm').DataTable({
 	    "aProcessing": true, 
-	    "aServerSide": true,   	     
+	    "aServerSide": true,
+	    "initComplete": function(settings, json) {
+        $('#tb_comm tbody tr:eq(0)').click();
+        },   	     
 	    "ajax": {
 	    	"url":'cgi-bin/server-response.php',
 	    	"type": "GET",
@@ -44,7 +48,7 @@ $(document).ready(function() {
                 "defaultContent": '',
                 "orderable":      false
             },
-            { "data": "aperta_da" },
+            { "data": "id_commessa" },
             { "data": "cliente" },
             { "data": "tipo_attivita" },
             { "data": "sede" }
@@ -288,12 +292,13 @@ $(document).ready(function() {
 
 /* Formatting function for row details - modify as you need */
 function format ( d ) {
-		var valutazione;
+	
+   var valutazione;
    var rischio;
    var classe_rischio;
-   var costo_industriale = d.euro_ora*1.15;
-   var marg_lordo = ((d.costo_proposto - d.euro_ora)/d.costo_proposto)*100;
-   var marg_ind = ((d.costo_proposto - costo_industriale)/d.costo_proposto)*100;
+   var costo_industriale = (d.euro_ora*1.15).toFixed(2);
+   var marg_lordo = (((d.costo_proposto - d.euro_ora)/d.costo_proposto)*100).toFixed(2);
+   var marg_ind = (((d.costo_proposto - costo_industriale)/d.costo_proposto)*100).toFixed(2);
      
      
     //Valutazione Del Rischio. Inserire in un'altra funzione 
@@ -346,8 +351,10 @@ function format ( d ) {
         '</tr>'+
         '<tr>'+
             '<td>Cliente</td>'+
-            '<td>Strategico: '+d.cliente_strategico+'</td>'+
             '<td>Proposta: '+d.costo_proposto+' €/o</td>'+
+            '<td>€/pezzo: '+d.euro_pezzo+'</td>'+
+            '<td>€/Km: '+d.euro_km+'</td>'+
+            '<td>€/TL: '+d.euro_tl+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Operatore</td>'+
@@ -356,13 +363,10 @@ function format ( d ) {
 				'<td>Costo Ind.: '+costo_industriale+' €/o</td>'+
 				'<td>Margine Lordo: '+marg_lordo+'%</td>'+
 				'<td>Margine Ind.: '+marg_ind+'%</td>'+
-            '<td>€/pezzo: '+d.euro_pezzo+'</td>'+
-            '<td>€/Km: '+d.euro_km+'</td>'+
-            '<td>€/TL: '+d.euro_tl+'</td>'+
+
         '</tr>'+
          '<tr>'+
             '<td>Rischio</td>'+
-            '<td>Volume ore: '+d.volume_ore+'</td>'+
             '<td>Classe Rischio: '+classe_rischio+'</td>'+
             '<td>Valutazione: <b>'+valutazione+'</b> </td>'+
         '</tr>'+
@@ -372,6 +376,9 @@ function format ( d ) {
         '</tr>'+
     '</table>';
 }
+
+
+
 
 
 

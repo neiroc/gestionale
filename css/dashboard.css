@@ -2,6 +2,15 @@
  * Base structure
  */
 
+
+
+
+
+svg{
+  width: 100% !important;
+  height: 130% !important;
+}
+
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
@@ -21,17 +30,50 @@ margin: 0 auto;
     margin-left: 16%;
 }
 
+.defects{
+font-size: 10px !important;
+}
+
+
+/* Table Rendering
+*/
+
+#tb_comm th{
+padding: 8px;
+}
+
+#tb_hours{
+font-size: 13px;
+}
+
+#tb_defects{
+font-size: 13px;
+}
+
+#tb_defects td{
+white-space: nowrap;;
+}
+
+/*
+ * ParetoDifetti
+ */
+#pareto-difetti{
+width: 600px;
+height: 400px;
+margin: auto;
+}
+
 
 
 /* Form Validation Style*/
 input:focus:invalid,
 textarea:focus:invalid{
-	border:solid 2px #F5192F;
+	border:solid 1px #F5192F;
 }
 
 input:focus:valid,
 textarea:focus:valid{
-	border:solid 2px #18E109;
+	border:solid 1px #18E109;
 	background-color:#fff;
 }
 
@@ -58,15 +100,22 @@ background-color: #FCF8E3 !important;
 background-color: #FBB9B9 !important; 
 }
 
+
 /* Responsive Modal Width*/
 
 @media screen and (min-width: 768px) {
 	
 	#myModal .modal-dialog  {width:900px;}
 	#editModal .modal-dialog  {width:900px;}
+	#defectsModal .modal-dialog  {width:900px;}
+	#defectsPanel label {height: 40px; text-align: center; vertical-align: text-bottom;} /* Align label and input*/
 
 }
 
+.alignment
+{
+    margin-top:25px;
+}
 /*
  * Global add-ons
  */
@@ -92,6 +141,8 @@ background-color: #FBB9B9 !important;
 float:right;
 font-size:20px; 
  }
+ 
+ 
 
 /* Hide for mobile, show later */
 .sidebar {

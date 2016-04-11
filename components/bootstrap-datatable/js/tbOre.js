@@ -56,18 +56,8 @@ if ($rows.length) {
  	$('#sede').val(sede);
  	$('#sede').prop("disabled",true);
  }
- if (a_pezzo=="NO") {
-  	$('#n_pezzi').prop("disabled",true);
- 	$('#spese').prop("disabled",true);
- 	$('#km').prop("disabled",true);
- 	$('#vosto_ora').prop("disabled",true);
-}else {
- 	$('#ore_std').prop("disabled",true);
- 	$('#ore_extra').prop("disabled",true);
- 	$('#ore_fest').prop("disabled",true);
- 	$('#ore_sabato').prop("disabled",true);
+ 
 
-}
  
   
  
@@ -76,6 +66,10 @@ $("#datetimepicker2").on("dp.update", function(e) {
    if (i > 1)  table1.destroy();
   	
   	date1 = $('#datetimepicker2').data("date");
+  	var d = date1.split('/');
+  	var d1 = d[1]+"-"+d[0];
+  	
+  	
   	monthName(date1);
   	$('#month').html(monthName(date1));	
   	$('#tb_head').show();	
@@ -97,7 +91,7 @@ $("#datetimepicker2").on("dp.update", function(e) {
 	    	   "table" : "co_ore",
             "var1": id_commessa, 
 	    		"var2": "cliente",
-	    		"date": date1
+	    		"date": d1
 	    	},
 	     },
 	    "language": {
@@ -119,7 +113,7 @@ $("#datetimepicker2").on("dp.update", function(e) {
 	     } );
 	
 	//SUMMARY 
-   summary(id_commessa, date1);
+   summary(id_commessa, d1);
 
 	
 });     
@@ -172,59 +166,31 @@ $('#addHours').prop("disabled",true);
 
 $('#addHours').click(function(){
 
-
-		    
 		 $("#id_commessa").val(id_commessa);
+		 $('#hoursModal').modal('show'); 
+		  
 
-		 
-		  $('#hoursModal').modal('show'); 
-		  
-				/* Save Changes */
-				/*$('#savechanges').click(function(){
-				  var nome = $('#nome2').val();
-			
-				
-				  
-				  var datas = "nome="+nome+"&cell="+cell+"&email="+email+"&tipo="+tipo+"&id="+dataArr[4];
-				  
-				  $.ajax({
-					type: "POST",
-					url: "cgi-bin/edit.php",
-					data: datas,
-					dataType: "html"
-					  }).done(function( msg ) {
-					alert( msg );
-				
-						//viewdata();
-						
-						  }).fail(function() {
-						alert( "error" );
-						  }).always(function() {
-						alert( "finished" );
-						  });
-				});
-		
-		
-		 
-		  
-		  	} else alert("Non hai selezionato nessuna riga")*/
-		
-		});
+});
 		
 			   /* Aggiungi Elemento */ 
 		$('#saveHours').click(function(){
-		  var request ="ore"
+			
+		  var from1 = $("#datetimepicker1").data("date").split("/");
+        var f1 = from1[2]+"-"+from1[1]+"-"+from1[0];
+			
+		  var request = "ore";
 		  var id_commessa = $('#id_commessa').val();
-		  var datatime = $('#datatime').val();
 		  
 		  var operatore = $('#operatore2').val();
 		  var ore_std = $('#ore_std').val();
 		  var ore_extra = $('#ore_extra').val();
 		  var ore_fest = $('#ore_fest').val();
 		  var ore_sabato = $('#ore_sabato').val();
+		  
+		  var pezzi = $('#n_pezzi').val();
 		 
-		  var datas = "request="+request+"&id_commessa="+id_commessa+"&data="+datatime+"&operatore="+operatore+"&ore_std="+ore_std+"&ore_extra="+ore_extra+"&ore_fest="+ore_fest+
-		  "&ore_sabato="+ore_sabato;
+		  var datas = "request="+request+"&id_commessa="+id_commessa+"&data="+f1+"&operatore="+operatore+"&ore_std="+ore_std+"&ore_extra="+ore_extra+"&ore_fest="+ore_fest+
+		  "&ore_sabato="+ore_sabato+"&pezzi="+pezzi;
 		  
 		  $.ajax({
 			type: "POST",
@@ -233,7 +199,7 @@ $('#addHours').click(function(){
 			dataType: "html"
 			  }).done(function( msg ) {
 			
-			alert( msg );
+			alert(msg);
 			
 	/*
 		  table.row.add( {
@@ -306,8 +272,8 @@ function summary(id, mese) {
 				   $('#td3_2').html((((0.20*costo)+(+costo))*data[0].total_sabato) +" €");
 				   
 				   $('#td4').html(data[0].total_fest);
-				   $('#td4_1').html(data[0].total_fest);
-				   $('#td4_1').html(data[0].total_fest);
+				   $('#td4_1').html((0.50*costo)+(+costo) +" €");
+				   $('#td4_2').html((((0.50*costo)+(+costo))*data[0].total_sabato) +" €");
 			        
 			     }
 				
