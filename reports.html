@@ -4,13 +4,13 @@
 	 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+    
+    <link rel="icon" href="images/favicon.ico">
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
-<!--    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" >-->
     <link rel="stylesheet" href="components/bootstrap-datatable/css/bootstrap-datetimepicker.min.css" >
     <link rel="stylesheet" href="css/morris.css" >
-        <link rel="stylesheet" href="css/jquery-confirm.min.css">
+    <link rel="stylesheet" href="css/jquery-confirm.min.css">
+    <link rel="stylesheet" href="components/bootstrap-datatable/css/buttons.dataTables.min.css">
 
     
     
@@ -21,7 +21,7 @@
     <link href="css/dashboard.css" rel="stylesheet">
     
 
-    <title></title>
+    <title>Contract s.r.l. Reports</title>
     
 </head>
 
@@ -36,31 +36,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">ContractGest</a>
+          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             
-            <!--User Menu-->
 				<li class="dropdown">
-					<a id="navuser1" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#"></a>
-					<ul class="dropdown-menu" id="usermenu">
-						<form>
-							<div>
-							<li>
-								<button type="button" class="btn btn-danger" id="logout">
-									<span class="glyphicon glyphicon-off"></span>
-									Logout
-								</button>
-							</li>
-						  </div>
-						</form>
-					</ul>
-				</li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li class="divider"></li>
+                        <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+           </li>
 
-            <li><a href="#">Settings</a></li>
-            
-            <li><a href="#">Help</a></li>
+
           </ul>
 
         </div>
@@ -70,15 +63,12 @@
     
     <!-- SIDEBAR  -->
     <div class="container-fluid">
-     
-      
 	      <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="client.html">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
             <li class="active"><a href="./reports.html">Reports<span class="sb-img glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></li>
           </ul>
-         
-        </div>
+         </div>
     </div>
 
     <!-- MAIN CONTENT --> 
@@ -89,9 +79,9 @@
 		
 	  <!-- Nav tabs -->
 	  <ul id="myTab" class="nav nav-tabs" role="tablist">
-	    <li role="presentation" class="active"><a href="#commesse" aria-controls="home" role="tab" data-toggle="tab">Commesse</a></li>
-	    <li role="presentation"><a href="#report" aria-controls="profile" role="tab" data-toggle="tab" >Report</a></li>
-	    <li role="presentation"><a href="#difetti" aria-controls="profile" role="tab" data-toggle="tab" >Difetti</a></li>
+	    <li role="presentation" class="active"><a href="#commesse" aria-controls="home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Commesse</a></li>
+	    <li role="presentation"><a href="#report" aria-controls="profile" role="tab" data-toggle="tab" ><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Ore Lavoro</a></li>
+	    <li role="presentation"><a href="#difetti" aria-controls="profile" role="tab" data-toggle="tab" ><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Controlli</a></li>
 	  </ul>
 	  <br>
 	
@@ -100,6 +90,7 @@
 		     <!-- Tab panes -->
 			  <div class="tab-content">
 			  
+					<!-- TAB COMMESSE -->
 					 <div role="tabpanel" class="tab-pane active" id="commesse">
 					 <div class="row">
 		 
@@ -130,7 +121,7 @@
 					    
 					    <div class='col-md-2'>
 					   
-					    <button id="mostra" type="button" class="btn btn-primary alignment btn-sm">Mostra</button>
+					    
 					  
 					    </div>
 		
@@ -147,6 +138,7 @@
 						      <th>Data apertura</th>
 						      <th>Tipo Attività</th>
 						      <th>Sede</th>
+						      <th></th>
 						   </tr> 
 						   </thead> 
 						</tbody>
@@ -155,54 +147,187 @@
 					  
 					
 			      </div>
+			      
+				 <!-- TAB ORE LAVORO -->
+				 <div role="tabpanel" class="tab-pane" id="report">
+							 <div class="row">
+							 	<div class="col-md-4">
+									 <table class="table table-condensed table-striped extra-details">
+											<thead>
+												<tr>
+													<th colspan="2">Riepilogo</th>
+													</tr>
+											</thead>
+											<tbody>
+											   <tr>
+													<td>Periodo : </td>
+													<td><i class="dal"></i> - <i class="al"></i></td>
+												</tr>
+												 <tr>
+													<td>Tipo Attività : </td>
+													<td class="tipo_att"></td>
+												</tr>
+												<tr>
+													<td>Sede : </td>
+													<td class="sedeh"></td>
+												</tr>
+												<tr>
+													<td>Tot. Ore Lavorate : </td>
+													<td id="totalh"></td> 
+												</tr>
+												
+											</tbody>
+									</table>
+								</div>
+							
+							
+							
+							 	<div class="col-md-2 col-md-offset-1">
+									 <table class="table table-condensed table-striped extra-details">
+											<thead>
+												<tr>
+													<th colspan="2">Azioni</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Esporta</td>
+													<td><a onclick="genera_PDF_ore()" style="cursor:pointer"><img src="images/pdf.png"></a> </td> 
+												</tr>
+												
+											</tbody>
+									</table>
+								</div>
+							</div>
+							
+				   
+				   	    <div class="table-responsive">
+					           <table id="tb_hours" class="display compact" width="100%">
+					           <thead>
+					             <tr> 
+							            <th>Data</th>
+							            <th>Operatore</th>  
+							            <th>Ore</th>
+						          </tr> 
+						       </thead>
+					          <tfoot>
+						            <tr>
+						               <th colspan="2" style="text-align:right">Total:</th>
+						               <th></th>
+						            </tr>
+						       </tfoot> 
+					       
+					            </table>
+					     </div>
+				
+				 </div>
 			  
-			    
+            <!-- TAB DIFETTI -->
 			   <div role="tabpanel" class="tab-pane" id="difetti">
 			   
+			        <div class="row">
+						 	<div class="col-md-4">
+								 <table class="table table-condensed table-striped extra-details">
+										<thead>
+											<tr>
+												<th colspan="2">Riepilogo</th>
+												</tr>
+										</thead>
+										<tbody>
+										   <tr>
+												<td>Periodo : </td>
+												<td><i class="dal"></i> - <i class="al"></i></td>
+											</tr>
+											 <tr>
+												<td>Tipo Attività : </td>
+												<td class="tipo_att"></td>
+											</tr>
+											<tr>
+												<td>Sede : </td>
+												<td class="sedeh"></td>
+											</tr>
+										   <tr>
+												<td>Tot. Pezzi Controllati</td>
+												<td id="totalp"></td>
+											</tr>
+											<tr>
+												<td>Tot. Conformi</td>
+												<td id="totalc"></td>
+											</tr>
+											<tr>
+												<td>Tot. Non conformi : </td>
+												<td id="totald"></td> 
+											</tr>
+											<tr>
+												<td>Tot. Rilavorati : </td>
+												<td id="totalr"></td> 
+											</tr>
+										</tbody>
+								</table>
+							</div>
+						
+						
+						
+						 	<div class="col-md-2 col-md-offset-1">
+								 <table class="table table-condensed table-striped extra-details">
+										<thead>
+											<tr>
+												<th colspan="2">Azioni</th>
+												</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Esporta </td>
+												<td <a onclick="genera_PDF_difetti()" style="cursor:pointer"><img src="images/pdf.png"></a> </td> 
+											</tr>
+						
+										</tbody>
+								</table>
+							</div>
+						</div>
+			   
 			   	    <div class="table-responsive">
-				           <table id="tb_defects" class="display compact" width="100%">
-				            <tbody> 
+				           <table id="tb_defects" class="display compact cell-border" width="100%">
+				            
 					            <thead>
 					            <tr>
 					                <th>Data</th>
 					                <th>Seq.Inizio</th>
 					                <th>Seq.Fine</th>
 					                <th>Controllati</th>
-					                <th>Difetti</th>
+					                <th>Conformi</th>
+					                <th>Non conformi</th>
 							          <th>Rilavorati</th>    
-							          <th>OK</th>  
+							          <th></th>  
 					            </tr> 
-					            </thead> 
-				            </tbody>
+					            </thead>
+					            <tfoot>
+					            <tr>
+					               <th colspan="3"></th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					            </tr>
+					            </tfoot> 
+				            
 				            </table>
 				     </div>
 				     
                 <!-- GRAFICO DIFETTI --> 
-                  <div class"row">
+                  <div class="row">
 					    <div class="text-center">
-					      <label class="label label-warning">Pareto Difetti</label>
-                     <div id="pareto-difetti"></div>
+						    <label class="label label-warning"><span class="glyphicon glyphicon-stats"></span> Pareto Difetti</label>
+                         <div id="pareto-difetti"></div>
+							</div>
 					    </div>				    
-				      </div>
+				      
 				    
 			 </div>
 			 
-			 <div role="tabpanel" class="tab-pane" id="report">
-			   
-			   	    <div class="table-responsive">
-				           <table id="tb_hours" class="display compact" width="100%">
-				            <tbody> 
-					            <thead> 
-						            <th>Data</th>
-						            <th>Operatore</th>  
-						            <th>Totale Ore</th>  
-					            </tr> 
-					            </thead> 
-				            </tbody>
-				            </table>
-				     </div>
-			
-			 </div>
+			 
+
 			
 			
 			</div>
@@ -215,20 +340,26 @@
 
      
     
-    <!-- Bootstrap core JavaScript
+    <!-- Core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
    
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    
+    <!-- DATETIME PICKER  -->
     <script src="js/moment.min.js"></script>
-    <script type="text/javascript" src="components/bootstrap-datatable/js/transition.js"></script>
-    <script type="text/javascript" src="components/bootstrap-datatable/js/collapse.js"></script>
+    <script src="js/it.js"></script>
+
+    <script src="components/bootstrap-datatable/js/transition.js"></script>
+    <script src="components/bootstrap-datatable/js/collapse.js"></script>
+    <script src="js/utility.js"></script>
+    
+    <!-- MORRIS GRAPH    -->
     <script src="js/morris.js"></script>
     <script src="js/raphael-min.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
     
-    <script type="text/javascript" src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>
     <script src="components/bootstrap-datatable/js/tbRep.js"></script>
 		    
     <script src="js/jquery.cookie.js"></script>
@@ -238,7 +369,7 @@
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
 
     <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
-
+    <script src="//cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>
 
 </body>        
 </html>

@@ -4,16 +4,25 @@ var data_inzio;
 var data_fine;
 
 $(document).ready(function() {
+//
+tableGeneral = $("#tb_ore_generali").DataTable({"paging": false,"ordering": false,"language": {"zeroRecords":    "Seleziona una commessa",},});
+	
 	
 //Date Interval
 $(function () {
+var dateNow = new Date();
+var datePast = new Date();
+var datePast = datePast.setMonth(dateNow.getMonth() -1);	
+	
         $('#data_inizio').datetimepicker({
-        		format: 'DD/MM/YYYY'
+        		format: 'DD/MM/YYYY',
+			   defaultDate : datePast,
         });
         
         $('#data_fine').datetimepicker({
         	   format: 'DD/MM/YYYY',
-            useCurrent: false //Important! See issue #1075
+            useCurrent: false, //Important! See issue #1075
+            defaultDate : dateNow,
         });
         
         $("#data_inizio").on("dp.change", function (e) {
@@ -31,15 +40,9 @@ $(function () {
 $('#myTab a[href="#ore_generali"]').click(function (e) {
 
 
-  //disable2(addHours);
-  
-  $('#head_ore_gen').hide(); //Nascondi header tabella
-  
-
-
 $('#mostra').click(function(){
 	
-//tableGeneral.destroy();
+tableGeneral.destroy();
 	
 //CONVERT DATE	
 var from1 = $("#data_inizio").data("date").split("/");
@@ -50,14 +53,16 @@ var f2 = from2[2]+"-"+from2[1]+"-"+from2[0];
 
 
 
-$('#head_ore_gen').show();	
+
 		 
 				  
    tableGeneral =  $('#tb_ore_generali').DataTable({
+   	
  	   dom: 'Bfrtip',
       buttons: [
         'pdf'
-      ], 
+      ],
+       "paging": false, 
 	    "aProcessing": true, 
 	    "aServerSide": true,
 	     retrieve: true, //Reinitialize datatable
@@ -78,11 +83,11 @@ $('#head_ore_gen').show();
 
             { "data": "data" },
             { "data": "id_commessa" },
-            { "data": "operatore" },
-            { "data": "ore_std" },
-            { "data": "ore_extra" },
-            { "data": "ore_fest" },
-            { "data": "ore_sabato" },
+            { "data": "cliente" },
+            { "data": "ore_std", "orderable":false },
+            { "data": "ore_extra", "orderable":false },
+            { "data": "ore_fest", "orderable":false },
+            { "data": "ore_sabato", "orderable":false },
             { "data": "sede" },
                                    
         ],

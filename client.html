@@ -10,6 +10,7 @@
     <link rel="icon" href="images/favicon.ico">
     <link  rel="stylesheet" href="css/fullcalendar.min.css">
     <link  rel="stylesheet" href="css/jquery-confirm.min.css">
+    <link  rel="stylesheet" href="css/jquery.qtip.min.css">
    <!--  <link  rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.print.css"> -->
   
 
@@ -54,31 +55,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">ContractGest</a>
+          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+           
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             
             <!--User Menu-->
 				<li class="dropdown">
-					<a id="navuser1" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#"></a>
-					<ul class="dropdown-menu" id="usermenu">
-						<form>
-							<div>
-							<li>
-								<button type="button" class="btn btn-danger" id="logout">
-									<span class="glyphicon glyphicon-off"></span>
-									Logout
-								</button>
-							</li>
-						  </div>
-						</form>
-					</ul>
-				</li>
-
-            <li><a href="#">Settings</a></li>
-            
-            <li><a href="#">Help</a></li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li class="divider"></li>
+                        <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+           </li>
           </ul>
 
         </div>
@@ -88,26 +82,31 @@
 
     <!-- SIDEBAR  -->
     <div class="container-fluid">
-     
-      
 	      <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active" ><a href="client.html">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
             <li><a href="./reports.html">Reports<span class="sb-img glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></li>
           </ul>
-         
         </div>
-        </div>
+    </div>
         
     <!-- MAIN CONTENT -->
-        <div id="cont">
+        
          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         
           <h1 class="page-header">Dashboard</h1>
-          <div id='calendar'></div>
+          
+          <div style="margin-top:5vh;">
+          <div class="col-md-6" id="calendar" style="padding-left:0px"></div>
+		          <div style="padding-left:10px; margin-left:50%;">
+			          <h2 style="margin-bottom:1em; font-size: 20px;">Riepilogo</h2>
+			          <p>Utente registrato il : <span id="date_cl"></span></p>
+			          <p>Commesse attivate : <span id="n_comm" class="badge" ></span></p>
+		          </div>
+          </div>
  
-        </div>
-        </div>
+          </div>
+       
      
     
 
@@ -117,13 +116,13 @@
     <script src="js/jquery-1.11.3.js"></script>
     <script src="http://momentjs.com/downloads/moment.min.js"></script>	       
     <script src="js/fullcalendar.min.js"></script>	
-    <script src="js/gcal.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.cookie.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.5.0/metisMenu.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/calendar.js"></script>
     <script src="js/login.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
+    <script src="js/fc-it.js"></script>
+    <script src="js/jquery.qtip.min.js"></script>
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

@@ -1,12 +1,12 @@
 //GLOBAL VARIABLES 
-var table;
+var tableComm;
+
 
 $(document).ready(function() {
 
 	
-		
 		/* Inizializza Tabella */
-	   table =  $('#tb_comm').DataTable({
+	   tableComm =  $('#tb_comm').DataTable({
 	    "aProcessing": true, 
 	    "aServerSide": true,
 	    "initComplete": function(settings, json) {
@@ -57,6 +57,9 @@ $(document).ready(function() {
         ],
         "order": [[1, 'asc']]
 	     } );
+
+	     
+	     
 	      
     
 	    /* Seleziona Righe */
@@ -65,7 +68,7 @@ $(document).ready(function() {
 	            //$(this).removeClass('selected');
 	        }
 	        else {
-	            table.$('tr.selected').removeClass('selected');
+	            tableComm.$('tr.selected').removeClass('selected');
 	            $(this).addClass('selected');
 	        }
 	    } );
@@ -74,7 +77,7 @@ $(document).ready(function() {
 		 // Add event listener for opening and closing details
 	    $('#tb_comm tbody').on('click', 'td.details-control', function () {
 	        var tr = $(this).closest('tr');
-	        var row = table.row( tr );
+	        var row = tableComm.row( tr );
 	 
 	        if ( row.child.isShown() ) {
 	            // This row is already open - close it
@@ -160,9 +163,9 @@ $(document).ready(function() {
 	   /*Edit Data from Table. Scrivere codice + pulito*/
 
 		$('#editData').click(function(){
-			var $rows = table.$('tr.selected');
+			var $rows = tableComm.$('tr.selected');
 		   var rows = $('tr.selected');
-		   var rowData = table.rows(rows).data();
+		   var rowData = tableComm.rows(rows).data();
 			
 			if ($rows.length) {
 			 
@@ -226,9 +229,9 @@ $(document).ready(function() {
 	   
     /* Rimuovi elemento selezionat */
 	 $('#rmData').click( function () {
-         var $rows = table.$('tr.selected');
+         var $rows = tableComm.$('tr.selected');
 		   var rows = $('tr.selected');
-		   var rowData = table.rows(rows).data();
+		   var rowData = tableComm.rows(rows).data();
 		   var datas;
 		   
 		   if ($rows.length) {
@@ -257,7 +260,7 @@ $(document).ready(function() {
 						alert( "finished" );
 						  });
 	
-		             table.row('.selected').remove().draw( false );
+		             tableComm.row('.selected').remove().draw( false );
 				    	 
 				       $.alert({
 				       title:false,
@@ -282,6 +285,10 @@ $(document).ready(function() {
 	     	
 	     	
 	    } );
+	    
+	    
+	    
+
 	    
 
 

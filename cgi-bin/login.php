@@ -2,8 +2,6 @@
 
 require 'db_aux.php';
 
-
-
 //recupero il file json contenente le credenziali di login e lo decodifico
 $data = file_get_contents("php://input");
 $login=json_decode($data);
@@ -32,21 +30,24 @@ if($con == False) {
 }
 	
 //interrogo il db e controllo se i dati di accesso corrispondono		
-$query="SELECT nome, email, password, tipo_anagrafica FROM an_anagrafiche where email='".$username."' AND password='".$password."';";
+$query="SELECT nome, email, password, tipo_anagrafica, start_date FROM an_anagrafiche where email='".$username."' AND password='".$password."';";
+
 	
 $risposta = mysqli_query($con,$query);
 
-//chiudo la connessione con il db server	
-mysqli_close($con);
 
 if(($row = mysqli_fetch_array($risposta))&&($row['email']==$username)&&($row['password']==$password)){
 						
 	$result['result'] = "login effettuato con successo";//risposta positiva
 	$result['type'] = $row['tipo_anagrafica'];
 	$result['nome'] = $row['nome']; 
+	$result['date'] = $row['start_date'];
 	
-	//$result['id_utente'] = $row['id_utente'];
-	//$result['reputation'] = $row['reputation'];
+	$query2="SELECT COUNT(*) AS num FROM co_commesse WHERE cliente='".$row['nome']."'"; //num commesse
+	$risposta2 = mysqli_query($con,$query2);
+	$row2 = mysqli_fetch_array($risposta2);
+	$result['num'] = $row2['num']; 
+
 	//header('Content-Type: application/json; charset=utf-8');
 	$re = json_encode($result);
 	echo $re;
@@ -64,7 +65,8 @@ else{
 }
 
 
-
+//chiudo la connessione con il db server	
+mysqli_close($con);
 
 
 ?> 

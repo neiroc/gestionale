@@ -50,7 +50,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <b><a class="navbar-brand" href="#">ContractGest</a></b>
+          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -82,29 +83,34 @@
     <!-- SIDEBAR  -->
     <div class="container-fluid">
       <div class="row">
-      
 	      <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active" ><a href="">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li><a id="anag" href="#">Anagrafiche<span class="sb-img glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
-            <li><a id="off"href="#">Offerte<span class="sb-img glyphicon glyphicon-eur" aria-hidden="true"></span></a></li>        
-            <li><a id="comm"href="#">Commesse<span class="sb-img glyphicon glyphicon-inbox" aria-hidden="true"></span></a></li>
+            <li class="active"><a href="">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li><a href="./anag.html">Anagrafiche<span class="sb-img glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
+            <li><a href="./offerte.html">Offerte<span class="sb-img glyphicon glyphicon-eur" aria-hidden="true"></span></a></li>        
+            <li><a href="./commesse.html">Commesse<span class="sb-img glyphicon glyphicon-inbox" aria-hidden="true"></span></a></li>
           </ul>
-          
-         
-        </div>
+         </div>
+      </div>
+    </div>
         
         <!-- MAIN CONTENT -->
-        <div id="cont">
+        
          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         
           <h1 class="page-header">Dashboard</h1>
-          <div id='calendar'></div>
- 
-        </div>
-        </div>
-      </div>
-    </div>
+          
+          <div style="margin-top:5vh;">
+          <div class="col-md-6" style="padding-left:0px;"><div id='calendar'></div></div>
+		          <div style="padding-left:10px; margin-left:50%;">
+					          <h2 style="margin-bottom:1em; font-size: 20px;">Riepilogo</h2>
+					          <p> N° Clienti : <span id="date_cl"></span></p>
+					          <p>Commesse attivate quest'anno: <span id="n_comm" class="badge" ></span></p>
+				    </div>
+          </div>
+        
+         </div>
+    
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -120,9 +126,8 @@
     <script src="js/jquery-confirm.min.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script src="js/login.js"></script>
-   
+    <script src="js/fc-it.js"></script>
 
-    <!--  <script src="js/bootstrap-table.js"></script> -->
     
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
    <!--  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->

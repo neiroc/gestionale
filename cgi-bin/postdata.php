@@ -58,13 +58,15 @@ if($_POST['request']=="difetti"){
 		
  				$result = mysql_insert_array("co_difetti", $_POST, "request");
  	   
-
 }
+
+
 
 // Results
 if( $result['mysql_error'] ) {
     echo "Query Failed: " . $result['mysql_error'];
 } 
+
 // Close database!
 
 ?>

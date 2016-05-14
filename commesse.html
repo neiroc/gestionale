@@ -11,8 +11,12 @@
     <link href="css/select2.min.css" rel="stylesheet" >
     <link rel="stylesheet" href="components/bootstrap-datatable/css/bootstrap-datetimepicker.min.css" >
     <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
+    <link rel="stylesheet" href="css/morris.css" >
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
 
 
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     
 	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
@@ -22,6 +26,53 @@
 </head>
 
 <body>
+
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <!--User Menu-->
+				<li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li class="divider"></li>
+                        <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+           </li>
+
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- SIDEBAR  -->
+    <div class="container-fluid">
+      <div class="row">
+	      <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="./dashboard.html">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+            <li><a href="./anag.html">Anagrafiche<span class="sb-img glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
+            <li><a href="./offerte.html">Offerte<span class="sb-img glyphicon glyphicon-eur" aria-hidden="true"></span></a></li>        
+            <li class="active"><a href="./commesse.html">Commesse<span class="sb-img glyphicon glyphicon-inbox" aria-hidden="true"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
      
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
@@ -31,9 +82,9 @@
   			<div class="panel-body">
 	      <!-- Operation's Button trigger modal -->
 	      <div class="btn-group" role="group" aria-label="...">	      
-	      <button type="button" disabled id="addData" class="btn btn-primary btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Aggiungi</button>
-	      <button type="button" disabled id="editData" class="btn btn-warning btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Modifica</button>
-	      <button type="button" id="rmData" class="btn btn-danger btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Rimuovi</button>
+	      <button type="button" disabled id="addData" class="btn btn-default btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Aggiungi</button>
+	      <button type="button" disabled id="editData" class="btn btn-default btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Modifica</button>
+	      <button type="button" id="rmData" class="btn btn-default btn-sm" data-toggle="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Rimuovi</button>
 	      </div>
 	      <button type="button" id="addHours" class="btn btn-default btn-sm" data-toggle="modal">Inserisci Ore</button>	         		     
 	      <button type="button" id="addDefects" class="btn btn-default btn-sm" data-toggle="modal">Inserisci Difetti</button>	         		     
@@ -45,16 +96,17 @@
 
   <!-- Nav tabs -->
   <ul id="myTab"class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-    <li role="presentation"><a href="#ore" aria-controls="profile" role="tab" data-toggle="tab" onchange="disable2(addHours)">Ore</a></li>
-    <li role="presentation"><a href="#ore_generali" aria-controls="profile" role="tab" data-toggle="tab">Ore Generali</a></li>
+    <li role="presentation" class="active"><a href="#commesse" aria-controls="home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Commesse</a></li>
+    <li role="presentation"><a href="#ore" aria-controls="profile" role="tab" data-toggle="tab" onchange="disable2(addHours)"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Ore</a></li>
+    <li role="presentation"><a href="#controlli" aria-controls="profile" role="tab" data-toggle="tab" onchange="disable2(addHours)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Controlli</a></li>
+    <li role="presentation"><a href="#ore_generali" aria-controls="profile" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>  Ore Generali</a></li>
   </ul>
   <br>
 
   <!-- Tab panes -->
   <div class="tab-content">
   
-    <div role="tabpanel" class="tab-pane active" id="home">       
+    <div role="tabpanel" class="tab-pane active" id="commesse">       
 	    <div class="table-responsive">
 	           <table id="tb_comm" class="display"  cellspacing="0" width="100%">
 	            <tbody> 
@@ -72,15 +124,60 @@
 	     </div>
   </div>
   
+  <div id="user"></div>
+
+  
     
    <div role="tabpanel" class="tab-pane" id="ore">
    
-            <div class="row">
+
+			   
+			   <div class="row">
+						 	<div class="col-md-4">
+								 <table class="table table-condensed table-striped extra-details">
+										<thead>
+											<tr>
+												<th colspan="2">Riepilogo</th>
+												</tr>
+										</thead>
+										<tbody>
+										   <tr>
+												<td>Tot. Pezzi Controllati</td>
+												<td id="totalp"></td>
+											</tr>
+											<tr>
+												<td>Tot. Difetti Riscontrati : </td>
+												<td id="totald"></td> 
+											</tr>
+										</tbody>
+								</table>
+							</div>
+						
+						
+						
+						 	<div class="col-md-2 col-md-offset-1">
+								 <table class="table table-condensed table-striped extra-details">
+										<thead>
+											<tr>
+												<th colspan="2">Azioni</th>
+												</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Esporta </td>
+												<td id="export"></td> 
+											</tr>
+										</tbody>
+								</table>
+							</div>
+			   </div>
+			   
+			    <div class="row">
 				    <div class="form-group col-md-2">
 				    <label>Seleziona mese :</label>
 				        
 				            <div class='input-group date' id='datetimepicker2'>
-				                <input type='text' class="form-control" />
+				                <input type='text' class="form-control input-sm">
 				                <span class="input-group-addon">
 				                    <span class="glyphicon glyphicon-calendar">
 				                    </span>
@@ -90,20 +187,20 @@
 				    </div>
 				    
 				    <div class="col-md-2 col-md-offset-2">
-				     <h2 id="month"></h2>
+				     <h2 id="month" class="text-center"></h2>
 				    </div>
 			   </div> 
    
-   	    <div class="table-responsive">
-	           <table id="tb_ore" class="display"  cellspacing="0" width="100%">
+   	    
+	           <table id="tb_ore" class="display compact cell-border"  cellspacing="0" width="100%">
 	            <tbody> 
-		            <thead id="tb_head" >
+		            <thead>
 		             
 		            <tr>
 			            <th>Data</th>
 			            <th>Operatore</th>  
 			            <th>Ore Std</th>  
-			            <th>Ore Extra/Notte</th>  
+			            <th>Ore Extra / Notte</th>  
 			            <th>Ore Festivi</th>  
 			            <th>Ore Sabato</th>  
 		            </tr>
@@ -111,7 +208,7 @@
 		            </thead> 
 	            </tbody>
 	            </table>
-	     </div>
+	    
 	     <br><br><br>
 	     
 	     <table id="summary" class="table table-nonfluid" width="auto">
@@ -172,16 +269,141 @@
 
  </div>
  
+ 			   <div role="tabpanel" class="tab-pane" id="controlli">
+			   
+			        <div class="row">
+						 	<div class="col-md-4">
+								 <table class="table table-condensed table-striped extra-details">
+										<thead>
+											<tr>
+												<th colspan="2">Riepilogo</th>
+												</tr>
+										</thead>
+										<tbody>
+										   <tr>
+												<td>Tot. Pezzi Controllati</td>
+												<td id="totalp"></td>
+											</tr>
+											<tr>
+												<td>Tot. Difetti Riscontrati : </td>
+												<td id="totald"></td> 
+											</tr>
+										</tbody>
+								</table>
+							</div>
+						
+						
+						
+						 	<div class="col-md-2 col-md-offset-1">
+								 <table class="table table-condensed table-striped extra-details">
+										<thead>
+											<tr>
+												<th colspan="2">Azioni</th>
+												</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Esporta </td>
+												<td id="print2"></td> 
+											</tr>
+										</tbody>
+								</table>
+							</div>
+						</div>
+			   
+			   	    <div class="table-responsive">
+				           <table id="tb_defects" class="display compact cell-border" width="100%">
+				            
+					            <thead>
+					            <tr>
+					                <th>Data</th>
+					                <th>Seq.Inizio</th>
+					                <th>Seq.Fine</th>
+					                <th>Controllati</th>
+					                <th>Difetti</th>
+							          <th>Rilavorati</th>    
+							          <th>OK</th>
+							          <th></th>  
+					            </tr> 
+					            </thead>
+					            <tfoot>
+					            <tr>
+					               <th colspan="4" style="text-align:right">Totale :</th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					           
+                              
+					            </tr>
+					            </tfoot> 
+				            
+				            </table>
+				     </div>
+				     
+                <!-- GRAFICO DIFETTI --> 
+                  <div class="row">
+					    <div class="text-center">
+						    <label class="label label-warning"><span class="glyphicon glyphicon-stats"></span> Pareto Difetti</label>
+                         <div id="pareto-difetti"></div>
+							</div>
+					    </div>				    
+				      
+				    
+			 </div>
+ 
  <div role="tabpanel" class="tab-pane" id="ore_generali"> 
  
  
-		 <div class="row">
+
+		
+		<div class="row">
+						 	<div class="col-md-4">
+								 <table class="table table-condensed table-striped extra-details">
+										<thead>
+											<tr>
+												<th colspan="2">Riepilogo</th>
+												</tr>
+										</thead>
+										<tbody>
+										   <tr>
+												<td>Tot. Pezzi Controllati</td>
+												<td id="totalp"></td>
+											</tr>
+											<tr>
+												<td>Tot. Difetti Riscontrati : </td>
+												<td id="totald"></td> 
+											</tr>
+										</tbody>
+								</table>
+							</div>
+						
+						
+						
+						 	<div class="col-md-2 col-md-offset-1">
+								 <table class="table table-condensed table-striped extra-details">
+										<thead>
+											<tr>
+												<th colspan="2">Azioni</th>
+												</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Esporta </td>
+												<td id="export"></td> 
+											</tr>
+										</tbody>
+								</table>
+							</div>
+		</div>
+		
+				 <div class="row">
 		 
-		    <div class='col-md-3'>
+		    <div class='col-md-2'>
 		        <div class="form-group">
 		        <label>Da :</label>
 		            <div class='input-group date' id='data_inizio'>
-		                <input type='text' class="form-control" />
+		                <input type='text' class="form-control input-sm">
 		                <span class="input-group-addon">
 		                    <span class="glyphicon glyphicon-calendar"></span>
 		                </span>
@@ -190,11 +412,11 @@
 		    </div>
 		    
 		  
-		    <div class='col-md-3'>
+		    <div class='col-md-2'>
 		        <div class="form-group">
 		          <label>Al :</label>
 		            <div class='input-group date' id='data_fine'>
-		                <input type='text' class="form-control" />
+		                <input type='text' class="form-control input-sm">
 		                <span class="input-group-addon">
 		                    <span class="glyphicon glyphicon-calendar"></span>
 		                </span>
@@ -204,19 +426,19 @@
 		    
 		    <div class='col-md-2'>
 		   
-		    <button id="mostra" type="button" class="btn btn-primary alignment">Mostra</button>
+		    <button id="mostra" type="button" class="btn btn-primary btn-sm alignment">Mostra</button>
 		  
 		    </div>
 		</div>      
 		
-	    <div class="table-responsive">
-	           <table id="tb_ore_generali" class="display"  cellspacing="0" width="100%">
+	    
+	           <table id="tb_ore_generali" class="display compact cell-border"  cellspacing="0" width="100%">
 	            <tbody> 
-		            <thead id="head_ore_gen"> 
+		            <thead> 
 		            <tr>
 			            <th>Data</th>
 			            <th>ID Commessa</th>
-			            <th>Operatore</th>  
+			            <th>Cliente</th>  
 			            <th>Ore Std</th>  
 			            <th>Ore Extra/Notte</th>  
 			            <th>Ore Festivi</th>  
@@ -226,7 +448,7 @@
 		            </thead> 
 	            </tbody>
 	            </table>
-	     </div>
+	     
   </div>
 
 
@@ -247,6 +469,9 @@
 			  
 			  <div class="modal-body">
 			  
+			  <div class="panel panel-primary">
+			  <div class="panel-heading panel-heading-sm">Dati Offerta</div>
+			  <div class="panel-body">
 			  <div class="row">
 				    <div class='col-sm-3'>
 				      <div class="form-group">
@@ -294,6 +519,13 @@
 				 </div>	
 			   </div>
 			   
+			   </div>
+			   </div>
+			 
+			   
+			  <div class="panel panel-primary">
+			  <div class="panel-heading panel-heading-sm">Dati Offerta</div>
+			  <div class="panel-body">
 			      <div class="row">
 				      <div class="col-md-3">
 					      <div class="form-group">
@@ -355,6 +587,11 @@
 								<input id="costo_ora" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
+					     
+					     </div>
+					     </div>
+					     
+
 
 				   </div>
 				   
@@ -391,41 +628,49 @@
 			  
 			  <div class="modal-body">
 			  
-		
-			  <div class="row">
-				    <div class='col-sm-3'>
-				      <div class="form-group">
-							<label for="nome">ID commessa</label>
-							<input id="id_commessa2" disabled class="form-control" style="width:100%;" tabindex="2">						         
-				      </div>
-				    </div>
-				    
-			      <div class='col-sm-6'>
-		            <div class="form-group">
-		              <label for="nome">Data</label>
-		                <div class='input-group date' id='datetimepicker7'>
-		                    <input id="datatime" type='text' class="form-control" >
-		                    <span class="input-group-addon">
-		                    <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
+		     <div class="panel panel-primary">
+			  <div class="panel-heading panel-heading-sm">Informazioni Generali</div>
+			  <div id="defectsPanelinfo"class="panel-body">
+				  <div class="row">
+					    
+				      <div class='col-md-3'>
+			            <div class="form-group">
+			              <label for="nome">Data</label>
+			                <div class='input-group date' id='datetimepicker7'>
+			                    <input id="datatime" type='text' class="form-control input-sm" >
+			                    <span class="input-group-addon">
+			                    <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+			                </div>
+			            </div>
 		            </div>
-	            </div>
-            </div>
-            
-            <div class="row">
-			  
-			    <div class="col-md-6">
-			      <div class="form-group">
-						<label>Sede</label>
-						<input type='text'  class="form-control" id="sede">						         
-					</div>
-				 </div>	
+				    
+					 <div class="col-md-3">
+				      <div class="form-group">
+							<label>Pezzi Controllati</label>
+							<input type='text'  class="form-control input-sm" id="sede">						         
+						</div>
+					 </div>
+					 
+					 <div class='col-md-3'>
+				      <div class="form-group">
+							<label for="nome">Seq.Inizio</label>
+							<input id=""  class="form-control input-sm" style="width:100%;" tabindex="2">						         
+				      </div>
+					 </div>
+					    
+					    <div class='col-md-3'>
+					      <div class="form-group">
+								<label for="nome">Seq.Fine</label>
+								<input id=""  class="form-control input-sm" style="width:100%;" tabindex="2">						         
+					      </div>
+					    </div>	
+				   </div>
+				</div>
 			   </div>
 			   
 			  <div class="panel panel-primary">
-			  <div class="panel-heading">Difetti Riscontrati   
-			  <button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+			  <div class="panel-heading panel-heading-sm">Difetti Riscontrati   
 			  </div>
 			  <div id="defectsPanel"class="panel-body">
 			      <div class="row">
@@ -433,6 +678,7 @@
 				      <div class="col-md-3">
 					      <div class="form-group">
 								<label id="label1"></label>
+								<a style="float:right; font-size:11px;"  href="#" id="popover1" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head1" class="hide">Inserisci Difetto</div><div id="popover-content1" class="hide"><input type="text" id="dif1"><button type="button" onclick="save1()" class="btn btn-primary btn-xs">Save</button></div>								
 								<input id="difetto1" type="text" value="0" name="mySpinner">
 							
 					      </div>
@@ -442,6 +688,7 @@
 					      <div class="col-md-3">
 					      <div class="form-group">
 								<label id="label2"></label>
+								<a style="float:right; font-size:11px;"  href="#" id="popover2" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head2" class="hide">Inserisci Difetto</div><div id="popover-content2" class="hide"><input type="text" id="dif2"><button type="button" onclick="save2()" class="btn btn-primary btn-xs">Save</button></div>								
 								<input id="difetto2" type="text" value="0" name="mySpinner">
 					      </div>
 					      </div>
@@ -449,6 +696,7 @@
 					      <div class="col-md-3">
 					      <div class="form-group">
 								<label id="label3"></label>
+								<a  style="float:right; font-size:11px;" href="#" id="popover3" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head3" class="hide">Inserisci Difetto</div><div id="popover-content3" class="hide"><input type="text" id="dif3"><button type="button" onclick="save3()" class="btn btn-primary btn-xs">Save</button></div>
 								<input id="difetto3" type="text" value="0" name="mySpinner">
 					      </div>
 					     </div>
@@ -456,6 +704,7 @@
 					     <div class="col-md-3">
 					     <div class="form-group">
 								<label id="label4"></label>
+								<a  style="float:right; font-size:11px;" href="#" id="popover4" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head4" class="hide">Inserisci Difetto</div><div id="popover-content4" class="hide"><input type="text" id="dif4"><button type="button" onclick="save4()" class="btn btn-primary btn-xs">Save</button></div>
 								<input id="difetto4" type="text" value="0" name="mySpinner">
 					      </div>
 					     </div>
@@ -466,6 +715,7 @@
 					     <div class="col-md-3">
 					     <div class="form-group">
 								<label id="label5"></label>
+								<a style="float:right; font-size:11px;" href="#" id="popover5" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head5" class="hide">Inserisci Difetto</div><div id="popover-content5" class="hide"><input type="text" id="dif5"><button type="button" onclick="save5()" class="btn btn-primary btn-xs">Save</button></div>
 								<input id="difetto5" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
@@ -473,6 +723,7 @@
 					     <div class="col-md-3">
 					     <div class="form-group">
 								<label id="label6"></label>
+								<a style="float:right; font-size:11px;" href="#" id="popover6" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head6" class="hide">Inserisci Difetto</div><div id="popover-content6" class="hide"><input type="text" id="dif6"><button type="button" onclick="save6()" class="btn btn-primary btn-xs">Save</button></div>
 								<input id="difetto6" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
@@ -480,6 +731,7 @@
 					     <div class="col-md-3">
 					     <div class="form-group">
 								<label id="label7"></label>
+								<a style="float:right; font-size:11px;" href="#" id="popover7" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head7" class="hide">Inserisci Difetto</div><div id="popover-content7" class="hide"><input type="text" id="dif7"><button type="button" onclick="save7()" class="btn btn-primary btn-xs">Save</button></div>
 								<input id="difetto7" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
@@ -487,6 +739,7 @@
 					     <div class="col-md-3">
 					     <div class="form-group">
 								<label id="label8"></label>
+								<a style="float:right; font-size:11px;" href="#" id="popover8" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head8" class="hide">Inserisci Difetto</div><div id="popover-content8" class="hide"><input type="text" id="dif8"><button type="button" onclick="save8()" class="btn btn-primary btn-xs">Save</button></div>
 								<input id="difetto8" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
@@ -530,20 +783,35 @@
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
     
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/login.js"></script>
+    
     <!-- DataTable Js Filez -->
     <script src="components/bootstrap-datatable/js/tbComm.js"></script>
     <script src="components/bootstrap-datatable/js/tbOre.js"></script>
     <script src="components/bootstrap-datatable/js/tbOreGen.js"></script>
     <script src="components/bootstrap-datatable/js/tbDefects.js"></script>
     
-    <!-- PDF BUTTON --> 
+    <!-- GRAPH -->
+    <script src="js/morris.js"></script>
+    <script src="js/raphael-min.js"></script>
+    
+    <!-- X-Editable -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
+    
+    <!-- EXPORT BUTTONS --> 
     <script src="//cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
     <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.1.1/js/buttons.html5.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
 		
-	<!-- Datapicker -->	
+	<!-- DatapickerTime -->	
     <script src="js/moment.min.js"></script>
+    <script src="js/it.js"></script>
     <script type="text/javascript" src="components/bootstrap-datatable/js/transition.js"></script>
     <script type="text/javascript" src="components/bootstrap-datatable/js/collapse.js"></script>
     <script type="text/javascript" src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>

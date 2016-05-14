@@ -1,7 +1,5 @@
 <?php
 
-//include 'ChromePhp.php';
-
 
 /* Effettua la connessione al db*/
 

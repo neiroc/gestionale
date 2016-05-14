@@ -1,39 +1,70 @@
 /*
  * Base structure
  */
+ 
+ .fc-center h2{
+font-size:20px !important; 
+}
 
+.shadowfilter {
+	-webkit-filter: drop-shadow(0px 0px 0px rgba(255,255,255,0.80));
+	-webkit-transition: all 0.5s linear;
+	-o-transition: all 0.5s linear;
+	transition: all 0.5s linear;
+}
 
+.shadowfilter:hover {
+	-webkit-filter: drop-shadow(0px 0px 3px rgba(255,192,0,0.7));
+}
 
+button.dt-button, div.dt-button, a.dt-button{
+	padding: 0px;
+	border:0px;
+}
 
+.dt-button:hover{
+	padding: 0px !important;
+	border:0px !important;
+}
+
+.extra-details th {
+padding-left: 0px !important;
+}
+
+.extra-details td {
+padding: 0px !important;
+
+}
 
 svg{
   width: 100% !important;
   height: 130% !important;
+  margin-bottom: 20px;
 }
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
+  font-family: "Century Gothic"; 
   padding-top: 50px;
 }
 
 #calendar{
-max-width: 900px;
-margin: 0 auto;
+
 }
 
 .table-nonfluid {
    width: auto !important;
 }
 
-#logout {
-    margin-top: 10%;
-    margin-left: 16%;
-}
+
 
 .defects{
 font-size: 10px !important;
 }
 
+.navbar-brand{
+padding-top: 5px !important;
+}
 
 /* Table Rendering
 */
@@ -50,7 +81,8 @@ font-size: 13px;
 font-size: 13px;
 }
 
-#tb_defects td{
+
+td{
 white-space: nowrap;;
 }
 
@@ -104,11 +136,13 @@ background-color: #FBB9B9 !important;
 /* Responsive Modal Width*/
 
 @media screen and (min-width: 768px) {
+   .panel-body  {font-size: 12px;}
 	
 	#myModal .modal-dialog  {width:900px;}
+	
 	#editModal .modal-dialog  {width:900px;}
 	#defectsModal .modal-dialog  {width:900px;}
-	#defectsPanel label {height: 40px; text-align: center; vertical-align: text-bottom;} /* Align label and input*/
+	#defectsPanel label {width:90%;height: 25px; text-align: center; vertical-align: text-bottom; font-size: 12px; } /* Align label and input*/
 
 }
 
@@ -143,6 +177,11 @@ font-size:20px;
  }
  
  
+ .panel-heading-sm{
+    padding: 4px 10px;
+}
+
+ 
 
 /* Hide for mobile, show later */
 .sidebar {
@@ -162,6 +201,37 @@ font-size:20px;
     background-color: #f5f5f5;
     border-right: 1px solid #eee;
   }
+  
+	a {
+    color:#000000;  
+}
+  
+	a:hover {
+    color: #FFC000;
+}
+  
+  .nav-tabs{
+  background-color:#ffffff;
+} 
+/* 
+	.tab-content{
+    background-color:#303136;
+    color:#fff;
+    padding:5px
+}*/
+	.nav-tabs > li > a{
+/*  border: 1px;*/
+}
+	.nav-tabs > li > a:hover{
+/*    background-color: #303136 !important;*/
+    border-radius: 0.2;
+    color:#ffc000;
+    border-bottom-style: hidden;
+
+}
+
+   
+
 }
 
 /* Sidebar navigation */
@@ -178,7 +248,7 @@ font-size:20px;
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
   color: #fff;
-  background-color: #428bca;
+  background-color: #FFC000;
 }
 
 

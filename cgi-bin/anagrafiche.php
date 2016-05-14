@@ -1,9 +1,6 @@
 <?php
 
 require 'db_aux.php';
-//include 'ChromePhp.php';
-
-
 
 
 /* Mostra tutte le Anagrafiche */
