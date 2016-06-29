@@ -3,10 +3,10 @@ var tableComm;
 
 
 $(document).ready(function() {
-
 	
 		/* Inizializza Tabella */
 	   tableComm =  $('#tb_comm').DataTable({
+	    "paging": false,	
 	    "aProcessing": true, 
 	    "aServerSide": true,
 	    "initComplete": function(settings, json) {
@@ -55,8 +55,15 @@ $(document).ready(function() {
            
                                     
         ],
-        "order": [[1, 'asc']]
+        "order": [[1, 'desc']]
 	     } );
+	    
+	      //more elegance pleaz    
+	      var $rows = tableComm.$('tr.selected');
+	      var rowData = tableComm.rows($rows).data();
+			 $.each($(rowData),function(key,value){
+			     id_commessa = value["id_commessa"];
+			 });
 
 	     
 	     
@@ -142,15 +149,7 @@ $(document).ready(function() {
 			  }).done(function( msg ) {
 			
 			alert( msg );
-			
-	/*
-		  table.row.add( {
-        "nome":       nome,
-        "mobile":   cell,
-        "email":     email,
-        "tipo_anagrafica": tipo
-       
-    		} ).draw();*/
+
 
 			  }).fail(function() {
 			alert( "error aa" );
@@ -251,22 +250,19 @@ $(document).ready(function() {
 							type: "POST",
 							url: "cgi-bin/delete.php",
 							data: datas,
-							dataType: "html"
-							  }).done(function( msg ) {
-						
-						  }).fail(function() {
-						alert( "error" );
-						  }).always(function() {
-						alert( "finished" );
-						  });
+							success: function (msg) {
+								$.alert({
+								    title:false,
+							       content : msg,
+							       confirmButton: 'DAJE!'
+							   });
+						   },  
+							  
+							});
 	
 		             tableComm.row('.selected').remove().draw( false );
 				    	 
-				       $.alert({
-				       title:false,
-				       content : 'Commessa Eliminata!',
-				       confirmButton: 'DAJE!'
-				       });
+				  
 				    },
 				    cancel: function(){
 				    $.alert('Visto che non eri sicuro!')
@@ -297,8 +293,8 @@ $(document).ready(function() {
 
 
 
-/* Formatting function for row details - modify as you need */
-function format ( d ) {
+/* Formatting function for row details  */
+function format (d) {
 	
    var valutazione;
    var rischio;
@@ -343,7 +339,7 @@ function format ( d ) {
     else if (rischio=="MEDIO" && d.cliente_strategico=="NO")
        valutazione="Offerta da discutere con direzione";
     else 
-       valutazione="Procedere con l'offerta"; 
+       valutazione="Offerta accettata"; 
 
       
     // `d` is the original data object for the row

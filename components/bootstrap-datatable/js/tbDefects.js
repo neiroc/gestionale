@@ -1,8 +1,4 @@
-
-
-
-
-    $('#popover1').popover({
+   $('#popover1').popover({
     html : true,
     title: function() {
       return $("#popover-head1").html();
@@ -30,7 +26,7 @@
     content: function() {
       return $("#popover-content3").html();
     }
-	});
+	 });
 	
 	 $('#popover4').popover({
     html : true,
@@ -40,7 +36,7 @@
     content: function() {
       return $("#popover-content4").html();
     }
-	});
+	 });
 	
 	 $('#popover5').popover({
     html : true,
@@ -60,7 +56,7 @@
     content: function() {
       return $("#popover-content6").html();
     }
-	});
+	 });
 
     $('#popover7').popover({
     html : true,
@@ -80,7 +76,7 @@
     content: function() {
       return $("#popover-content8").html();
     }
-	}); 
+	 }); 
 	
 
 //ORRIBILE. MODIFICARE ASSOLUTAMENTE GESTIONE DIFETTI !!!
@@ -363,7 +359,6 @@ $('#addDefects').on("click",  function(){
 	data: "req=tipo_difetti&id="+id_commessa,
 	dataType: "json",
 	success : function (data) {
-		//else $('#label8').html('<a href="#" id="username" >Inserisci difetto <i class="glyphicon glyphicon-pencil"></i></a>');
 		
 		$('#label1').html(data[0].difetto1);
       $('#label2').html(data[0].difetto2);
@@ -373,35 +368,7 @@ $('#addDefects').on("click",  function(){
 		$('#label6').html(data[0].difetto6);
       $('#label7').html(data[0].difetto7);
       $('#label8').html(data[0].difetto8);
-		/*
-		if (data[0][1] != "") $('#label1').html(data[0].difetto1);
-		else $('#label1').html('<a href="#" id="popover1" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head" class="hide">Inserisci Difetto</div><div id="popover-content" class="hide"><input type="text" id="dif1"><button type="button" onclick="save1()" class="btn btn-primary btn-xs">Save</button></div>');
-		
-		if (data[0][2] != "") $('#label2').html(data[0].difetto2);
-		else $('#label2').html('<a href="#" id="popover2" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head" class="hide">Inserisci Difetto</div><div id="popover-content" class="hide"><input type="text" id="dif2"><button type="button" onclick="save2()" class="btn btn-primary btn-xs">Save</button></div>');
-		
-		if (data[0][3] != "") $('#label3').html(data[0].difetto3);
-		else $('#label3').html('<a href="#" id="popover3" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head" class="hide">Inserisci Difetto</div><div id="popover-content" class="hide"><input type="text" id="dif3"><<button type="button" onclick="save3()" class="btn btn-primary btn-xs">Save</button></div>');
-		
-		if (data[0][4] != "") $('#label4').html(data[0].difetto4);
-      else $('#label4').html('<a href="#" id="popover4" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head" class="hide">Inserisci Difetto</div><div id="popover-content" class="hide"><input type="text" id="dif4"><button type="button" onclick="save4()" class="btn btn-primary btn-xs">Save</button></div>');		
-		
-		if (data[0][5] != "") $('#label5').html(data[0].difetto5);
-		else $('#label5').html('<a href="#" id="popover5" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head" class="hide">Inserisci Difetto</div><div id="popover-content" class="hide"><input type="text" id="dif5"><button type="button" onclick="save5()" class="btn btn-primary btn-xs">Save</button></div>');
-		
-		if (data[0][6] != "") $('#label6').html(data[0].difetto6);
-		else $('#label6').html('<a href="#" id="popover6" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head" class="hide">Inserisci Difetto</div><div id="popover-content" class="hide"><input type="text" id="dif6"><button type="button" onclick="save6()" class="btn btn-primary btn-xs">Save</button></div>');
-		
-		if (data[0][7] != "") $('#label7').html(data[0].difetto7);
-      else $('#label7').html('<a href="#" id="popover7" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head" class="hide">Inserisci Difetto</div><div id="popover-content" class="hide"><input type="text" id="dif7"><button type="button" onclick="save7()" class="btn btn-primary btn-xs">Save</button></div>');
-      
-      //if (data[0][8] != "") $('#label8').html(data[0].difetto8);
-	   //else $('#label8').html('<a href="#" id="popover8" data-placement="top"><i class="glyphicon glyphicon-pencil"></i></a><div id="popover-head" class="hide">Inserisci Difetto</div><div id="popover-content" class="hide"><input type="text" id="dif8"><button type="button" onclick="save8()" class="btn btn-primary btn-xs">Save</button></div>');
-		  */
-		
-		//$('#label9').html(data[0].difetto9);
-		
-		//$('#label10').html(data[0].difetto10);
+
 
 	},
    error: function () {
@@ -422,15 +389,17 @@ $('#defectsModal').modal('show');
 
 	/* Salva Difetti*/
 	$('#saveDefects').click(function(){
-		
+     var url;	  
+	  var datas;
 		
 	  var from1 = $('#datetimepicker7').data("date").split("/");
      var f1 = from1[2]+"-"+from1[1]+"-"+from1[0];
-		
-	  var request = "difetti";
-	  
-	 
-	  
+ 
+	  var pezzi_controllati = $('#pezzi_controllati').val();
+	  var rilavorati = $('#rilavorati').val();
+	  var seq_inizio = $('#seq_inizio').val();
+	  var operatore = $('#operatore3').val();
+	  var seq_fine = $('#seq_fine').val();
 	  var difetto1 = $('#difetto1').val();
 	  var difetto2 = $('#difetto2').val();
 	  var difetto3 = $('#difetto3').val();
@@ -439,22 +408,92 @@ $('#defectsModal').modal('show');
 	  var difetto6 = $('#difetto6').val();
 	  var difetto7 = $('#difetto7').val();
 	  var difetto8 = $('#difetto8').val();
+	  var commento = $.trim($('#commento_dif').val()); //Use trim to avoid unexpected token
+	  var ko = parseInt(difetto1)+parseInt(difetto2)+parseInt(difetto3)+parseInt(difetto4)+parseInt(difetto5)+parseInt(difetto6)+parseInt(difetto7)+parseInt(difetto8);
+     var ok = pezzi_controllati - ko;
+  
 
+	   
+	  if (flag) {
 	 
-	  var datas = "request="+request+"&id="+id_commessa+"&data="+f1+"&difetto1="+difetto1+"&difetto2="+difetto2+"&difetto3="+difetto3+"&difetto4="+difetto4+"&difetto5="+difetto5+
-	              "&difetto6="+difetto6+"&difetto7="+difetto7+"&difetto8="+difetto8;
+	  url = "cgi-bin/postdata.php";
+	  datas = "request=difetti&id_commessa="+id_commessa+"&data="+f1+"&difetto1="+difetto1+"&difetto2="+difetto2+"&difetto3="+difetto3+"&difetto4="+difetto4+"&difetto5="+difetto5+
+	              "&difetto6="+difetto6+"&difetto7="+difetto7+"&difetto8="+difetto8+"&pezzi_controllati="+pezzi_controllati+"&seq_inizio="+seq_inizio+"&seq_fine="+seq_fine+"&operatore="+operatore+
+	              "&rilavorati="+rilavorati+"&commento="+commento;
+	  }
+	  else{
+     url = "cgi-bin/edit.php";	  
+	  datas = "request=difetti&id="+id_row+"id_commessa="+id_commessa+"&data="+f1+"&difetto1="+difetto1+"&difetto2="+difetto2+"&difetto3="+difetto3+"&difetto4="+difetto4+"&difetto5="+difetto5+
+	              "&difetto6="+difetto6+"&difetto7="+difetto7+"&difetto8="+difetto8+"&pezzi_controllati="+pezzi_controllati+"&seq_inizio="+seq_inizio+"&seq_fine="+seq_fine+"&operatore="+operatore+
+	              "&rilavorati="+rilavorati+"&commento="+commento;
+	  }
 	  
 	  $.ajax({
 		type: "POST",
-		url: "cgi-bin/postdata.php",
+		url: url,
 		data: datas,
 		dataType: "html",
-		success: function (data) {
-		alert("difetti salvati");
-		alert(data); //gestione errori da vedere
+		success: function (msg) {
+				var result = $.parseJSON(msg);
+            
+				if(result['mysql_error'])
+				   var m = "ERROR: "+result['mysql_error'];
+				else{ 
+				   var m = "Dettagli difetti salvati!";
+				   id_row = result['mysql_insert_id'];
+
+				   }
+						   
+					$.alert({
+			          title: false,
+					    content: m,
+					    confirmButton : 'DAJE', 
+					});
+
 		},
+		complete: function () {
+	    //se salva aggiungi riga
+         if (flag) {
+         tableDefects.row.add( {
+         	  "id": id_row,
+		        "data":       f1,
+		        "seq_inizio": seq_inizio,
+		        "seq_fine": seq_fine,
+		        "pezzi_controllati": pezzi_controllati,
+		        "ok": ok,
+	           "ko": ko,
+              "rilavorati": rilavorati,
+              "commento": commento,
+              "difetto1":difetto1,		    
+              "difetto2":difetto2,		    
+              "difetto3":difetto3,		    
+              "difetto4":difetto4,		    
+              "difetto5":difetto5,		    
+              "difetto6":difetto6,		    
+              "difetto7":difetto7,		    
+              "difetto8":difetto8,		    
+               } ).draw();
+         }
+         else {
+         //se edita aggiorna riga
+         var obj = {
+ 	           "id": id_row,
+		        "data":       f1,
+		        "seq_inizio": seq_inizio,
+		        "seq_fine": seq_fine,
+		        "pezzi_controllati": pezzi_controllati,
+		        "ok": ok,
+	           "ko": ko,
+              "rilavorati": rilavorati,
+              "commento": commento,	
+              };
+         tableDefects.row(rowNumber).data(obj);
+         flag = 1; //reimposto il flag per salvare e non editare
+         $('#defectsModal').modal('toggle');
+        } 	
+	   },
 		error: function (data) {
-		
+		console.log(data);
 		}
 
   });

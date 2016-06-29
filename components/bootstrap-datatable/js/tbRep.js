@@ -21,7 +21,6 @@ $(document).ready(function() {
 upUser();
 
 
-//tableComm = $("#tb_comm").DataTable({"paging": false,"ordering": false,"language": {"zeroRecords":    "Seleziona un intervallo di tempo",},}); 
 tableHours = $("#tb_hours").DataTable({"paging": false,"ordering": false,"language": {"zeroRecords":    "Seleziona prima una commessa",},}); // Initialize Datatable
 tableDefects = $("#tb_defects").DataTable({"paging": false,"ordering": false,"language": {"zeroRecords":    "Seleziona prima una commessa",},}); // Initialize Datatable
 
@@ -204,9 +203,9 @@ var $rows = tableComm.$('tr.selected');
             var api = this.api(), data;
  
 
-            // Total over all pages
+            // Total over the current page
             total = tableHours
-                .column( 2 )
+                .column( 2, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                 	 if ( typeof a === 'string' ) {
@@ -217,12 +216,6 @@ var $rows = tableComm.$('tr.selected');
 						  }
                     return a+b;
                 }, 0 );
-                
- 
-            // Total over this page
-            pageTotal = api
-                .column( 2, { page: 'current'} )
-                .data();
                 
 
             // Update footer
@@ -294,7 +287,6 @@ $('ul.nav a').on('shown.bs.tab', function(e){
             { "data": "data", "type" : "date-eu", "orderable":true,
               "render": function ( data, type, row, meta ) {
                var d = row.data.split('-');
-               
 			      return d[2]+'/'+d[1]+'/'+d[0] ;
 		          }            
              },
@@ -324,7 +316,7 @@ $('ul.nav a').on('shown.bs.tab', function(e){
             
             // Total over all pages
             var total3 = tableDefects
-                .column( 3 )
+                .column( 3, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                 	 if ( typeof a === 'string' ) {
@@ -339,7 +331,7 @@ $('ul.nav a').on('shown.bs.tab', function(e){
 
             // Total over all pages
             var total4 = tableDefects
-                .column( 4 )
+                .column( 4, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                 	 if ( typeof a === 'string' ) {
@@ -353,7 +345,7 @@ $('ul.nav a').on('shown.bs.tab', function(e){
                 
              // Total over all pages
             var total5 = tableDefects
-                .column( 5 )
+                .column( 5, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                 	 if ( typeof a === 'string' ) {
@@ -367,7 +359,7 @@ $('ul.nav a').on('shown.bs.tab', function(e){
                 
             // Total over all pages
             var total6 = tableDefects
-                .column( 6 )
+                .column( 6, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                 	 if ( typeof a === 'string' ) {

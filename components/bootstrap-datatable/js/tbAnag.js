@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	 
 		
-		/* Inizializza Tabella */
-				
+		/* Inizializza Tabella */			
 	   var table =  $('#tb_anag').DataTable({
+	    "paging": false,
 	    "aProcessing": true, 
 	    "aServerSide": true,
 	    "initComplete": function(settings, json) {
@@ -28,6 +28,7 @@ $(document).ready(function() {
 	    		"var12": "ref_comm",
 	    		"var13": "tel_refcomm",
 	    		"var14": "email_refcomm",
+	    		"var15": "costo",
 
 	    	},	    
 	    },
@@ -99,6 +100,7 @@ $(document).ready(function() {
 			  var cell = $('#cell').val();
 			  var tel = $('#tel_fisso').val();
 			  var email = $('#email').val();
+			  var costo = $('#costo').val();
 			  var tipo = $('#tipo').val();		  
 			  var sedel = $('#sede_legale').val();
 			  var piva = $('#piva').val();
@@ -110,7 +112,7 @@ $(document).ready(function() {
 			  
 			  /* Le variabile postate devono avere lo stesso nome delle colonne della tabella del DB */
 			  var datas = "request=anagrafica&nome="+nome+"&mobile="+cell+"&tel_fisso="+tel+"&email="+email+"&tipo_anagrafica="+tipo+
-			  "&sede_legale="+sedel+"&piva="+piva+"&ind_fatt="+ind_fatt+"&ref_amm="+ref_amm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm;
+			  "&sede_legale="+sedel+"&piva="+piva+"&ind_fatt="+ind_fatt+"&ref_amm="+ref_amm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm+"&costo="+costo;
 			
            if (nome != null) {
            	
@@ -128,29 +130,63 @@ $(document).ready(function() {
 					url: "cgi-bin/postdata.php",
 					data: datas,
 					dataType: "html",
-					success : function () {
+					success : function (msg) {
+					
+						var result = $.parseJSON(msg);
+
+						if(result['mysql_error'])
+						   var m = "ERROR: "+result['mysql_error'];
+						else{ 
+						   var m = "Anagrafica salvata correttamente";
+						   
+							//reload datatable [WORKS]						 
+							/*$.ajax( {
+							    dataType: "json",
+							    url: 'cgi-bin/server-response.php',
+							     data: {
+								    		"req" : "anagrafica",
+								    	  "table": "an_anagrafiche",
+								    		"var1": "id_anagrafica", 
+								    		"var2": "nome",
+								    		"var3": "mobile",
+								    		"var4": "email",
+								    		"var5": "start_date",
+								    		"var6": "tipo_anagrafica",
+								    		"var7": "tel_fisso",
+								    		"var8": "sede_legale",
+								    		"var9": "piva",
+								    		"var10": "ind_fatt",
+								    		"var11": "ref_amm",
+								    		"var12": "ref_comm",
+								    		"var13": "tel_refcomm",
+								    		"var14": "email_refcomm",
+								    		"var15": "costo",
+							
+								    	},
+							    success: function(data) {
+							        if (true) {
+							            // Refresh page...
+							            table.clear();
+							            table.ajax.reload();
+							            table.draw();
+							        }
+							    }
+							});*/
+						   }
+						   
 							$.alert({
 					          title: false,
-							    content: 'Anagrafica salvata correttamente!',
+							    content: m,
 							    confirmButton : 'DAJE', 
-							    confirm: function(){
-								  
-									table.row.add( {
-						        "nome":       nome,
-						        "mobile":   cell,
-						        "email":     email,
-						        "tipo_anagrafica": tipo
-						       
-						    		}).draw();
-					
-					          }
+
 							});
 					},
 					complete : function () {
 					  			me1.data('requestRunning', false);
+					  			location.reload();
 	            },
 	            error: function () {
-	            alert("Errore AJAX Call");                 
+	            alert("Errore DB, PHP or ...");                 
 	            }
 			   });
 		   
@@ -161,11 +197,16 @@ $(document).ready(function() {
 				content:'Inserisci prima un nome!'
 			    });
 			}
-			
+			   
+
 			$('#myModal').modal('toggle');
+		
+
+
 			return false; // avoid to execute the actual submit of the form. 
  
 			});
+					  
 		});
 	  
 	  
@@ -189,7 +230,8 @@ $(document).ready(function() {
 		        $("#tel_fisso").val(value["tel_fisso"]); 
 		        $("#email").val(value["email"]);
 		        $("#tipo").val(value["tipo_anagrafica"]);
-		        
+		        $("#costo").val(value["costo"]);
+		        //dati cliente
 		        $("#sede_legale").val(value["sede_legale"]); 
 		        $("#piva").val(value["piva"]); 
 		        $("#ind_fatt").val(value["ind_fatt"]); 
@@ -205,15 +247,15 @@ $(document).ready(function() {
 				/* Save Changes */
 				$('#save1').submit(function(e){
 						
-					 //Prevent Multiple Fired Events
-					 			
-					 var me = $(this);
-		          //e.preventDefault();
-		
-				    if ( me.data('requestRunning') ) {
-				        return;
-				    }
-		          me.data('requestRunning', true);
+					 
+				 //Prevent Multiple Fired Events
+				 var me = $(this);
+	          //e.preventDefault();
+	
+			    if ( me.data('requestRunning') ) {
+			        return;
+			    }
+	          me.data('requestRunning', true);
 					
 					
 					
@@ -221,10 +263,11 @@ $(document).ready(function() {
 				  var cell = $('#cell').val();
 				  var tel  = $('#tel_fisso').val();
 				  var email= $('#email').val();
+				  var costo = $('#costo').val();
 				  var tipo = $('#tipo').val();		  
 				  var sedel = $('#sede_legale').val();
 				  var piva = $('#piva').val();
-				  console.log(piva);
+				  
 				  var ind_fatt = $('#ind_fatt').val();
 				  var ref_amm = $('#ref_amm').val();
 				  var ref_comm = $('#ref_comm').val();
@@ -234,7 +277,7 @@ $(document).ready(function() {
 				
 				  
 				  var datas = "request=anagrafica&id="+id+"&nome="+nome+"&cell="+cell+"&tel_fisso="+tel+"&email="+email+"&tipo="+tipo+"&sede_legale="+sedel+"&piva="+piva+"&ind_fatt="+ind_fatt+
-				               "&ref_amm="+ref_amm+"&ref_comm="+ref_comm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm;
+				               "&ref_amm="+ref_amm+"&ref_comm="+ref_comm+"&tel_refcomm="+tel_ref_comm+"&email_refcomm="+email_ref_comm+"&costo="+costo;
 				  
 				  $.ajax({
 					type: "POST",
@@ -250,6 +293,7 @@ $(document).ready(function() {
 	            },
                complete: function() {
                me.data('requestRunning', false);
+               location.reload();
                },
                error: function () {
                alert("Errore AJAX Call");                 
@@ -396,7 +440,7 @@ function format ( d ) {
             '<td>'+d.start_date+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>Extra info :</td>'+
+            '<td>Ruolo :</td>'+
             '<td>'+d.tipo_anagrafica+'</td>'+
         '</tr>'+
     '</table>';
@@ -404,6 +448,14 @@ function format ( d ) {
  }
 }
 
+//SPINNERS
+$("input[name='mySpinner']").TouchSpin({
+      verticalbuttons: true,
+      postfix: '€',
+      step: 0.25,
+      decimals: 2
+
+});
 
 
     

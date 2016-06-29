@@ -10,7 +10,9 @@
     <link rel="icon" href="images/favicon.ico">
     <link  rel="stylesheet" href="css/fullcalendar.min.css">
     <link  rel="stylesheet" href="css/jquery-confirm.min.css">
-    <!--  <link  rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.print.css"> -->
+    <link href="css/sidebar-menu.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
     
 
     <title>Gestionale Contract</title>
@@ -40,76 +42,80 @@
   </head>
 
   <body>
+   
+   
+	<nav class="navbar navbar-inverse navbar-fixed-top no-margin">
+	 <!-- Brand and toggle get grouped for better mobile display -->
+	       <div class="navbar-header fixed-brand">
+	           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+	             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+	           </button>
+	           <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+	       </div><!-- navbar-header-->
+	 
+	       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                   <ul class="nav navbar-nav">
+	                       <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span style="color:#FFC000"class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+	                   </ul>
+	                   <ul class="nav navbar-nav navbar-right">
+							   <!--User Menu-->
+								<li class="dropdown">
+							           <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+							               <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
+							           </a>
+							           <ul class="dropdown-menu dropdown-user">
+							               <li class="divider"></li>
+							               <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+							           </ul>
+							           <!-- /.dropdown-user -->
+							   </li>
+							 </ul>
+	       </div><!-- bs-example-navbar-collapse-1 -->
+	</nav>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+       <div id="wrapper" class="toggled-2">
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+ 
+                <li class="active">
+                    <a href="dashboard.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x  "></i></span>Dashboard</a>
+                </li>
+                <li>
+                    <a href="anag.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Anagrafiche</a>
+                </li>
+                <li>
+                    <a href="offerte.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eur fa-stack-1x "></i></span>Offerte</a>
+                </li>
+                <li>
+                    <a href="commesse.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-inbox fa-stack-1x "></i></span>Commesse</a>
+                </li>
 
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <!--User Menu-->
-				<li class="dropdown">
-					<a id="navuser1" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#"></a>
-					<ul class="dropdown-menu" id="usermenu">
-						<form>
-							<div class="form-group">
-							<li>
-								<button type="button" class="btn btn-danger" id="logout">
-									<span class="glyphicon glyphicon-off"></span>
-									Logout
-								</button>
-							</li>
-						  </div>
-						</form>
-					</ul>
-				</li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-
-        </div>
-      </div>
-    </nav>
-
-
-    <!-- SIDEBAR  -->
-    <div class="container-fluid">
-      <div class="row">
-	      <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li><a href="./anag.html">Anagrafiche<span class="sb-img glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
-            <li><a href="./offerte.html">Offerte<span class="sb-img glyphicon glyphicon-eur" aria-hidden="true"></span></a></li>        
-            <li><a href="./commesse.html">Commesse<span class="sb-img glyphicon glyphicon-inbox" aria-hidden="true"></span></a></li>
-          </ul>
-         </div>
-      </div>
-    </div>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
         
         <!-- MAIN CONTENT -->
         
-         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div id="page-content-wrapper">
+	        <div class="container-fluid xyz">
+	          <div class="row">
         
-          <h1 class="page-header">Dashboard</h1>
-          
-          <div style="margin-top:5vh;">
-          <div class="col-md-6" style="padding-left:0px;"><div id='calendar'></div></div>
-		          <div style="padding-left:10px; margin-left:50%;">
-					          <h2 style="margin-bottom:1em; font-size: 20px;">Riepilogo</h2>
-					          <p> N° Clienti : <span id="date_cl"></span></p>
-					          <p>Commesse attivate quest'anno: <span id="n_comm" class="badge" ></span></p>
-				    </div>
+		          <h1 class="page-header">Dashboard</h1>
+		          
+		          <div style="margin-top:5vh;">
+		          <div class="col-md-6" style="padding-left:0px;"><div id='calendar'></div></div>
+				          <div style="padding-left:10px; margin-left:50%;">
+							          <h2 style="margin-bottom:1em; font-size: 20px;">Riepilogo</h2>
+							          <p> N° Clienti : <span id=""></span></p>
+							          <p>Commesse attivate quest'anno: <span id="n_comm" class="badge" ></span></p>
+						    </div>
+		          </div>
+        
+             </div>
           </div>
-        
-         </div>
+        </div>
+      </div>        
+         
     
 
     <!-- Bootstrap core JavaScript
@@ -123,6 +129,7 @@
     <script src="js/gcal.js"></script>
     <script src="js/script.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/sidebar-menu.js"></script>
     <script src="js/jquery-confirm.min.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script src="js/login.js"></script>

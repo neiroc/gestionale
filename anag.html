@@ -5,71 +5,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
-    <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.1.0/css/select.dataTables.min.css">
-    <link rel="stylesheet" href="css/font-awesome.css" >
-    <link rel="stylesheet" href="css/jquery-confirm.min.css">
+    <link href="components/bootstrap-datatable/css/jquery.dataTables.css" rel="stylesheet">    
+    <link href="components/bootstrap-datatable/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="css/jquery-confirm.min.css" rel="stylesheet">
+    <link href="css/sidebar-menu.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css">
     
-      <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	
 	 <!-- Custom styles for this template --> 
     <link href="css/dashboard.css" rel="stylesheet">
 
-    <title></title>
+    <title>Contract - Anagrafiche</title>
 </head>
 
 <body>
 
-	 <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <!--User Menu-->
-				<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li class="divider"></li>
-                        <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-           </li>
+	<nav class="navbar navbar-inverse navbar-fixed-top no-margin">
+	 <!-- Brand and toggle get grouped for better mobile display -->
+	       <div class="navbar-header fixed-brand">
+	           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+	             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+	           </button>
+	           <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+	       </div><!-- navbar-header-->
+	 
+	       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                   <ul class="nav navbar-nav">
+	                       <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span style="color:#FFC000"class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+	                   </ul>
+	                   <ul class="nav navbar-nav navbar-right">
+							   <!--User Menu-->
+								<li class="dropdown">
+							           <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+							               <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
+							           </a>
+							           <ul class="dropdown-menu dropdown-user">
+							               <li class="divider"></li>
+							               <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+							           </ul>
+							           <!-- /.dropdown-user -->
+							   </li>
+							 </ul>
+	       </div><!-- bs-example-navbar-collapse-1 -->
+	</nav>
 
-          </ul>
+        <div id="wrapper" class="toggled-2">
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+ 
+                <li>
+                    <a href="dashboard.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x  "></i></span>Dashboard</a>
+                </li>
+                <li class="active">
+                    <a href="anag.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Anagrafiche</a>
+                </li>
+                <li>
+                    <a href="offerte.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eur fa-stack-1x "></i></span>Offerte</a>
+                </li>
+                <li>
+                    <a href="commesse.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-inbox fa-stack-1x "></i></span>Commesse</a>
+                </li>
 
-        </div>
-      </div>
-    </nav>
-
-
-    <!-- SIDEBAR  -->
-    <div class="container-fluid">
-      <div class="row">
-      
-	      <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="./dashboard.html">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li class="active" ><a href="anag.html">Anagrafiche<span class="sb-img glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
-            <li><a href="./offerte.html">Offerte<span class="sb-img glyphicon glyphicon-eur" aria-hidden="true"></span></a></li>        
-            <li><a href="./commesse.html">Commesse<span class="sb-img glyphicon glyphicon-inbox" aria-hidden="true"></span></a></li>
-          </ul>
-          
-         
-        </div>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
      
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div id="page-content-wrapper">
+	        <div class="container-fluid xyz">
+	          <div class="row">
 
        <h2 class="sub-header">Anagrafiche</h2>
           
@@ -125,7 +131,7 @@
 							
 							<div class="form-group col-md-4">
 								<label>Costo</label>
-								<input type="text" name="name" class="form-control" id="nome" required>
+								<input id="costo" type="text" name="mySpinner" value="18">
 					      </div>
 					  </div>
 					  
@@ -147,7 +153,7 @@
 					      </div>
 					      
 					       <div class="form-group col-md-4">
-								<label for="inputEmail">Email</label>
+								<label for="inputEmail">Email *</label>
 								<div class="input-group">
 									<div class="input-group-addon"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></div>
 									<input type="email"class="form-control"  id="email" required>
@@ -182,34 +188,31 @@
 					  </div>
 					  
 					  <div  class="row"> 
-					      <div class="form-group col-md-6">
-								<label>Referente Amministrativo</label>
-								<input name="w_s_other"  disabled class="form-control" id="ref_amm">
-					      </div>
-					      
-					      <div class="form-group col-md-6">
+					      <div class="form-group col-md-4">
 								<label>Referente Commerciale</label>
 								<input name="w_s_other"   disabled  class="form-control" id="ref_comm">
 					      </div>
-					  </div>
-					      
-					  <div class="row">    
-					       <div class="form-group col-md-6">
+
+					      <div class="form-group col-md-4">
 								<label>Tel.Ref.Comm.</label>
 								<input name="w_s_other"   disabled  class="form-control" id="tel_refcomm">
 					      </div>
 					      
-					      <div class="form-group col-md-6">
+					      <div class="form-group col-md-4">
 								<label>Email Ref.Commerciale</label>
 								<input name="w_s_other"   disabled  class="form-control" id="email_refcomm">
 					      </div>
 					  </div>
 					 
 					  <div class="row">
-					  		<div class="form-group col-md-4">
+					    <div class="form-group col-md-4">
+							<label>Referente Amministrativo</label>
+						   <input name="w_s_other"  disabled class="form-control" id="ref_amm">
+					    </div>
+					  	 <div class="form-group col-md-4">
 				        <label for="inputPassword" >Password</label>
-                    <input name="w_s_other"  disabled  type="password" id="pwd" class="form-control" >
-					  		</div>
+                    <input name="w_s_other"  disabled  type="text" id="pwd" class="form-control" >
+					  	 </div>
 					  
 					  </div>
 				  </div>			 
@@ -250,6 +253,9 @@
             <!-- </table> -->
           </div>
         </div>
+        </div>
+        </div>
+      </div>
         
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -257,13 +263,13 @@
 
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    
+    <script src="js/sidebar-menu.js"></script>
+    <script src="js/jquery.bootstrap-touchspin.min.js"></script> 
     <script src="js/jquery.cookie.js"></script>
     <script src="js/login.js"></script>
-    
     <script src="js/jquery-confirm.min.js"></script>
     <script src="components/bootstrap-datatable/js/jquery.dataTables.js"></script>
     <script src="components/bootstrap-datatable/js/tbAnag.js"></script>
-    <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
+    <script src="components/bootstrap-datatable/js/dataTables.select.min.js"></script>
 </body>        
 </html>

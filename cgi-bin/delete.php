@@ -36,6 +36,38 @@ $id = $_POST['id'];
 		  $res = $mysqli->query("DELETE FROM co_commesse WHERE id_commessa='$id'");
 		 
 					  if($res){
+					    echo "Commessa Eliminata!";
+					  } else{
+					    echo "Errore Database";
+					  }
+		}
+		
+		if($request == "controlli") {
+			$id = $_POST['id'];
+			$data = $_POST['data'];
+			$operatore = $_POST['operatore'];
+			
+			
+			
+		   $res = $mysqli->query("DELETE FROM co_difetti WHERE id='$id'");
+		 
+					  if($res){
+					    echo "Elemento rimosso!";
+					  } else{
+					    echo "Errore Database";
+					  }
+		}
+		
+		if($request == "ore") {
+			$id = $_POST['id'];
+			$data = $_POST['data'];
+			$operatore = $_POST['operatore'];
+			
+			
+			
+		  $res = $mysqli->query("DELETE FROM co_ore WHERE id_commessa='$id' AND data='$data' AND operatore='$operatore'");
+		 
+					  if($res){
 					    echo "Elemento rimosso!";
 					  } else{
 					    echo "Errore Database";

@@ -11,10 +11,9 @@
     <link  rel="stylesheet" href="css/fullcalendar.min.css">
     <link  rel="stylesheet" href="css/jquery-confirm.min.css">
     <link  rel="stylesheet" href="css/jquery.qtip.min.css">
-   <!--  <link  rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.0/fullcalendar.print.css"> -->
-  
+    <link href="css/sidebar-menu.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
 
-    
 
     <title>Gestionale Contract</title>
 
@@ -46,66 +45,75 @@
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
-           
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            
-            <!--User Menu-->
-				<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li class="divider"></li>
-                        <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-           </li>
-          </ul>
+	<nav class="navbar navbar-inverse navbar-fixed-top no-margin">
+	 <!-- Brand and toggle get grouped for better mobile display -->
+	       <div class="navbar-header fixed-brand">
+	           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+	             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+	           </button>
+	           <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+	       </div><!-- navbar-header-->
+	 
+	       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                   <ul class="nav navbar-nav">
+	                       <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span style="color:#FFC000"class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+	                   </ul>
+	                   <ul class="nav navbar-nav navbar-right">
+							   <!--User Menu-->
+								<li class="dropdown">
+							           <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+							               <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
+							           </a>
+							           <ul class="dropdown-menu dropdown-user">
+							               <li class="divider"></li>
+							               <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+							           </ul>
+							           <!-- /.dropdown-user -->
+							   </li>
+							 </ul>
+	       </div><!-- bs-example-navbar-collapse-1 -->
+	</nav>
 
+
+       <div id="wrapper">
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+ 
+                <li class="active">
+                    <a href="client.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x  "></i></span>Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="reports.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Reports</a>
+                </li>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
+        
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+	        <div class="container-fluid xyz">
+	            <div class="row">
+	                
+		        
+		          <h1 class="page-header">Dashboard</h1>
+		          
+		          <div style="margin-top:5vh;">
+		          <div class="col-md-6" id="calendar" style="padding-left:0px"></div>
+				          <div style="padding-left:10px; margin-left:50%;">
+					          <h2 style="margin-bottom:1em; font-size: 20px;">Riepilogo</h2>
+					          <p>Utente registrato il : <span id="date_cl"></span></p>
+					          <p>Commesse attivate : <span id="n_comm" class="badge" ></span></p>
+				          </div>
+		          </div>
+		          
+	                
+	            </div>
+           </div>
+        <!-- /#page-content-wrapper -->
         </div>
       </div>
-    </nav>
-
-
-    <!-- SIDEBAR  -->
-    <div class="container-fluid">
-	      <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active" ><a href="client.html">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li><a href="./reports.html">Reports<span class="sb-img glyphicon glyphicon-list-alt" aria-hidden="true"></span></a></li>
-          </ul>
-        </div>
-    </div>
-        
-    <!-- MAIN CONTENT -->
-        
-         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        
-          <h1 class="page-header">Dashboard</h1>
-          
-          <div style="margin-top:5vh;">
-          <div class="col-md-6" id="calendar" style="padding-left:0px"></div>
-		          <div style="padding-left:10px; margin-left:50%;">
-			          <h2 style="margin-bottom:1em; font-size: 20px;">Riepilogo</h2>
-			          <p>Utente registrato il : <span id="date_cl"></span></p>
-			          <p>Commesse attivate : <span id="n_comm" class="badge" ></span></p>
-		          </div>
-          </div>
- 
-          </div>
        
      
     
@@ -117,6 +125,7 @@
     <script src="http://momentjs.com/downloads/moment.min.js"></script>	       
     <script src="js/fullcalendar.min.js"></script>	
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/sidebar-menu.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script src="js/calendar.js"></script>
     <script src="js/login.js"></script>

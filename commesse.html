@@ -7,12 +7,15 @@
   
     <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
     <link rel="stylesheet" href="components/bootstrap-datatable/css/select.dataTables.min.css">
-    <link rel="stylesheet" href="components/bootstrap-datatable/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="css/jquery-confirm.min.css">
     <link href="css/select2.min.css" rel="stylesheet" >
+
     <link rel="stylesheet" href="components/bootstrap-datatable/css/bootstrap-datetimepicker.min.css" >
     <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
     <link rel="stylesheet" href="css/morris.css" >
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <link href="css/sidebar-menu.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
 
 
     <!-- Bootstrap core CSS -->
@@ -27,54 +30,59 @@
 
 <body>
 
-   <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <!--User Menu-->
-				<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li class="divider"></li>
-                        <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-           </li>
+	<nav class="navbar navbar-inverse navbar-fixed-top no-margin">
+	 <!-- Brand and toggle get grouped for better mobile display -->
+	       <div class="navbar-header fixed-brand">
+	           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+	             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+	           </button>
+	           <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+	       </div><!-- navbar-header-->
+	 
+	       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                   <ul class="nav navbar-nav">
+	                       <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span style="color:#FFC000"class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+	                   </ul>
+	                   <ul class="nav navbar-nav navbar-right">
+							   <!--User Menu-->
+								<li class="dropdown">
+							           <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+							               <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
+							           </a>
+							           <ul class="dropdown-menu dropdown-user">
+							               <li class="divider"></li>
+							               <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+							           </ul>
+							           <!-- /.dropdown-user -->
+							   </li>
+							 </ul>
+	       </div><!-- bs-example-navbar-collapse-1 -->
+	</nav>
 
-          </ul>
+         <div id="wrapper" class="toggled-2">
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+ 
+                <li>
+                    <a href="dashboard.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x  "></i></span>Dashboard</a>
+                </li>
+                <li>
+                    <a href="anag.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Anagrafiche</a>
+                </li>
+                <li>
+                    <a href="offerte.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eur fa-stack-1x "></i></span>Offerte</a>
+                </li>
+                <li class="active">
+                    <a href="commesse.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-inbox fa-stack-1x "></i></span>Commesse</a>
+                </li>
 
-        </div>
-      </div>
-    </nav>
-
-
-    <!-- SIDEBAR  -->
-    <div class="container-fluid">
-      <div class="row">
-	      <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="./dashboard.html">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li><a href="./anag.html">Anagrafiche<span class="sb-img glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
-            <li><a href="./offerte.html">Offerte<span class="sb-img glyphicon glyphicon-eur" aria-hidden="true"></span></a></li>        
-            <li class="active"><a href="./commesse.html">Commesse<span class="sb-img glyphicon glyphicon-inbox" aria-hidden="true"></span></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
      
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div id="page-content-wrapper">
+	        <div class="container-fluid xyz">
+	          <div class="row">
 
     <h2 class="sub-header">Commesse</h2>
           
@@ -92,21 +100,51 @@
 		</div>
 	
 		
-<div>
+
 
   <!-- Nav tabs -->
   <ul id="myTab"class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#commesse" aria-controls="home" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Commesse</a></li>
     <li role="presentation"><a href="#ore" aria-controls="profile" role="tab" data-toggle="tab" onchange="disable2(addHours)"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Ore</a></li>
     <li role="presentation"><a href="#controlli" aria-controls="profile" role="tab" data-toggle="tab" onchange="disable2(addHours)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Controlli</a></li>
-    <li role="presentation"><a href="#ore_generali" aria-controls="profile" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>  Ore Generali</a></li>
+    <li role="presentation"><a href="#ore_generali" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-circle-o-notch" aria-hidden="true"></i>  Generale</a></li>
   </ul>
   <br>
 
   <!-- Tab panes -->
   <div class="tab-content">
   
-    <div role="tabpanel" class="tab-pane active" id="commesse">       
+    <div role="tabpanel" class="tab-pane active" id="commesse">
+    
+    	<div class="row">
+		 
+		    <div class='col-md-2'>
+		        <div class="form-group">
+		        <label>Da :</label>
+		            <div class='input-group date' id='data_inizio1'>
+		                <input type='text' class="form-control input-sm">
+		                <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                </span>
+		            </div>
+		        </div>
+		    </div>
+		    
+		  
+		    <div class='col-md-2'>
+		        <div class="form-group">
+		          <label>Al :</label>
+		            <div class='input-group date' id='data_fine1'>
+		                <input type='text' class="form-control input-sm">
+		                <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                </span>
+		            </div>
+		        </div>
+		    </div>
+		    
+		</div>
+		            
 	    <div class="table-responsive">
 	           <table id="tb_comm" class="display"  cellspacing="0" width="100%">
 	            <tbody> 
@@ -130,142 +168,149 @@
     
    <div role="tabpanel" class="tab-pane" id="ore">
    
-
-			   
+            <!-- Riepilogo  -->
 			   <div class="row">
-						 	<div class="col-md-4">
-								 <table class="table table-condensed table-striped extra-details">
-										<thead>
-											<tr>
-												<th colspan="2">Riepilogo</th>
-												</tr>
-										</thead>
-										<tbody>
-										   <tr>
-												<td>Tot. Pezzi Controllati</td>
-												<td id="totalp"></td>
-											</tr>
-											<tr>
-												<td>Tot. Difetti Riscontrati : </td>
-												<td id="totald"></td> 
-											</tr>
-										</tbody>
-								</table>
-							</div>
+				  <div class="col-md-4">
+					<table class="table table-condensed table-striped extra-details">
+					   <thead>    
+				    	  <tr>
+				            <th scope="col" rowspan="2">Riepilogo</th>
+				        </tr>
+				        
+				        <tr>
+				            <th scope="col">Ore</th>
+				            <th>Costo</th>
+				            <th>Totale</th>
+				        </tr>        
+				      </thead>
+			    
+					   <tbody>
+					       <tr>
+				    	      <td>Tot. ore standard</td>
+				    		   <td id="td1"></td>
+				    		   <td id="td1_1"></td>
+				    		   <td id="td1_2"></td>
+					       </tr>
+					       
+					       <tr>
+				        	   <td>Tot. ore extra (+25%)</td>
+				            <td id="td2"></td>
+				            <td id="td2_1"></td>
+				            <td id="td2_2"></td>
+					       </tr>
+					       <tr>
+				        	   <td>Tot. ore festivi (+50%) </td>
+				            <td id="td3"></td>
+				            <td id="td3_1"></td>
+				            <td id="td3_2"></td>
+					        </tr>
+					        
+					        <tr>
+				        	   <td>Tot. ore sabato (+20%)</td>
+				            <td id="td4"></td>
+				            <td id="td4_1"></td>
+				            <td id="td4_2"></td>
+				           </tr>
+				           <tr style="color:#337ab7">
+				    	      <td>Tot. ore standard TL</td>
+				    		   <td id="td5"></td>
+				    		   <td id="td5_1"></td>
+				    		   <td id="td5_2"></td>
+					       </tr>
+				           <tr>
+				    	      <td>Tot. spese</td>
+				    		   <td id="td6"></td>
+				    		   <td id="td6_1"></td>
+				    		   <td id="td6_2"></td>
+					       </tr>
+					       <tr>
+				    	      <td>Tot. km</td>
+				    		   <td id="td7"></td>
+				    		   <td id="td7_1"></td>
+				    		   <td id="td7_2"></td>
+					       </tr>
+					       <tr>
+				    	      <td>Tot. pasti</td>
+				    		   <td id="td8"></td>
+				    		   <td id="td8_1"></td>
+				    		   <td id="td8_2"></td>
+					       </tr>
+
+					    </tbody>
+					    <tfoot>
+				    	  <tr>
+				            <td scope="row">Totale</th>
+				            <td id="td9"></td>
+				            <td id="td9_1"></td>
+				            <td id="td9_2"></td>
+				        </tr>
+				       </tfoot>
+					</table>
+				</div>
 						
+			
 						
-						
-						 	<div class="col-md-2 col-md-offset-1">
-								 <table class="table table-condensed table-striped extra-details">
-										<thead>
-											<tr>
-												<th colspan="2">Azioni</th>
-												</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Esporta </td>
-												<td id="export"></td> 
-											</tr>
-										</tbody>
-								</table>
-							</div>
+			 	<div class="col-md-2 col-md-offset-1">
+					 <table class="table table-condensed table-striped extra-details">
+							<thead>
+								<tr>
+									<th colspan="2">Azioni</th>
+							   </tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Esporta </td>
+									<td><a onclick="oreInt()" style="cursor:pointer"><img src="images/pdf.png"></a> </td> 
+								</tr>
+							</tbody>
+					</table>
+				</div>
+				
+				
 			   </div>
 			   
-			    <div class="row">
-				    <div class="form-group col-md-2">
-				    <label>Seleziona mese :</label>
-				        
-				            <div class='input-group date' id='datetimepicker2'>
-				                <input type='text' class="form-control input-sm">
-				                <span class="input-group-addon">
-				                    <span class="glyphicon glyphicon-calendar">
-				                    </span>
-				                </span>
-				            </div>
-				       
-				    </div>
-				    
-				    <div class="col-md-2 col-md-offset-2">
-				     <h2 id="month" class="text-center"></h2>
-				    </div>
-			   </div> 
+
    
    	    
-	           <table id="tb_ore" class="display compact cell-border"  cellspacing="0" width="100%">
+	           <table id="tb_hours" class="display compact cell-border"  cellspacing="0" width="100%">
 	            <tbody> 
 		            <thead>
 		             
 		            <tr>
 			            <th>Data</th>
 			            <th>Operatore</th>  
-			            <th>Ore Std</th>  
-			            <th>Ore Extra / Notte</th>  
+			            <th>Ore Standard</th>  
+			            <th>Ore Extra</th>  
 			            <th>Ore Festivi</th>  
-			            <th>Ore Sabato</th>  
+			            <th>Ore Sabato</th>
+			            <th></th>  <!-- edit -->
+			            <th></th>  <!-- spese -->
+			            <th></th>  <!-- km -->
+			            <th></th>  <!-- pasti -->
+			            <th></th>  <!-- ore tl -->
+			            <th></th>  <!-- id row -->
 		            </tr>
 		            
-		            </thead> 
+		            </thead>
+		            		<tfoot>
+					            <tr>
+					               <th colspan="2"></th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					               <th></th>
+					              
+					            </tr>
+					            </tfoot> 
+
 	            </tbody>
 	            </table>
 	    
-	     <br><br><br>
-	     
-	     <table id="summary" class="table table-nonfluid" width="auto">
 
-				 <caption>SUMMARY</caption>
-			    
-			    <thead>    
-			    	  <tr>
-			            <th scope="col" rowspan="2">Main mode</th>
-			            
-			        </tr>
-			        
-			        <tr>
-			            <th scope="col">Ore</th>
-			            <th>Costo</th>
-			            <th>Totale</th>
-			        </tr>        
-			    </thead>
-			    
-			    <tfoot>
-			    	<tr>
-			        	<th scope="row">Totale</th>
-			            <td></td>
-			          
-			        </tr>
-			    </tfoot>
-			    
-			    <tbody>
-			    	<tr>
-			    		<th>Tot. ore standard</th>
-			    		   <td id="td1"></td>
-			    		   <td id="td1_1"></td>
-			    		   <td id="td1_2"></td>
-			       </tr>
-			        
-			        <tr>
-			        	<th>Tot. ore extra (+25%)</th>
-			            <td id="td2"></td>
-			            <td id="td2_1"></td>
-			            <td id="td2_2"></td>
-			        </tr>
-			        
-			        <tr>
-			        	<th>Tot. ore sabato (+20%)</th>
-			            <td id="td3"></td>
-			            <td id="td3_1"></td>
-			            <td id="td3_2"></td>
-			        <tr>
-			        	<th>Tot. ore festivi (+50%) </th>
-			            <td id="td4"></td>
-			            <td id="td4_1"></td>
-			            <td id="td4_2"></td>
-			        </tr>
-			        
-			    </tbody>
-			
-			</table>
+	     
+
 
  </div>
  
@@ -285,8 +330,17 @@
 												<td id="totalp"></td>
 											</tr>
 											<tr>
-												<td>Tot. Difetti Riscontrati : </td>
+												<td>Tot. Conformi</td>
+												<td id="totalc"></td>
+											</tr>
+											<tr>
+												<td>Tot. Non conformi : </td>
 												<td id="totald"></td> 
+											</tr>
+											<tr>
+												<td>Tot. Rilavorati : </td>
+												<td id="totalr"></td> 
+											</tr>
 											</tr>
 										</tbody>
 								</table>
@@ -304,7 +358,7 @@
 										<tbody>
 											<tr>
 												<td>Esporta </td>
-												<td id="print2"></td> 
+												<td><a onclick="controlliInt()" style="cursor:pointer"><img src="images/pdf.png"></a> </td> 
 											</tr>
 										</tbody>
 								</table>
@@ -320,21 +374,20 @@
 					                <th>Seq.Inizio</th>
 					                <th>Seq.Fine</th>
 					                <th>Controllati</th>
-					                <th>Difetti</th>
-							          <th>Rilavorati</th>    
-							          <th>OK</th>
+					                <th>Conformi</th>
+							          <th>Non conformi</th>    
+							          <th>Rilavorati</th>
 							          <th></th>  
 					            </tr> 
 					            </thead>
 					            <tfoot>
 					            <tr>
-					               <th colspan="4" style="text-align:right">Totale :</th>
+					               <th colspan="3"></th>
 					               <th></th>
 					               <th></th>
 					               <th></th>
 					               <th></th>
-					           
-                              
+					               <th></th>
 					            </tr>
 					            </tfoot> 
 				            
@@ -353,28 +406,82 @@
 			 </div>
  
  <div role="tabpanel" class="tab-pane" id="ore_generali"> 
- 
- 
 
-		
 		<div class="row">
 						 	<div class="col-md-4">
 								 <table class="table table-condensed table-striped extra-details">
-										<thead>
-											<tr>
-												<th colspan="2">Riepilogo</th>
-												</tr>
-										</thead>
-										<tbody>
-										   <tr>
-												<td>Tot. Pezzi Controllati</td>
-												<td id="totalp"></td>
-											</tr>
-											<tr>
-												<td>Tot. Difetti Riscontrati : </td>
-												<td id="totald"></td> 
-											</tr>
-										</tbody>
+									   <thead>    
+								    	  <tr>
+								            <th scope="col" rowspan="2">Riepilogo</th>
+								        </tr>
+								        
+								        <tr>
+								            <th scope="col">Ore</th>
+								            <th>Costo</th>
+								            <th>Totale</th>
+								        </tr>        
+								      </thead>
+									   <tbody>
+									       <tr>
+								    	      <td>Tot. ore standard</td>
+								    		   <td id="tD1"></td>
+								    		   <td id="tD1_1"></td>
+								    		   <td id="tD1_2"></td>
+									       </tr>
+									       <tr>
+								        	   <td>Tot. ore extra (+25%)</td>
+								            <td id="tD2"></td>
+								            <td id="tD2_1"></td>
+								            <td id="tD2_2"></td>
+									       </tr>
+									       <tr>
+								        	   <td>Tot. ore festivi (+50%) </td>
+								            <td id="tD3"></td>
+								            <td id="tD3_1"></td>
+								            <td id="tD3_2"></td>
+									       </tr>
+									       <tr>
+								        	   <td>Tot. ore sabato (+20%)</td>
+								            <td id="tD4"></td>
+								            <td id="tD4_1"></td>
+								            <td id="tD4_2"></td>
+								          </tr>
+								          <tr style="color:#337ab7">
+								    	      <td>Tot. ore standard TL</td>
+								    		   <td id="tD5"></td>
+								    		   <td id="tD5_1"></td>
+								    		   <td id="tD5_2"></td>
+									       </tr>
+									       <tr>
+								    	      <td>Tot. spese</td>
+								    		   <td id="tD6"></td>
+								    		   <td id="tD6_1"></td>
+								    		   <td id="tD6_2"></td>
+									       </tr>
+									       <tr>
+								    	      <td>Tot. km</td>
+								    		   <td id="tD7"></td>
+								    		   <td id="tD7_1"></td>
+								    		   <td id="tD7_2"></td>
+									       </tr>
+									       <tr>
+								    	      <td>Tot. pasti</td>
+								    		   <td id="tD8"></td>
+								    		   <td id="tD8_1"></td>
+								    		   <td id="tD8_2"></td>
+									       </tr>
+									     
+									    </tbody>
+									    <tfoot>
+								       <tfoot>
+								    	  <tr>
+								            <td scope="row">Totale</th>
+								            <td id="tD9"></td>
+								            <td id="tD9_1"></td>
+								            <td id="tD9_2"></td>
+								        </tr>
+								       </tfoot>
+								       </tfoot>
 								</table>
 							</div>
 						
@@ -390,7 +497,7 @@
 										<tbody>
 											<tr>
 												<td>Esporta </td>
-												<td id="export"></td> 
+												<td><a onclick="oreGenInt()" style="cursor:pointer"><img src="images/pdf.png"></a> </td>
 											</tr>
 										</tbody>
 								</table>
@@ -432,20 +539,54 @@
 		</div>      
 		
 	    
-	           <table id="tb_ore_generali" class="display compact cell-border"  cellspacing="0" width="100%">
+	           <table id="tb_ore_generali" class="display compact cell-border" cellspacing="0" width="100%">
 	            <tbody> 
 		            <thead> 
 		            <tr>
 			            <th>Data</th>
-			            <th>ID Commessa</th>
+			            <th>ID</th>
 			            <th>Cliente</th>  
+			            <th>Operatore</th>  
 			            <th>Ore Std</th>  
-			            <th>Ore Extra/Notte</th>  
+			            <th>Ore Extra</th>  
 			            <th>Ore Festivi</th>  
 			            <th>Ore Sabato</th>  
-			            <th>Sede</th>  
-		            </tr> 
-		            </thead> 
+			            <th>Sede</th>
+			            <th></th>  			              
+			            <th></th>  			              
+			            <th></th>  			              
+			            <th></th>  			              
+		            </tr>
+		            <tr id="filterrow">
+			            <th></th>
+			            <th class="filter"></th>
+			            <th class="filter"></th>  
+			            <th class="filter"></th>  
+			            <th></th>  
+			            <th></th>  
+			            <th></th>  
+			            <th></th>  
+			            <th></th> 
+			            <th></th> 
+			            <th></th> 
+			            <th></th> 
+			            <th></th> 
+                  </tr> 
+		            </thead>
+         			<tfoot>
+		            <tr>
+		               <th colspan="4"></th>
+		               <th></th>
+		               <th></th>
+		               <th></th>
+		               <th></th>
+		               <th></th>
+		               <th></th>
+		               <th></th>
+		               <th></th>
+		               <th></th>
+		            </tr>
+		            </tfoot>  
 	            </tbody>
 	            </table>
 	     
@@ -470,25 +611,10 @@
 			  <div class="modal-body">
 			  
 			  <div class="panel panel-primary">
-			  <div class="panel-heading panel-heading-sm">Dati Offerta</div>
+			  <div class="panel-heading panel-heading-sm">Dati commessa</div>
 			  <div class="panel-body">
 			  <div class="row">
-				    <div class='col-sm-3'>
-				      <div class="form-group">
-							<label for="nome">ID commessa</label>
-							<input id="id_commessa" disabled class="form-control" style="width:100%;" tabindex="2">						         
-				      </div>
-				    </div>
-				    
-				    <div class="form-group col-md-3">
-					    <label for="sel1">Att. Commerciale</label>
-					    <select class="form-control" id="strategico">
-						    <option>NO</option>
-						    <option>SI</option>
-					    </select>
-		          </div>
-					  
-				      
+			  
 			      <div class='col-sm-6'>
 		            <div class="form-group">
 		              <label for="nome">Data</label>
@@ -500,23 +626,34 @@
 		                </div>
 		            </div>
 	            </div>
+	            
+	            <div class="col-md-6">
+				      <div class="form-group">
+							<label>Sede</label>
+							<input type='text'  class="form-control" id="sede">						         
+						</div>
+				   </div>	
+ 
             </div>
             
             <div class="row">
              <div class="col-md-6">
  			      <div class="form-group">
-						<label for="email">Operatore</label>
+						<label>Operatore</label>
 						<select id="operatore2" class="form-control select2" tabindex="2">						         
 						</select>
 			      </div>
 			    </div>
+			    
+		    	 <div class="form-group col-md-3 col-md-offset-3">
+				    <label for="sel1">Att. Commerciale</label>
+				    <select class="form-control" id="att_comm">
+					    <option>NO</option>
+					    <option>SI</option>
+				    </select>
+	          </div>
 			  
-			    <div class="col-md-6">
-			      <div class="form-group">
-						<label>Sede</label>
-						<input type='text'  class="form-control" id="sede">						         
-					</div>
-				 </div>	
+
 			   </div>
 			   
 			   </div>
@@ -524,12 +661,12 @@
 			 
 			   
 			  <div class="panel panel-primary">
-			  <div class="panel-heading panel-heading-sm">Dati Offerta</div>
+			  <div class="panel-heading panel-heading-sm">Dettagli</div>
 			  <div class="panel-body">
 			      <div class="row">
 				      <div class="col-md-3">
 					      <div class="form-group">
-								<label for="sede">Ore Standard</label>
+								<label>Ore Standard</label>
 								<input style="background-color: #C9FFB3" id="ore_std" type="text" value="8" name="mySpinner">
 							
 					      </div>
@@ -538,7 +675,7 @@
 					      
 					      <div class="col-md-3">
 					      <div class="form-group">
-								<label for="sede">Ore Extra/Notte</label>
+								<label for="sede">Ore Extra</label>
 								<input style="background-color: #C9FFB3" id="ore_extra" type="text" value="0" name="mySpinner">
 					      </div>
 					      </div>
@@ -563,20 +700,20 @@
 					     <div class="col-md-3">
 					     <div class="form-group">
 								<label>N° Pezzi</label>
-								<input style="background-color: #FCF8E3" id="n_pezzi" type="text" value="0" name="mySpinner2">
+								<input disabled style="background-color: #FCF8E3" id="n_pezzi" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
 					     
 					     <div class="col-md-3">
 					     <div class="form-group">
-								<label for="sede">Spese</label>
+								<label>Spese</label>
 								<input style="background-color: #FCF8E3" id="spese" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
 					     
 					     <div class="col-md-3">
 					     <div class="form-group">
-								<label for="sede">Km</label>
+								<label>Km</label>
 								<input id="km" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
@@ -584,7 +721,7 @@
 					     <div class="col-md-3">
 					     <div class="form-group">
 								<label for="sede">€/pasto</label>
-								<input id="costo_ora" type="text" value="0" name="mySpinner2">
+								<input id="euro_pasto" type="text" value="0" name="mySpinner2">
 					      </div>
 					     </div>
 					     
@@ -597,7 +734,7 @@
 				   
 				   <div class="row">
 						<div class="form-group col-md-12">
-	               <label for="nome">NOTA</label>
+	               <label>NOTA</label>
 							<textarea class="form-control autogrow" id="nota"></textarea>					
 						</div>				   
 				   </div>
@@ -633,38 +770,58 @@
 			  <div id="defectsPanelinfo"class="panel-body">
 				  <div class="row">
 					    
-				      <div class='col-md-3'>
-			            <div class="form-group">
-			              <label for="nome">Data</label>
-			                <div class='input-group date' id='datetimepicker7'>
-			                    <input id="datatime" type='text' class="form-control input-sm" >
-			                    <span class="input-group-addon">
-			                    <span class="glyphicon glyphicon-calendar"></span>
-			                    </span>
-			                </div>
-			            </div>
+				   <div class='col-md-4'>
+		            <div class="form-group">
+		              <label for="nome">Data</label>
+		                <div class='input-group date' id='datetimepicker7'>
+		                    <input id="datatime" type='text' class="form-control input-sm" >
+		                    <span class="input-group-addon">
+		                    <span class="glyphicon glyphicon-calendar"></span>
+		                    </span>
+		                </div>
 		            </div>
+		          </div>
+		            
+			       <div class="col-md-4">
+	 			      <div class="form-group">
+							<label>Operatore</label>
+							<select id="operatore3" class="form-control select2" tabindex="2">						         
+							</select>
+				      </div>
+				    </div>
 				    
-					 <div class="col-md-3">
+					 <div class="col-md-4">
 				      <div class="form-group">
 							<label>Pezzi Controllati</label>
-							<input type='text'  class="form-control input-sm" id="sede">						         
+						   <input id="pezzi_controllati" type="text" value="0" name="mySpinner3">
 						</div>
 					 </div>
 					 
-					 <div class='col-md-3'>
+				  </div>
+				   
+				   <div class="row">
+				   
+				    <div class='col-md-4'>
 				      <div class="form-group">
 							<label for="nome">Seq.Inizio</label>
-							<input id=""  class="form-control input-sm" style="width:100%;" tabindex="2">						         
+							<input id="seq_inizio" type="text" value="0" name="mySpinner3">					         
 				      </div>
 					 </div>
 					    
-					    <div class='col-md-3'>
-					      <div class="form-group">
-								<label for="nome">Seq.Fine</label>
-								<input id=""  class="form-control input-sm" style="width:100%;" tabindex="2">						         
-					      </div>
-					    </div>	
+				    <div class='col-md-4'>
+				      <div class="form-group">
+							<label for="nome">Seq.Fine</label>
+							<input id="seq_fine" type="text" value="0" name="mySpinner3">						         
+				      </div>
+				    </div>
+				    
+				    <div class="col-md-4">
+				      <div class="form-group">
+							<label>Rilavorati</label>
+						   <input id="rilavorati" type="text" value="0" name="mySpinner3">
+						</div>
+					 </div>
+					    
 				   </div>
 				</div>
 			   </div>
@@ -752,7 +909,7 @@
 				   <div class="row">
 						<div class="form-group col-md-12">
 	               <label for="nome">NOTA</label>
-							<textarea class="form-control autogrow" id="nota"></textarea>					
+							<textarea class="form-control autogrow" id="commento_dif"></textarea>					
 						</div>				   
 				   </div>
  
@@ -770,6 +927,9 @@
           
 
     </div> <!-- MAIN -->
+    </div>
+    </div>
+    </div>
     
     <!--  JavaScript Kore
     ================================================== -->
@@ -777,6 +937,7 @@
             
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/sidebar-menu.js"></script>
     <script src="js/jquery.bootstrap-touchspin.min.js"></script>
 
     
@@ -797,27 +958,21 @@
     <script src="js/raphael-min.js"></script>
     
     <!-- X-Editable -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
-    
-    <!-- EXPORT BUTTONS --> 
-    <script src="//cdn.datatables.net/buttons/1.1.1/js/dataTables.buttons.min.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-    <script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.1.1/js/buttons.html5.min.js"></script>
-    <script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
+    <script src="js/bootstrap-editable.min.js"></script>
 		
-	<!-- DatapickerTime -->	
+	 <!-- DatapickerTime -->	
     <script src="js/moment.min.js"></script>
     <script src="js/it.js"></script>
-    <script type="text/javascript" src="components/bootstrap-datatable/js/transition.js"></script>
-    <script type="text/javascript" src="components/bootstrap-datatable/js/collapse.js"></script>
-    <script type="text/javascript" src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="components/bootstrap-datatable/js/transition.js"></script>
+    <script src="components/bootstrap-datatable/js/collapse.js"></script>
+    <script src="components/bootstrap-datatable/js/bootstrap-datetimepicker.min.js"></script>
     
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.1.0/js/dataTables.select.min.js"></script>
+    <script src="js/select2.min.js"></script>
+    <script src="components/bootstrap-datatable/js/dataTables.select.min.js"></script>
+    <script src="components/bootstrap-datatable/js/date-eu.js"></script>
+    
+    <!-- Extra  -->
+    <script src="js/utility.js"></script>
 
 	
 </body>        

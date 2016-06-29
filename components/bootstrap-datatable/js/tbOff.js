@@ -1,8 +1,5 @@
 $(document).ready(function() {
-	console.log(moment().format('YYYY-MM-DD'));
 
-
-  //$.fn.dataTable.moment( 'DD/MM/YYYY' );
 
 
 		/* Inizializza Tabella */
@@ -48,7 +45,12 @@ $(document).ready(function() {
                 "defaultContent": '',
                 "orderable":      false
             },
-            { "data": "data_apertura" }, 
+            { "data": "data_apertura", "type": "date-eu",
+               "render": function ( data, type, row, meta ) {
+               var d = row.data_apertura.split('-');
+			      return d[2]+'/'+d[1]+'/'+d[0] ;
+		          } 
+		      }, 
             { "data": "aperta_da" },
             { "data": "cliente" },
             { "data": "tipo_attivita" },
@@ -203,6 +205,7 @@ $('#addData').click(function(e){
 				},
 				complete: function () {
 				me.data('requestRunning', false);
+				location.reload(); //Alternative??
 				}
 		     });
 	  
@@ -269,7 +272,7 @@ $('#addData').click(function(e){
 				  
 
 				  datas = "request=offerta&id_offerta="+id+"&aperta_da="+aperta_da+"&cliente="+cliente+"&cliente_strategico="+strategico+"&costo_proposto="+proposta+"&tipo_operatore="+tipo+
-		  "&euro_ora="+euroOra+"&euro_pastog="+euroPasto+"&euro_km="+euroKm+"&euro_tl="+euroTl+"&volume_ore="+volOre+"&tipo_attivita="+tipoAtt+"&pagamento="+tipoPag+"&sede="+sede+"&nota="+nota;
+		        "&euro_ora="+euroOra+"&euro_pastog="+euroPasto+"&euro_km="+euroKm+"&euro_tl="+euroTl+"&volume_ore="+volOre+"&tipo_attivita="+tipoAtt+"&pagamento="+tipoPag+"&sede="+sede+"&nota="+nota;
 
 
 					if (aperta_da != null && cliente != null) {
@@ -298,6 +301,7 @@ $('#addData').click(function(e){
 							},
 							complete: function () {
 								me.data('requestRunning', false);
+								location.reload();
 							},
 							error: function () {
 								alert("Error AJAX Call!");
@@ -353,22 +357,19 @@ $('#addData').click(function(e){
 							type: "POST",
 							url: "cgi-bin/delete.php",
 							data: datas,
-							dataType: "html"
-							  }).done(function(  ) {
-				
-								  }).fail(function() {
-								//alert( "error" );
-								  }).always(function() {
-								//alert( "finished" );
-								  });
-						  
-				
-					     table.row('.selected').remove().draw( false );
-				
-				        $.alert('Offerta Eliminata!');
+							dataType: "html",
+							success:  function () {
+								$.alert('Offerta Eliminata!');
+							},
+							complete: function () {
+							table.row('.selected').remove().draw( false );
+							},
+							
+							})
+				        
 				    },
 				    cancel: function(){
-				        $.alert('Visto che non eri sicuro!')
+				        $.alert('Visto che non eri sicuro!');
 				    }
 				 
 				});
@@ -423,23 +424,20 @@ $('#addData').click(function(e){
 	        });
 			    
 			   if($rows.length){
-			     
-			 
 			     	 
-				$.ajax({
-					type: "POST",
-					url: "cgi-bin/postdata.php",
-					data: datas1,
-					dataType: "html"
-					  }).done(function( msg ) {
-			
-		
-				
-				  }).fail(function() {
-				alert( "error" );
-				  }).always(function() {
-				alert( "finished" );
-				  });
+					$.ajax({
+						type: "POST",
+						url: "cgi-bin/postdata.php",
+						data: datas1,
+						dataType: "html",
+	               success: function (msg) {
+							$.alert({
+								title:false,
+							   content: msg
+						    });
+						},
+					});
+
 				  
 		      }else {
 		      	 $.alert({
@@ -593,9 +591,10 @@ function valuta2() {
 
 
 /* Formatting function for row details - modify as you need */
+/* Formatting function for row details  */
 function format ( d ) {
 	
-	var valutazione;
+   var valutazione;
    var rischio;
    var classe_rischio;
    var costo_industriale = (d.euro_ora*1.15).toFixed(2);
@@ -641,17 +640,22 @@ function format ( d ) {
        valutazione="Procedere con l'offerta"; 
 
       
-
     // `d` is the original data object for the row
     return '<table  cellpadding="5" cellspacing="0" style="padding-left:50px; background-color:white; ">'+
         '<tr>'+
+            '<td>Data Apertura:</td>'+
+            '<td>'+d.data_apertura+'</td>'+
+        '</tr>'+
+         '<tr>'+
             '<td>Quadro : '+d.quadro+'</td>'+
             '<td>A pezzi : '+d.a_pezzo+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Cliente</td>'+
-            '<td>Strategico: '+d.cliente_strategico+'</td>'+
             '<td>Proposta: '+d.costo_proposto+' €/o</td>'+
+            '<td>€/pezzo: '+d.euro_pezzo+'</td>'+
+            '<td>€/Km: '+d.euro_km+'</td>'+
+            '<td>€/TL: '+d.euro_tl+'</td>'+
         '</tr>'+
         '<tr>'+
             '<td>Operatore</td>'+
@@ -660,13 +664,10 @@ function format ( d ) {
 				'<td>Costo Ind.: '+costo_industriale+' €/o</td>'+
 				'<td>Margine Lordo: '+marg_lordo+'%</td>'+
 				'<td>Margine Ind.: '+marg_ind+'%</td>'+
-            '<td>€/pezzo: '+d.euro_pezzo+'</td>'+
-            '<td>€/Km: '+d.euro_km+'</td>'+
-            '<td>€/TL: '+d.euro_tl+'</td>'+
+
         '</tr>'+
          '<tr>'+
             '<td>Rischio</td>'+
-            '<td>Volume ore: '+d.volume_ore+'</td>'+
             '<td>Classe Rischio: '+classe_rischio+'</td>'+
             '<td>Valutazione: <b>'+valutazione+'</b> </td>'+
         '</tr>'+
@@ -676,6 +677,8 @@ function format ( d ) {
         '</tr>'+
     '</table>';
 }
+
+
 
 
 function disable(select_val,input_id,input_id2) {

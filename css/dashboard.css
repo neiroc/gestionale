@@ -1,6 +1,62 @@
 /*
- * Base structure
+ * 5 columns grid for Bootsrap
  */
+ 
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-15 {
+    width: 20%;
+    float: left;
+}
+@media (min-width: 768px) {
+.col-sm-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-15 {
+        width: 20%;
+        float: left;
+    }
+}
+ 
+ 
+ /*
+ * Datatable colours
+ */
+table.dataTable tbody tr.selected {
+    background-color: #96BAD8 !important;
+}
+
+table.dataTable.display tbody>tr.odd.selected>.sorting_1, table.dataTable.order-column.stripe tbody>tr.odd.selected>.sorting_1 {
+    background-color: #96BAD8 !important;
+}
+
+table.dataTable.display tbody>tr.even.selected>.sorting_1, table.dataTable.order-column.stripe tbody>tr.even.selected>.sorting_1 {
+    background-color: #96BAD8 !important;
+}
+
+
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+  background-color:  #f2ffe6 ;
+}
+
+
  
  .fc-center h2{
 font-size:20px !important; 
@@ -38,7 +94,7 @@ padding: 0px !important;
 
 svg{
   width: 100% !important;
-  height: 130% !important;
+  height: 150% !important;
   margin-bottom: 20px;
 }
 
@@ -66,7 +122,23 @@ font-size: 10px !important;
 padding-top: 5px !important;
 }
 
-/* Table Rendering
+.navbar-nav>li>.dropdown-menu {
+    margin-top: 6px;
+ }
+ 
+ @media (min-width: 768px){
+.navbar-right {
+    float: right!important;
+    margin-right: 0px;
+}
+
+.navbar-right .dropdown-menu {
+    right: 19px;
+    left: auto;
+}
+}
+
+/* Tables Rendering
 */
 
 #tb_comm th{
@@ -77,14 +149,28 @@ padding: 8px;
 font-size: 13px;
 }
 
+#tb_ore_generali{
+	width: 100%;
+font-size: 13px;
+}
+
 #tb_defects{
 font-size: 13px;
 }
 
-
 td{
 white-space: nowrap;;
 }
+
+ #tb_ore_generali   tfoot {
+    display: table-header-group;
+}
+
+#filterrow{
+height: 33px;
+background-color: #f2ffe6;
+}
+
 
 /*
  * ParetoDifetti
@@ -93,6 +179,7 @@ white-space: nowrap;;
 width: 600px;
 height: 400px;
 margin: auto;
+margin-bottom: 200px;
 }
 
 
@@ -136,10 +223,8 @@ background-color: #FBB9B9 !important;
 /* Responsive Modal Width*/
 
 @media screen and (min-width: 768px) {
-   .panel-body  {font-size: 12px;}
-	
-	#myModal .modal-dialog  {width:900px;}
-	
+   .panel-body  {font-size: 12px;}	
+	#myModal .modal-dialog  {width:900px;}	
 	#editModal .modal-dialog  {width:900px;}
 	#defectsModal .modal-dialog  {width:900px;}
 	#defectsPanel label {width:90%;height: 25px; text-align: center; vertical-align: text-bottom; font-size: 12px; } /* Align label and input*/

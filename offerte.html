@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   
-    <link rel="stylesheet" href="components/bootstrap-datatable/css/jquery.dataTables.css">    
-    <link rel="stylesheet" href="components/bootstrap-datatable/css/select.dataTables.min.css">
-    <link rel="stylesheet" href="css/select2.min.css">
-    <link rel="stylesheet" href="css/font-awesome.css" >
-    <link rel="stylesheet" href="css/jquery.bootstrap-touchspin.min.css" >
-    <link rel="stylesheet" href="css/jquery-confirm.min.css">
+    <link href="components/bootstrap-datatable/css/jquery.dataTables.css" rel="stylesheet">    
+    <link href="components/bootstrap-datatable/css/select.dataTables.min.css" rel="stylesheet">
+    <link href="css/select2.min.css" rel="stylesheet">
+    <link href="css/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+    <link href="css/jquery-confirm.min.css" rel="stylesheet">
+    <link href="css/sidebar-menu.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
     
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -18,60 +19,65 @@
 	 <!-- Bootstrap Template CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
 
-    <title></title>
+    <title>Contract - Offerte</title>
     
 </head>
 
 <body>
 
-	 <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <!--User Menu-->
-				<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li class="divider"></li>
-                        <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-           </li>
+	<nav class="navbar navbar-inverse navbar-fixed-top no-margin">
+	 <!-- Brand and toggle get grouped for better mobile display -->
+	       <div class="navbar-header fixed-brand">
+	           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+	             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+	           </button>
+	           <a class="navbar-brand" href="#"><img class="shadowfilter" src="images/logo-78x40.png" alt=""></a>
+	       </div><!-- navbar-header-->
+	 
+	       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                   <ul class="nav navbar-nav">
+	                       <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span style="color:#FFC000"class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+	                   </ul>
+	                   <ul class="nav navbar-nav navbar-right">
+							   <!--User Menu-->
+								<li class="dropdown">
+							           <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+							               <span class="glyphicon glyphicon-user"> </span><span id="user_name1"> </span><span class="caret"> </span>
+							           </a>
+							           <ul class="dropdown-menu dropdown-user">
+							               <li class="divider"></li>
+							               <li><a id="logout" style="cursor:pointer"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+							           </ul>
+							           <!-- /.dropdown-user -->
+							   </li>
+							 </ul>
+	       </div><!-- bs-example-navbar-collapse-1 -->
+	</nav>
 
-          </ul>
+         <div id="wrapper" class="toggled-2">
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+ 
+                <li>
+                    <a href="dashboard.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x  "></i></span>Dashboard</a>
+                </li>
+                <li>
+                    <a href="anag.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Anagrafiche</a>
+                </li>
+                <li class="active">
+                    <a href="offerte.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-eur fa-stack-1x "></i></span>Offerte</a>
+                </li>
+                <li>
+                    <a href="commesse.html"><span class="fa-stack fa-lg pull-left"><i class="fa fa-inbox fa-stack-1x "></i></span>Commesse</a>
+                </li>
 
-        </div>
-      </div>
-    </nav>
-
-
-    <!-- SIDEBAR  -->
-    <div class="container-fluid">
-      <div class="row">
-	      <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="./dashboard.html">Dashboard<span class="sb-img glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-            <li><a id="anag" href="./anag.html">Anagrafiche<span class="sb-img glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
-            <li class="active"><a href="./offerte.html">Offerte<span class="sb-img glyphicon glyphicon-eur" aria-hidden="true"></span></a></li>        
-            <li><a href="./commesse.html">Commesse<span class="sb-img glyphicon glyphicon-inbox" aria-hidden="true"></span></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
      
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div id="page-content-wrapper">
+	        <div class="container-fluid xyz">
+	          <div class="row">
 
     <h2 class="sub-header">Offerte</h2>
           
@@ -325,7 +331,7 @@
           <div class="table-responsive">
            
  
-            <table id="tb_off"  cellspacing="0" width="100%">
+            <table id="tb_off"  style="border-top:1px" cellspacing="0" width="100%">
             <tbody> 
 	            <thead> 
 	            <tr>
@@ -345,6 +351,9 @@
          
         </div>
         </div>
+        </div>
+        </div>
+        </div>
     
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -352,6 +361,7 @@
             
     <script src="js/jquery-1.11.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/sidebar-menu.js"></script>
     <script src="js/moment.min.js"></script>
     
     <script src="js/jquery.cookie.js"></script>
@@ -366,6 +376,7 @@
     <script src="components/bootstrap-datatable/js/dataTables.select.min.js"></script>
 	 <script src="components/bootstrap-datatable/js/dataTables.buttons.min.js"></script>
 	 <script src="//cdn.datatables.net/plug-ins/1.10.11/sorting/datetime-moment.js"></script>
+	 <script src="//cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>
 	 
 </body>        
 </html>

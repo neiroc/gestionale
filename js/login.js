@@ -36,7 +36,7 @@ $(document).ready(function() {
 					$.cookie('date', new_d, {expires:30});
 					$.cookie('n_comm',call.num, {expires:30});
 
-					if (call.type == "Amministratore") 
+					if (call.type == "Amministratore" || call.type == "Team Leader") 
 				       location.href="dashboard.html";
 				   else
 					    location.href="client.html";
@@ -61,7 +61,7 @@ $(document).ready(function() {
 	$('#logout').on('click', function(){
 
 	var host = document.domain ;
-   var url = host+"/gestionale/cgi-bin/logout.php"; // url dello script remoto
+   var url = "cgi-bin/logout.php"; // url dello script remoto
    //var url = "localhost/gestionale/cgi-bin/logout.php"; // url dello script remoto
 	console.log(url);
 	$.ajax({
@@ -76,7 +76,7 @@ $(document).ready(function() {
 			if(call.result==="logout effettuato con successo"){	
 
 				$.removeCookie('username');
-				location.href="index.html";
+				location.href="./";
 			}
 			else 
 				//errorAlert(call.result); 		
