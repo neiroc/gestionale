@@ -19,6 +19,7 @@ var euro_km;
 
 //altri
 var flag = 1; //flag su 1 -> salva 0 -> edita
+var tab = 0; // tab 0 -> tab commesse
 var id_row;
 var rowNumber;
 var date1;
@@ -26,9 +27,8 @@ var month;
 var data_inizio;
 var data_fine;
 
-//select2
-var tl; //registra se in autocomplete selezionato un tl
-var operatore = null; //nome operatore
+
+
 
 var difetti = new Array();
 
@@ -58,9 +58,10 @@ tableDefects = $("#tb_defects").DataTable({"paging": false,"ordering": false,"la
 
 
 //Tab Panel Hours	    
-$('#myTab a[href="#ore"]').click(function (e) {
+//$('#myTab a[href="#ore"]').click(function (e) {
+$('ul.nav a').on('shown.bs.tab', function(e){
 
-
+tab = 1;
 var $rows = tableComm.$('tr.selected');
 
 if ($rows.length) {
@@ -156,7 +157,7 @@ if ($rows.length) {
             { "data": "ore_extra", "orderable" : false  },
             { "data": "ore_fest", "orderable" : false  },
             { "data": "ore_sabato", "orderable" : false  },
-            { "data": "commento", className: "dt-head-right dt-body-center", "width": "20px",
+            { "data": "commento", "orderable" : false, className: "dt-head-right dt-body-center", "width": "20px",
               "render": function ( data, type, row, meta ) {
               	
               	 var commento = row.commento;
@@ -317,32 +318,32 @@ if ($rows.length) {
             var costo_sabato  = ((0.20*costo)+(+costo)).toFixed(2);
             
             //Ore standard
-            var totale_std = (total2-ore_tl)*costo;
+            var totale_std = parseFloat(((total2-ore_tl)*costo).toFixed(2));
 			   $('#td1').html(total2-ore_tl);
 			   $('#td1_1').html(costo+" €");
 			   $('#td1_2').html(totale_std+" €");
 
 			   
 			   //Ore extra 
-			   var totale_extra =costo_extra*total3;
+			   var totale_extra = parseFloat((costo_extra*total3).toFixed(2));
 			   $('#td2').html(total3);
 			   $('#td2_1').html(costo_extra +" €");
 			   $('#td2_2').html(totale_extra+" €");
 			   
 			   //Ore festivi
-			   var totale_fest = costo_festivi*total4;
+			   var totale_fest = parseFloat((costo_festivi*total4).toFixed(2));
 			   $('#td3').html(total4);
             $('#td3_1').html(costo_festivi +" €");
             $('#td3_2').html(totale_fest+" €");
 			   
 			   //Ore sabato
-			   var totale_sab = costo_sabato*total5;
+			   var totale_sab = parseFloat((costo_sabato*total5).toFixed(2));
             $('#td4').html(total5);
             $('#td4_1').html(costo_sabato +" €");
             $('#td4_2').html(totale_sab+" €");
             
             //Ore TL
-            var totale_tl = costo_tl*ore_tl;
+            var totale_tl = parseFloat((costo_tl*ore_tl).toFixed(2));
             $('#td5').html(ore_tl);
             $('#td5_1').html(costo_tl+" €");
             $('#td5_2').html(totale_tl+" €");
@@ -351,7 +352,7 @@ if ($rows.length) {
             $('#td6_2').html(total7+" €");
             
             //Totale km
-            var totale_km = (total8*euro_km);
+            var totale_km = parseFloat(((total8*euro_km)).toFixed(2));
             //$('#td7').html(total8);
             $('#td7_1').html(total8+"*"+euro_km);
             $('#td7_2').html((total8*euro_km).toFixed(2)+" €");
@@ -390,7 +391,9 @@ $('#tb_hours').on( 'click', 'tr', function () {
 
 //DEFECTS PANEL TAB     
 $('ul.nav a').on('shown.bs.tab', function(e){
-    
+   
+    //imposto tab flag
+    tab=1;
     //Clear table and graph
     tableDefects.destroy();
     $("#pareto-difetti").html("");
@@ -608,15 +611,15 @@ $('ul.nav a').on('shown.bs.tab', function(e){
 
 });
 
-//Trovare soluzione alternativa??
+//Trovare soluzione alternativa
 $('#tb_defects').on( 'click', 'tr', function () {
     rowNumber = tableDefects.rows( { order: 'applied', filter: 'applied' } ).nodes().indexOf( this );
     console.log(rowNumber);
 } );
 
 var data1;
- $('#hoursModal').on('shown.bs.modal', function () {	    		    		
- 	 $('.select2').select2({
+    		    		
+ 	$('#select2ore').select2({
  	 	 ajax: {
 	        url: "cgi-bin/server-response2.php",
 	        dataType: 'json',
@@ -641,22 +644,6 @@ var data1;
 	    allowClear: true
 	});
 	
-	//verifica se operatore è tl
-	$('.select2').on("select2:select", function(e) { 
-   
-	   if(e.params.data.id == "Team Leader"){
-	   tl = "SI";
-	   operatore=e.params.data.text;
-	   }else{
-	    tl = "NO";
-	    operatore=e.params.data.text;
-	    }
-   });
-   
-   	 
-
-		
-});
 
 
 $('#addHours').click(function(){
@@ -684,12 +671,28 @@ $('#addHours').click(function(){
 		 $("#id_commessa").val(id_commessa);
 		 $('#hoursModal').modal('show'); 
 		  
-
+		
 });
 		
 		/* Aggiungi Elemento */ 
 		$('#saveHours').click(function(){
+			
+		  //Verifica se operatore è un team leader
+		  var tl; var operatore;	
+		  var select2ore = $("#select2ore").select2("data");
 		  
+		  if (select2ore == ""){
+			  tl = null;
+			  operatore = null;
+		  }else if (select2ore[0].id=="Team Leader") {
+		  			tl = "SI";
+			      operatore = select2ore[0].text;
+	           }else {
+	            tl = "NO";
+			      operatore = select2ore[0].text;
+	           }
+		  
+					  
 		  var url; //cambia se flag impostato
 		  var datas;
 
@@ -704,20 +707,21 @@ $('#addHours').click(function(){
 		  var sede = $('#sede').val();
 		  
 		  var pezzi = $('#n_pezzi').val();
+		  var spese = $('#spese').val();
+		  var km = $('#km').val();
+		  var europasto = $('#euro_pasto').val();
 		  var nota = $.trim($('#nota').val());
 		  
-
-		 console.log(operatore);
 		  
         if (flag){
         	url="cgi-bin/postdata.php"; 
         	datas = "request=ore&id_commessa="+id_commessa+"&data="+f1+"&operatore="+operatore+"&ore_std="+ore_std+"&ore_extra="+ore_extra+"&ore_fest="+ore_fest+
-		  "&ore_sabato="+ore_sabato+"&pezzi="+pezzi+"&sede="+sede+"&cliente="+cliente+"&commento="+nota+"&team_leader="+tl;
+		   "&ore_sabato="+ore_sabato+"&pezzi="+pezzi+"&sede="+sede+"&cliente="+cliente+"&commento="+nota+"&team_leader="+tl+"&spese="+spese+"&km="+km+"&euro_pastog="+europasto;
         }
         else {
         	url="cgi-bin/edit.php";
          datas = "request=ore&id="+id_row+"&id_commessa="+id_commessa+"&data="+f1+"&operatore="+operatore+"&ore_std="+ore_std+"&ore_extra="+ore_extra+"&ore_fest="+ore_fest+
-		  "&ore_sabato="+ore_sabato+"&pezzi="+pezzi+"&sede="+sede+"&cliente="+cliente+"&commento="+nota+"&team_leader="+tl;;        	
+		   "&ore_sabato="+ore_sabato+"&pezzi="+pezzi+"&sede="+sede+"&cliente="+cliente+"&commento="+nota+"&team_leader="+tl+"&spese="+spese+"&km="+km+"&euro_pastog="+europasto;        	
         	}
 
 		  
@@ -728,7 +732,7 @@ $('#addHours').click(function(){
 			dataType: "html",
 			success : function (msg) {
 				
-           console.log(msg);
+
 			   var result = $.parseJSON(msg);
             
 				if(result['mysql_error']){
@@ -749,7 +753,7 @@ $('#addHours').click(function(){
 			},
 			complete: function () {
          //se salva aggiungi riga
-         if (flag == 1) {
+         if (flag == 1 && tab != 0) {
          table1.row.add( {
          	  
          	  "id": id_row,
@@ -768,7 +772,7 @@ $('#addHours').click(function(){
                } ).draw();
                operatore = null; //reimposto a null operatore
          }
-         if (flag == 0) {
+         if (flag == 0 && tab != 0) {
          //se edita aggiorna riga
          var obj = {
          	  "id": id_row,
@@ -802,8 +806,8 @@ $('#addHours').click(function(){
 	    
 
 	    
-  $('#defectsModal').on('shown.bs.modal', function () {	    		    		
-	    	 $('.select2').select2({
+    		    		
+	    	 $('#select2def').select2({
 	    	 	 ajax: {
 			        url: "cgi-bin/server-response2.php",
 			        dataType: 'json',
@@ -826,7 +830,7 @@ $('#addHours').click(function(){
 			    minimumInputLength: 2,
 			    placeholder: "Seleziona...",
 			});
-		});
+
 	  
 // Other Feautures		
   $(function () {

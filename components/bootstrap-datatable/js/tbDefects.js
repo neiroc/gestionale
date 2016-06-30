@@ -391,6 +391,17 @@ $('#defectsModal').modal('show');
 	$('#saveDefects').click(function(){
      var url;	  
 	  var datas;
+	  
+    //Verifica operatore 
+	  var operatore;	
+	  var select2def = $("#select2def").select2("data");
+	  console.log(select2def);
+	  if (select2def == "")
+		 operatore = null;
+	  else  
+	  	 operatore = select2def[0].text;
+	           
+	  console.log(operatore);         
 		
 	  var from1 = $('#datetimepicker7').data("date").split("/");
      var f1 = from1[2]+"-"+from1[1]+"-"+from1[0];
@@ -398,7 +409,7 @@ $('#defectsModal').modal('show');
 	  var pezzi_controllati = $('#pezzi_controllati').val();
 	  var rilavorati = $('#rilavorati').val();
 	  var seq_inizio = $('#seq_inizio').val();
-	  var operatore = $('#operatore3').val();
+
 	  var seq_fine = $('#seq_fine').val();
 	  var difetto1 = $('#difetto1').val();
 	  var difetto2 = $('#difetto2').val();
@@ -452,41 +463,42 @@ $('#defectsModal').modal('show');
 
 		},
 		complete: function () {
-	    //se salva aggiungi riga
-         if (flag) {
-         tableDefects.row.add( {
-         	  "id": id_row,
-		        "data":       f1,
-		        "seq_inizio": seq_inizio,
-		        "seq_fine": seq_fine,
-		        "pezzi_controllati": pezzi_controllati,
-		        "ok": ok,
-	           "ko": ko,
-              "rilavorati": rilavorati,
-              "commento": commento,
-              "difetto1":difetto1,		    
-              "difetto2":difetto2,		    
-              "difetto3":difetto3,		    
-              "difetto4":difetto4,		    
-              "difetto5":difetto5,		    
-              "difetto6":difetto6,		    
-              "difetto7":difetto7,		    
-              "difetto8":difetto8,		    
-               } ).draw();
+	      //se salva aggiungi riga
+         if (flag && tab != 0) {
+	         tableDefects.row.add( {
+	         	  "id": id_row,
+			        "data":       f1,
+			        "seq_inizio": seq_inizio,
+			        "seq_fine": seq_fine,
+			        "pezzi_controllati": pezzi_controllati,
+			        "ok": ok,
+		           "ko": ko,
+	              "rilavorati": rilavorati,
+	              "commento": commento,
+	              "difetto1":difetto1,		    
+	              "difetto2":difetto2,		    
+	              "difetto3":difetto3,		    
+	              "difetto4":difetto4,		    
+	              "difetto5":difetto5,		    
+	              "difetto6":difetto6,		    
+	              "difetto7":difetto7,		    
+	              "difetto8":difetto8,		    
+	               } ).draw();
          }
-         else {
+        
          //se edita aggiorna riga
-         var obj = {
- 	           "id": id_row,
-		        "data":       f1,
-		        "seq_inizio": seq_inizio,
-		        "seq_fine": seq_fine,
-		        "pezzi_controllati": pezzi_controllati,
-		        "ok": ok,
-	           "ko": ko,
-              "rilavorati": rilavorati,
-              "commento": commento,	
-              };
+         if (flag == 0 && tab != 0) {
+	         var obj = {
+	 	           "id": id_row,
+			        "data":       f1,
+			        "seq_inizio": seq_inizio,
+			        "seq_fine": seq_fine,
+			        "pezzi_controllati": pezzi_controllati,
+			        "ok": ok,
+		           "ko": ko,
+	              "rilavorati": rilavorati,
+	              "commento": commento,	
+	              };
          tableDefects.row(rowNumber).data(obj);
          flag = 1; //reimposto il flag per salvare e non editare
          $('#defectsModal').modal('toggle');

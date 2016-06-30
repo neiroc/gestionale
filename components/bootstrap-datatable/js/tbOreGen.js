@@ -40,7 +40,7 @@ var datePast = datePast.setMonth(dateNow.getMonth() -1);
 
 //Tab Panel	   
 $('#myTab a[href="#ore_generali"]').click(function (e) {
-	
+	tab=1;
 	
 var $rows = tableComm.$('tr.selected');
 

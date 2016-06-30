@@ -4,7 +4,7 @@ require "db_aux.php";
 //Connetti al DB
 $mysqli = connect_db();
 
-
+//Tipo richiesta
 $request = $_POST['request'];
 
 
@@ -75,35 +75,44 @@ $nota       = $_POST['nota'];
 
 if($request == "ore") {
 	
-//Dati Commessa
-$id= $_POST['id'];
+//Dati Inserimento Ore
+$id			 = $_POST['id'];
 $id_commessa = $_POST['id_commessa'];
-$data  = $_POST['data'];
-$operatore    = $_POST['operatore'];
-$ore_std = $_POST['ore_std'];
+
+$data        = $_POST['data'];
+$operatore   = $_POST['operatore'];
+$ore_std     = $_POST['ore_std'];
 $ore_extra   = $_POST['ore_extra'];
-$ore_fest      = $_POST['ore_fest'];
-$ore_sabato    = $_POST['ore_sabato'];
-$pezzi  = $_POST['pezzi'];
-$sede     = $_POST['sede'];
+$ore_fest    = $_POST['ore_fest'];
+$ore_sabato  = $_POST['ore_sabato'];
+
+$pezzi       = $_POST['pezzi'];
+$spese       = $_POST['spese'];
+$km          = $_POST['km'];
+$europasto   = $_POST['euro_pastog'];
+
+$sede        = $_POST['sede'];
 $cliente     = $_POST['cliente'];
 $commento    = $_POST['commento'];
 
 
 
-	
-  $res2 = $mysqli->query("UPDATE co_ore SET data='$data', operatore='$operatore', ore_std='$ore_std', ore_extra='$ore_extra', ore_fest='$ore_fest', ore_sabato='$ore_sabato',
-                         pezzi='$pezzi', sede='$sede', cliente='$cliente' WHERE id='$id'"); 
-  
-  if($res2){
-  	   echo json_encode(array( "mysql_error" => false,
-                          "mysql_insert_id" => mysql_insert_id(),
-                          "mysql_affected_rows" => mysql_affected_rows(),
-                          "mysql_info" => mysql_info()
-                        ));
-  } else{
-       echo json_encode(array( "mysql_error" => mysqli_error($con) ));
-  }
+	if(($_POST['operatore']!="null") && ($_POST['data']!="null")) {
+	  
+		  $res2 = $mysqli->query("UPDATE co_ore SET data='$data', operatore='$operatore', ore_std='$ore_std', ore_extra='$ore_extra', ore_fest='$ore_fest', ore_sabato='$ore_sabato',
+		                         pezzi='$pezzi', sede='$sede', cliente='$cliente', commento='$commento', spese='$spese', km='$km', euro_pastog='$europasto' WHERE id='$id'"); 
+		  
+		  if($res2){
+		  	   echo json_encode(array( "mysql_error" => false,
+		                          "mysql_insert_id" => mysql_insert_id(),
+		                          "mysql_affected_rows" => mysql_affected_rows(),
+		                          "mysql_info" => mysql_info()
+		                        ));
+		  } else{
+		       echo json_encode(array( "mysql_error" => mysqli_error($con) ));
+		  }
+	  
+	}else echo json_encode(array( "mysql_error" => "Fai un piccolo sforzo, inserisci almeno data e operatore ;)"));
 
 }
 

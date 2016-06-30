@@ -1,9 +1,10 @@
 <?php
 
 require "../cgi-bin/db_aux.php";
+require_once('jpgraph/jpgraph.php');
+require_once('jpgraph/jpgraph_bar.php');
 require_once('tcpdf/tcpdf.php');
-require_once ('jpgraph/jpgraph.php');
-require_once ('jpgraph/jpgraph_bar.php');
+
 
 
 // Extend the TCPDF class to create custom Header and Footer
@@ -89,13 +90,13 @@ $pdf->setLanguageArray($l);
 
 // ---------------------------------------------------------
 
-// set default font subsetting mode
-$pdf->setFontSubsetting(true);
+// set default font subsetting mode ?? cos'èè 
+$pdf->setFontSubsetting(false);
 // Set font
 // dejavusans is a UTF-8 Unicode font, if you only need to
 // print standard ASCII chars, you can use core fonts like
 // helvetica or times to reduce file size.
-$pdf->SetFont('dejavusans', '', 11, '', true);
+$pdf->SetFont('helvetica', 'I', 7);
 
 // Add a page
 // This method has several options, check the source code documentation for more information.
@@ -131,7 +132,6 @@ tr {
 th {
     background-color: #FFC000;
     color: #333333;
-    font-family: trebuchet MS;
     font-size: 9px;
     text-align: left;
 }
